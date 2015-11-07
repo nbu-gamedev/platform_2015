@@ -1,0 +1,33 @@
+#include <SDL.h>
+#include <iostream>
+#include "World.h"
+#include "Actor.h"
+#include "Player.h"
+#include "Enemy.h"
+#include "Coin.h"
+
+
+using namespace std;
+
+
+
+int main( int argc, char* args[] ) {
+
+	World level;
+
+	// The Game loop
+	while (true)
+	{
+		// getTime(); (from SDL)
+		// update(); 
+		// render();
+
+
+	}
+
+
+
+	return 0; 
+}
+
+
