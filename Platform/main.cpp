@@ -1,4 +1,9 @@
+#ifdef __linux__
+#include <SDL2/SDL.h>
+#else
 #include <SDL.h>
+#endif
+
 #include <SDL_image.h>
 #include <iostream>
 #include "World.h"
@@ -20,7 +25,7 @@ int main( int argc, char* args[] ) {
 	while (true)
 	{
 		// getTime(); (from SDL)
-		// update(); 
+		// update();
 		// render();
 
 
@@ -28,7 +33,7 @@ int main( int argc, char* args[] ) {
 
 
 
-	return 0; 
+	return 0;
 }
 
 
