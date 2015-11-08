@@ -47,3 +47,4 @@ Temporary Items
 *.log
 *.opensdf
 *.sdf
+.vs/Platform/v14/.suo
