@@ -48,3 +48,4 @@ Temporary Items
 *.opensdf
 *.sdf
 .vs/Platform/v14/.suo
+*.suo
