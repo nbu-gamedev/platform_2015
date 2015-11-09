@@ -9,7 +9,7 @@ class Player:public Actor
 public:
     Player(SDL_Rect pos);//, SDL_Rect& img);
     void update(int time_passed, int key, bool key_type);
-
+	
     //void render();
     void move_player(int time);
     // void check_collisions();
