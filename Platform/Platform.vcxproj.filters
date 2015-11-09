@@ -30,12 +30,9 @@
     <ClCompile Include="CoreEngine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-<<<<<<< HEAD
     <ClCompile Include="Player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-=======
->>>>>>> origin/master
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h">
