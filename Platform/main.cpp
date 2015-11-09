@@ -11,10 +11,11 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "Coin.h"
-
+#include "CoreEngine.h"
 
 
 int main( int argc, char* args[] ) {
+
 
 	World level;
 	level.loadWorld("..\\Maps\\testmap.tmx");
@@ -30,17 +31,8 @@ int main( int argc, char* args[] ) {
 		cout << endl;
 	}
 
-	// The Game loop
-	while (true)
-	{
-		// getTime(); (from SDL)
-		// update();
-		// render();
-
-
-	}
-
-
+	CoreEngine coreEngine;
+	coreEngine.runGamingLoop();
 
 	return 0;
 }
