@@ -24,7 +24,8 @@ void Player::move_player(int time)
             pos_rect.x = 0;
         speed = std::min(speed + acceleration*time / 1000, max_speed_player);
     }
-    else if (!moving && speed > 0)
+    // plyzgane
+  /*  else if ()
     {
         moved = std::max(time*(speed -(acceleration*time/2)/1000)/1000, 0);
         pos_rect.x += (h_direction)*moved;
@@ -33,6 +34,15 @@ void Player::move_player(int time)
         else if( pos_rect.x < 0)
             pos_rect.x = 0;
         speed = std::max(speed - acceleration*time / 1000, 0);
+    }*/
+    //plavno spirane
+    else if (!moving && speed > 0)
+    {
+
+    }
+    else
+    {
+        speed = 0;
     }
 }
 

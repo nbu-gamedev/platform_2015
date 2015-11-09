@@ -146,7 +146,8 @@ void CoreEngine::runGamingLoop()
                     {
                         game_running = false;
                     }
-                    else if (event.type == SDL_KEYDOWN || event.type == SDL_KEYUP)
+                    else if (event.key.keysym.sym == SDLK_UP || event.key.keysym.sym == SDLK_LEFT
+                         ||   event.key.keysym.sym == SDLK_RIGHT)
                     {
                         key = (int)event.key.keysym.sym;
                         key_type = event.type == SDL_KEYDOWN ? 1:0;

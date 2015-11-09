@@ -4,7 +4,7 @@ class terrain :
 	public Actor
 {
 public:
-	terrain::terrain();
+	terrain();
 	terrain(int loadedNumber);
 	~terrain();
 
