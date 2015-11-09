@@ -1,8 +1,8 @@
 #pragma once
 #include "Actor.h"
 
-const int max_speed_player = 64; // TO BE CHANGED
-const int acceleration = 10; // TO BE CHANGED
+const int max_speed_player = 140; // TO BE CHANGED
+const int acceleration = 80; // TO BE CHANGED
 
 class Player:public Actor
 {
