@@ -13,13 +13,22 @@
 #include "Coin.h"
 
 
-using namespace std;
-
-
 
 int main( int argc, char* args[] ) {
 
 	World level;
+	level.loadWorld("..\\Maps\\testmap.tmx");
+
+	for (int i = 0; i < level.grid_height; i++)
+	{
+		for (int j = 0; j < level.grid_width; j++)
+		{
+			if (level.worldGrid[i][j] == NULL) cout << "0 ";
+			else if (level.worldGrid[i][j]->loadedNumber == 0) cout << "1 ";
+			else if (level.worldGrid[i][j]->loadedNumber == 1) cout << "2 ";
+		}
+		cout << endl;
+	}
 
 	// The Game loop
 	while (true)
