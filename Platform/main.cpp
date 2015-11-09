@@ -11,7 +11,7 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "Coin.h"
-
+#include "CoreEngine.h"
 
 using namespace std;
 
@@ -19,19 +19,8 @@ using namespace std;
 
 int main( int argc, char* args[] ) {
 
-	World level;
-
-	// The Game loop
-	while (true)
-	{
-		// getTime(); (from SDL)
-		// update();
-		// render();
-
-
-	}
-
-
+	CoreEngine coreEngine;
+	coreEngine.runGamingLoop();
 
 	return 0;
 }
