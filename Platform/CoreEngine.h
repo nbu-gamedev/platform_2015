@@ -30,10 +30,16 @@ private:
 	SDL_Window* gWindow;
 
 	//The surface contained by the window
-	SDL_Surface* gScreenSurface;
+//	SDL_Surface* gScreenSurface;
 
 	//Current displayed PNG image
-	SDL_Surface* gPNGSurface;
+//	SDL_Surface* gPNGSurface;
+
+	//The window renderer
+	SDL_Renderer* gRenderer = NULL;
+
+	//Current displayed texture
+	SDL_Texture* gTexture = NULL;
 
 public:
 	CoreEngine();
@@ -43,5 +49,7 @@ public:
 	void close();
 private:
 	//Loads individual image
-	SDL_Surface* loadSurface(std::string path);
+//	SDL_Surface* loadSurface(std::string path);   //outdated
+	//Loads individual image as texture
+	SDL_Texture* loadTexture(std::string path);
 };
