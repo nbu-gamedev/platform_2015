@@ -46,34 +46,30 @@ void Player::move_player(int time)
     }
 }
 
-void Player::update(int time_passed, int key, bool key_type)
+void Player::update(int time_passed, Key key, Type key_type)
 {
-    if (key && key_type)
+    if ((key == UP || key == LEFT || key == RIGHT) && key_type == PRESSED)
     {
         moving = true;
         switch(key)
         {
-            case 1073741906:
+            case UP:
             v_direction = 1;
-            printf("UP\n");
-            break;
-            case 1073741904:
-            printf("LEFT\n");
-            h_direction = -1;
-            v_direction = 0;
-            break;
-            case 1073741903:
-            printf("RIGHT\n");
-            h_direction = 1;
-            v_direction = 0;
-            break;
-            default:
             moving = false;
-            printf("NONE : %d\n",key);
+            break;
+            case LEFT:
+            h_direction = -1;
+           // v_direction = 0;
+            break;
+            case RIGHT:
+            h_direction = 1;
+           // v_direction = 0;
+            break;
+            default: {}
         }
     }
 
-    if (!key_type) moving = false;
+    if (key_type == RELEASED) moving = false;
 
     move_player(time_passed);
 }

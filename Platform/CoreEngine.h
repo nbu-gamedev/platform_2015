@@ -14,6 +14,7 @@
 #include "Actor.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "Input_Handler.h"
 
 class CoreEngine
 {

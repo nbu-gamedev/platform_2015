@@ -85,7 +85,7 @@ void CoreEngine::close()
 	SDL_DestroyTexture(gTexture);
 	gTexture = NULL;
 
-	//Destroy window	
+	//Destroy window
 	SDL_DestroyRenderer(gRenderer);
 	SDL_DestroyWindow(gWindow);
 	gWindow = NULL;
@@ -139,58 +139,36 @@ void CoreEngine::runGamingLoop()
 		}
 		else
 		{
-			World world;   //TODO maybe wrap into class 
+			World world;   //TODO maybe wrap into class
 			if (!world.loadWorld("../Maps/testmap.tmx"))
 			{
 				std::cout << "Error loading map !!" << std::endl;
 			}
 			else
 			{
-				
+
 				SDL_Rect pos{ 0,M_WINDOW_HEIGHT - 100,70,100 };
 				Player* player = new Player(pos);
 				bool game_running = true;
-				SDL_Event event;
-				int key = 0;
-				bool key_type = false;
 
 				// Get time
 				int prev_time, curr_time, time_passed;
 				prev_time = SDL_GetTicks();
 
+                InputHandler handler;
+                Custom_Event ce;
 				// The Game loop
 				while (game_running)
 				{
 					curr_time = SDL_GetTicks();
 					time_passed = curr_time - prev_time;
 					prev_time = curr_time;
-					while (SDL_PollEvent(&event))
-					{
-						//if (event.type == SDL_KEYUP) printf("key released\n");
-						if (event.type == SDL_QUIT || (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_F4))
-						{
-							game_running = false;
-						}
-						else if (event.key.keysym.sym == SDLK_UP || event.key.keysym.sym == SDLK_LEFT
-							|| event.key.keysym.sym == SDLK_RIGHT)
-						{
-							key = (int)event.key.keysym.sym;
-							key_type = event.type == SDL_KEYDOWN ? 1 : 0;
-						}
-					}
+					ce = handler.handle();
 
+                    if (ce.src == QUIT) game_running = false;
 					//update();
-					player->update(time_passed, key, key_type);
-					/*
-					outdated
+					player->update(time_passed, ce.k, ce.tp);
 
-					//Apply the PNG image
-					SDL_BlitSurface(gPNGSurface, NULL, gScreenSurface, &player->pos_rect);
-
-					//Update the surface
-					SDL_UpdateWindowSurface(gWindow);
-
-					*/
 					//Clear screen
 					SDL_RenderClear(gRenderer);
 
@@ -200,8 +178,6 @@ void CoreEngine::runGamingLoop()
 					//Update screen
 					SDL_RenderPresent(gRenderer);
 					SDL_Delay(33);
-
-
 				}
 			}
 		}
