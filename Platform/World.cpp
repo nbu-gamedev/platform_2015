@@ -93,7 +93,7 @@ void World::parseObject(const string & line, ifstream &file)
 		info.filePath += nextLine[start_location + offset];
 		offset++;
 	}
-
+	loadedObjects.push_back(info);
 
 }
 void World::parseGrid(const string & line, ifstream &file)
