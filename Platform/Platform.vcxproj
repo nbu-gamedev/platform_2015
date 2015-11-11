@@ -150,6 +150,7 @@
   <ItemGroup>
     <ClCompile Include="Actor.cpp" />
     <ClCompile Include="CoreEngine.cpp" />
+    <ClCompile Include="Input_Handler.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="terrain.cpp" />
@@ -160,6 +161,7 @@
     <ClInclude Include="Coin.h" />
     <ClInclude Include="CoreEngine.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="Input_Handler.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="terrain.h" />
     <ClInclude Include="World.h" />
