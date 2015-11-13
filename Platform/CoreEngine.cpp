@@ -75,7 +75,19 @@ bool CoreEngine::loadMedia()
 		printf("Failed to load texture image!\n");
 		success = false;
 	}
-
+	// TODO must take variable
+	//Loading tiles
+	std::string path;
+	for (int i = 0; i < 2; ++i)
+	{
+		path = m_world.loadedObjects[i].filePath;
+		gTilesTexture[i] = loadTexture(path);
+		if (gTilesTexture[i] == NULL)
+		{
+			printf("Failed to load tile image!\n");
+			success = false;
+		}
+	}
 	return success;
 }
 
@@ -84,6 +96,14 @@ void CoreEngine::close()
 	//Free loaded image
 	SDL_DestroyTexture(gTexture);
 	gTexture = NULL;
+
+	//free tiles;
+	//TODO yavor loop shoud take variale
+	for (int i = 0; i < 2; ++i)
+	{
+		SDL_DestroyTexture(gTilesTexture[i]);
+		gTilesTexture[i] = NULL;
+	}
 
 	//Destroy window
 	SDL_DestroyRenderer(gRenderer);
@@ -132,17 +152,18 @@ void CoreEngine::runGamingLoop()
 	}
 	else
 	{
-		//Load media
-		if (!loadMedia())
+		 //TODO maybe wrap into class
+		if (!m_world.loadWorld("../Maps/testmap.tmx"))
 		{
-			printf("Failed to load media!\n");
+			std::cout << "Error loading map !!" << std::endl;
 		}
 		else
-		{
-			World world;   //TODO maybe wrap into class
-			if (!world.loadWorld("../Maps/testmap.tmx"))
 			{
-				std::cout << "Error loading map !!" << std::endl;
+				
+			//Load media
+			if (!loadMedia())
+			{
+				printf("Failed to load media!\n");
 			}
 			else
 			{
@@ -150,7 +171,10 @@ void CoreEngine::runGamingLoop()
 				SDL_Rect pos{ 0,M_WINDOW_HEIGHT - 100,70,100 };
 				Player* player = new Player(pos);
 				bool game_running = true;
-
+				//TODO yavor  move this  
+				SDL_Rect tile;
+				tile.h = m_world.loadedObjects[0].height;
+				tile.w = m_world.loadedObjects[0].width;
 				// Get time
 				int prev_time, curr_time, time_passed;
 				prev_time = SDL_GetTicks();
@@ -171,6 +195,23 @@ void CoreEngine::runGamingLoop()
 
 					//Clear screen
 					SDL_RenderClear(gRenderer);
+
+					//Render Tiles to screen
+					for (int i = 0; i <  m_world.grid_height; ++i)
+					{
+						for (int y = 0; y < m_world.grid_width; ++y)
+						{
+							if (m_world.worldGrid[i][y] != NULL)
+							{
+								tile.y = i * m_world.loadedObjects[0].height;
+								tile.x = y * m_world.loadedObjects[0].width;
+								int index = m_world.worldGrid[i][y]->loadedNumber;
+							
+								SDL_RenderCopy(gRenderer, gTilesTexture[index], NULL, &tile);
+								
+							}
+						}
+					}
 
 					//Render texture to screen
 					SDL_RenderCopy(gRenderer, gTexture, NULL, &player->pos_rect);

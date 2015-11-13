@@ -20,8 +20,8 @@ class CoreEngine
 {
 private:
 
-	const int M_WINDOW_HEIGHT = 720;
-	const int M_WINDOW_WIDTH = 1280;
+	const int M_WINDOW_HEIGHT = 770;
+	const int M_WINDOW_WIDTH = 1330;
 	const char *M_WINDOW_NAME = "Platform";
 
 
@@ -41,6 +41,11 @@ private:
 
 	//Current displayed texture
 	SDL_Texture* gTexture = NULL;
+	//Tiles textures
+	SDL_Texture* gTilesTexture[2];  // TODO yavor   must take the number of tiles from the loaded map
+	
+	//world
+	World m_world;
 
 public:
 	CoreEngine();
