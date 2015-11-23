@@ -1,6 +1,6 @@
-#pragma once
 #include <algorithm>
 #include "Player.h"
+#include <iostream>
 
 Player::Player(SDL_Rect pos/*, SDL_Rect img*/)
 {
@@ -9,72 +9,121 @@ Player::Player(SDL_Rect pos/*, SDL_Rect img*/)
     real_y = pos.y;
     //img_rect = img;
     speed = 0;
-    jump_height = max_jump_height/2;
+    speed_y = 0;
     moving = false;
+    jumping = false;
+    falling = false;
     h_direction = 1;
-    v_direction = 0;
+    v_direction = 1;
+    acceleration = max_acceleration;
+    alive = true;
 }
 void Player::move_player(int time)
 {
     float moved = 0;
-    if (moving)
+
+    if(jumping)
     {
-        moved = std::min(time*(speed +(acceleration*time/2.)/1000.)/1000., max_speed_player*time/1000.);
+        // moving on y
+        moved = time*(speed_y - gravity_acceleration * time/ 2000.) / 1000.;
+        speed_y += (-v_direction)*gravity_acceleration*time/1000;
+        real_y += (-v_direction)*moved;
+        pos_rect.y = real_y;
+        if ( pos_rect.y > 630 - pos_rect.h) //630 == screen_height
+        {
+            pos_rect.y = 630 - pos_rect.h;
+            jumping = false;
+            speed_y = 0;
+        }
+        else if( pos_rect.y < 0)
+        {
+            pos_rect.y = 0;
+            speed_y = 0;
+        }
+       // std::cout << "speed:: " << speed_y << "moved:: " << moved << std::endl;
+
+        //moving on x
+        moved = time*speed/1000.;
         real_x += (h_direction)*moved;
         pos_rect.x = real_x;
-        if ( pos_rect.x > 1280 - pos_rect.w) // 1280 == screen_width
-            pos_rect.x = 1280 - pos_rect.w;
+        if ( pos_rect.x > 1330 - pos_rect.w) // 1330 == screen_width
+            pos_rect.x = 1330 - pos_rect.w;
+        else if( pos_rect.x < 0)
+            pos_rect.x = 0;
+
+
+        if (speed_y <= 0) v_direction = -1;
+    }
+
+    else if(falling)
+    {
+        // moving on y
+        moved = time*(speed_y - gravity_acceleration * time/ 2000.) / 1000.;
+        speed_y += (-v_direction)*gravity_acceleration*time/1000;
+        real_y += (-v_direction)*moved;
+        pos_rect.y = real_y;
+        if ( alive && pos_rect.y > 630 - pos_rect.h) //630 == screen_height
+        {
+            pos_rect.y = 630 - pos_rect.h;
+            falling = false;
+            speed_y = 0;
+        }
+        else if( pos_rect.y < 0)
+        {
+            pos_rect.y = 0;
+            speed_y = 0;
+        }
+
+    }
+
+    else if (moving)
+    {
+        moved = std::min(time*(speed + acceleration*time/2000.)/1000., max_speed_player*time/1000.);
+        real_x += (h_direction)*moved;
+        pos_rect.x = real_x;
+        if ( pos_rect.x > 1330 - pos_rect.w) // 1330 == screen_width
+            pos_rect.x = 1330 - pos_rect.w;
         else if( pos_rect.x < 0)
             pos_rect.x = 0;
         speed = std::min(speed + acceleration*time / 1000, max_speed_player);
-    }
-    // plyzgane
-  /*  else if ()
-    {
-        moved = std::max(time*(speed -(acceleration*time/2)/1000)/1000, 0);
-        pos_rect.x += (h_direction)*moved;
-        if ( pos_rect.x > 1280 - pos_rect.w)
-            pos_rect.x = 1280 - pos_rect.w;
-        else if( pos_rect.x < 0)
-            pos_rect.x = 0;
-        speed = std::max(speed - acceleration*time / 1000, 0);
-    }
-    //plavno spirane
-    else if (!moving && !v_direction && speed > 0)
-    {
 
+       // acceleration = std::max((int)0.95*time/1000*acceleration, max_acceleration/2);
+       // std::cout << speed <<std::endl;
     }
-    //jumpig
-    else if(!moving && v_direction)
-    {
 
-    }*/
     else
     {
         speed = 0;
     }
 
 }
-void Player::check_collisions()//(grid*)
+void Player::check_collisions(Actor*** grid)//(grid*)
 {
-    int x_grid = getGridCoords().first;
-    int y_grid = getGridCoords().second;
+    int i_beg_grid = getGridCoords().first.first;
+    int j_beg_grid = getGridCoords().first.second;
+    int i_end_grid = getGridCoords().second.first;
+    int j_end_grid = getGridCoords().second.second;
 
-    // check for platform
-    /*
+    // check if collide with close objects
+    for (int i = i_beg_grid; i<= i_end_grid; i++)
+    {
+        for(int j = j_beg_grid; j <= j_end_grid; j++)
+        {
+            if (i < 0 || i > 10 || j < 0 || j > 18) return; // world ' out of bounds ' ?
+            if (grid[i][j] && overlap(grid[i][j]))
+            {
+                Actor* actor = grid[i][j];
+                if (dynamic_cast<terrain*>(actor))
+                {
+                    collide_with_terrain(dynamic_cast<terrain*>(actor));
+                }
 
-    */
-    // check for enemy
-    /*
-
-    */
-    // check for coins
-    /*
-
-    */
+            }
+        }
+    }
 }
 
-void Player::update(int time_passed, Key key, Type key_type)
+void Player::update(Actor*** grid, int time_passed, Key key, Type key_type)
 {
     if (key == LEFT || key == RIGHT)
     {
@@ -82,22 +131,29 @@ void Player::update(int time_passed, Key key, Type key_type)
         {
             moving = true;
             h_direction = key == LEFT ? -1 : 1;
+            acceleration = max_acceleration;
         }
         else
             moving  = false;
         }
-     if (key == UP)
+     if (key == JUMP && !jumping)
      {
-       //jump
+        jumping = true;
+        v_direction = 1;
+        speed_y = jump_start_speed;
      }
 
     move_player(time_passed);
-    check_collisions();
+    check_collisions(grid);
 
 }
-std::pair<int,int> Player::getGridCoords()
+
+void Player:: collide_with_terrain(terrain* terra)
 {
-    int x_grid = pos_rect.x / 70;// PixelPerTile;
-    int y_grid = pos_rect.y / 70; //PixelPerTile;
-    return std::make_pair(x_grid,y_grid);
+
 }
+void Player:: collide_with_enemy(Enemy* enemy)
+{
+
+}
+

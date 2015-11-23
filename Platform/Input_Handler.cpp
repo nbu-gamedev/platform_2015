@@ -1,8 +1,13 @@
-#pragma once
 #include "Input_Handler.h"
 
 
-InputHandler::InputHandler(){};
+InputHandler::InputHandler()
+{
+    // map all player' keys
+    keys[SDLK_UP] = keys[SDLK_SPACE] = keys[SDLK_w] = JUMP;
+    keys[SDLK_LEFT] = keys[SDLK_a] = LEFT;
+    keys[SDLK_RIGHT] = keys[SDLK_d] = RIGHT;
+}
 
 Custom_Event InputHandler::handle()
 {
@@ -21,7 +26,8 @@ Custom_Event InputHandler::handle()
         {
             result.src = KEY;
             result.tp = event.type == SDL_KEYDOWN ? PRESSED : RELEASED;
-            result.k = (Key) event.key.keysym.sym;
+            auto k = keys.find(event.key.keysym.sym);
+            result.k = k != keys.end() ? k->second : NO_KEY;
         }
 
     }

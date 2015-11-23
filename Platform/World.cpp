@@ -23,14 +23,14 @@ bool World::loadWorld(string file)
 		while (getline(myfile, line))
 		{
 			for (int i = 0; i < elementsToParse; i++)
-			{	
+			{
 				size_t found = line.find(toParse[i]);
 				if (string::npos != found)
 				{
 					(*this.*parseFunc[i])(line, myfile);
 				}
 			}
-			
+
 		}
 		myfile.close();
 	}
@@ -68,7 +68,7 @@ World::~World()
 void World::parseDimensions(const string &line, ifstream &file)
 {
 	string toParse[] = { { "width=\"" },{ "height=\"" },{ "tilewidth=\"" },{ "tileheight=\"" } };
-	
+
 	mapInfo.yTiles = getValueAfter(toParse[0], line);
 	mapInfo.xTiles = getValueAfter(toParse[1], line);
 	mapInfo.tileWidth = getValueAfter(toParse[2], line);

@@ -9,14 +9,14 @@
 
 using namespace std;
 
-// This class need to be initialised with the loadWorld function witch will return true or false on success or failure respectively. 
+// This class need to be initialised with the loadWorld function witch will return true or false on success or failure respectively.
 class World
 {
 private:
-	
+
 
 public:
-	
+
 
 	// the grid with all the interactable objects
 	Actor*** worldGrid;
@@ -30,7 +30,7 @@ public:
 	~World();
 // this should be private
 public:
-	
+
 	// function to parse the XML file
 	void parseDimensions(const string &line, ifstream &file);
 	void parseObject(const string &line, ifstream &file);

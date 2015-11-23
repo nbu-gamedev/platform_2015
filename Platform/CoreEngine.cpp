@@ -159,7 +159,7 @@ void CoreEngine::runGamingLoop()
 		}
 		else
 			{
-				
+
 			//Load media
 			if (!loadMedia())
 			{
@@ -168,10 +168,10 @@ void CoreEngine::runGamingLoop()
 			else
 			{
 
-				SDL_Rect pos{ 0,M_WINDOW_HEIGHT - 100,70,100 };
+				SDL_Rect pos{ 0,M_WINDOW_HEIGHT - 240,70,100 };
 				Player* player = new Player(pos);
 				bool game_running = true;
-				//TODO yavor  move this  
+				//TODO yavor  move this
 				SDL_Rect tile;
 				tile.h = m_world.loadedObjects[0].height;
 				tile.w = m_world.loadedObjects[0].width;
@@ -191,7 +191,7 @@ void CoreEngine::runGamingLoop()
 
                     if (ce.src == QUIT) game_running = false;
 					//update();
-					player->update(time_passed, ce.k, ce.tp);
+					player->update(m_world.worldGrid, time_passed, ce.k, ce.tp);
 
 					//Clear screen
 					SDL_RenderClear(gRenderer);
@@ -206,9 +206,9 @@ void CoreEngine::runGamingLoop()
 								tile.y = i * m_world.loadedObjects[0].height;
 								tile.x = y * m_world.loadedObjects[0].width;
 								int index = m_world.worldGrid[i][y]->loadedNumber;
-							
+
 								SDL_RenderCopy(gRenderer, gTilesTexture[index], NULL, &tile);
-								
+
 							}
 						}
 					}

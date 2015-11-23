@@ -7,7 +7,9 @@
 #include <SDL_events.h>
 #endif
 
-enum Key {NO_KEY, UP = SDLK_UP, RIGHT = SDLK_RIGHT, LEFT = SDLK_LEFT };
+#include <map>
+
+enum Key {NO_KEY, JUMP, RIGHT, LEFT};
 enum Source_Type {NO_SOURCE_TYPE, MOUSE, KEY, QUIT};
 enum Type {NO_TYPE,PRESSED, RELEASED};
 
@@ -20,6 +22,7 @@ struct Custom_Event
 
 class InputHandler
 {
+    std::map<SDL_Keycode,Key> keys;
     SDL_Event event;
 public:
 
