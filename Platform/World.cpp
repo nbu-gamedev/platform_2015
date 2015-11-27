@@ -129,7 +129,7 @@ void World::parseGrid(const string & line, ifstream &file)
 				rect.y = (i + 1) * mapInfo.tileHeight - loadedObjects[current-1].height;
 				rect.x = j*mapInfo.tileWidth + mapInfo.tileWidth / 2. - loadedObjects[current-1].width / 2.;
 			}
-
+			
 			switch (current)
 			{
 			case 0:

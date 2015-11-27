@@ -4,10 +4,13 @@
 #else
 #include <SDL.h>
 #endif
-
+enum Object
+{
+	GROUND, GROUND_DIRT, PLAYER, SLIME
+};
 
 #include <utility>
-enum Object;
+#include "Globals.h"
 
 class Actor
 {

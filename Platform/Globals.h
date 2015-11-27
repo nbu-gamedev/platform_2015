@@ -1,7 +1,6 @@
 #pragma once
-enum Object
-{
-	GROUND, GROUND_DIRT, PLAYER, SLIME
-};
 
-double SLACE_FACTOR = 0.5;
+
+extern double SLACE_FACTOR;
+extern int M_WINDOW_HEIGHT;
+extern int M_WINDOW_WIDTH;

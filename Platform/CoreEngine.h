@@ -20,8 +20,7 @@ class CoreEngine
 {
 private:
 
-    const int M_WINDOW_HEIGHT = 770;
-    const int M_WINDOW_WIDTH = 1330;
+    
     const char* M_WINDOW_NAME = "Platform";
 
 
