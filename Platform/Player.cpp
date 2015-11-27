@@ -107,7 +107,7 @@ void Player::check_collisions(Actor*** grid)//(grid*)
                 {
                     collide_with_terrain(dynamic_cast<terrain*>(actor));
                 }
-                 if (dynamic_cast<Coin*>(actor))
+                 if (dynamic_cast<Coin*>(actor) && !dynamic_cast<Coin*>(actor)->taken)
                 {
                     get_coin(dynamic_cast<Coin*>(actor));
                 }
