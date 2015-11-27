@@ -41,7 +41,7 @@ private:
 	//Current displayed texture
 	SDL_Texture* gTexture = NULL;
 	//Tiles textures
-	SDL_Texture* gTilesTexture[2];  // TODO yavor   must take the number of tiles from the loaded map
+	SDL_Texture* gTilesTexture[4];  // TODO yavor   must take the number of tiles from the loaded map
 
 	//world
 	World m_world;

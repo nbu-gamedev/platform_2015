@@ -136,17 +136,20 @@ void World::parseGrid(const string & line, ifstream &file)
 				worldGrid[i][j] = NULL;
 				break;
 			case 1:
-				
 				worldGrid[i][j] = new terrain(rect, GROUND);
+				worldGrid[i][j]->loadedNumber = current - 1;
 				break;
 			case 2:
 				worldGrid[i][j] = new terrain(rect, GROUND_DIRT);
+				worldGrid[i][j]->loadedNumber = current - 1;
 				break;
 			case 3:
 				worldGrid[i][j] = new Player(rect);
+				worldGrid[i][j]->loadedNumber = current - 1;
 				break;
 			case 4:
 				worldGrid[i][j] = new Enemy(rect, SLIME);
+				worldGrid[i][j]->loadedNumber = current - 1;
 				break;
 			default:
 				worldGrid[i][j] = NULL;

@@ -79,7 +79,7 @@ bool CoreEngine::loadMedia()
     // TODO must take variable
     //Loading tiles
     std::string path;
-    for (int i = 0; i < 2; ++i)
+    for (int i = 0; i < 4; ++i)
     {
         path = m_world.loadedObjects[i].filePath;
         gTilesTexture[i] = loadTexture(path);
@@ -100,7 +100,7 @@ void CoreEngine::close()
 
     //free tiles;
     //TODO yavor loop shoud take variale
-    for (int i = 0; i < 2; ++i)
+    for (int i = 0; i < 4; ++i)
     {
         SDL_DestroyTexture(gTilesTexture[i]);
         gTilesTexture[i] = NULL;
@@ -189,9 +189,9 @@ void CoreEngine::runGamingLoop()
                     time_passed = curr_time - prev_time;
                     if (time_passed < 15)
                     {
-                        //continue;
+                        continue;
                     }
-                    cout << time_passed << endl;
+
                     prev_time = curr_time;
                     ce = handler.handle();
 

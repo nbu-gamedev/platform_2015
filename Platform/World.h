@@ -25,7 +25,7 @@ public:
 	bool loadWorld(string file);
 
 
-	// Construcor and destructor
+	// Construcor and destructor l
 	World();
 	~World();
 // this should be private
