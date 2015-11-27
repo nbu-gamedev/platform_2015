@@ -1,6 +1,7 @@
 #pragma once
 #include "terrain.h"
 #include "Enemy.h"
+#include "Coin.h"
 #include "Input_Handler.h"
 
 
@@ -20,6 +21,7 @@ public:
     void move_player(int time);
     void collide_with_terrain(terrain* terra);
     void collide_with_enemy(Enemy* enemy);
+    void get_coin(Coin* coin);
 
     double real_x,real_y;
     int h_direction;

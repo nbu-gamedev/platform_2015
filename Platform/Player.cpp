@@ -40,17 +40,6 @@ void Player::move_player(int time)
             pos_rect.y = 0;
             speed_y = 0;
         }
-       // std::cout << "speed:: " << speed_y << "moved:: " << moved << std::endl;
-
-        //moving on x
-        moved = time*speed/1000.;
-        real_x += (h_direction)*moved;
-        pos_rect.x = real_x;
-        if ( pos_rect.x > 1330 - pos_rect.w) // 1330 == screen_width
-            pos_rect.x = 1330 - pos_rect.w;
-        else if( pos_rect.x < 0)
-            pos_rect.x = 0;
-
 
         if (speed_y <= 0) v_direction = -1;
     }
@@ -76,7 +65,8 @@ void Player::move_player(int time)
 
     }
 
-    else if (moving)
+    //else
+    if (moving)
     {
         moved = std::min(time*(speed + acceleration*time/2000.)/1000., max_speed_player*time/1000.);
         real_x += (h_direction)*moved;
@@ -117,7 +107,10 @@ void Player::check_collisions(Actor*** grid)//(grid*)
                 {
                     collide_with_terrain(dynamic_cast<terrain*>(actor));
                 }
-
+                 if (dynamic_cast<Coin*>(actor))
+                {
+                    get_coin(dynamic_cast<Coin*>(actor));
+                }
             }
         }
     }
@@ -155,5 +148,10 @@ void Player:: collide_with_terrain(terrain* terra)
 void Player:: collide_with_enemy(Enemy* enemy)
 {
 
+}
+void Player:: get_coin(Coin* coin)
+{
+    coin -> taken = true;
+    Coin::taken_coins++;
 }
 
