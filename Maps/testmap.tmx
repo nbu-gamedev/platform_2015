@@ -6,17 +6,23 @@
  <tileset firstgid="2" name="ground_dirt" tilewidth="70" tileheight="70" tilecount="1">
   <image source="../Art/ground_dirt.png" width="70" height="70"/>
  </tileset>
+ <tileset firstgid="3" name="walk0001" tilewidth="75" tileheight="96" tilecount="1">
+  <image source="../Art/character/walk/walk0001.png" width="75" height="96"/>
+ </tileset>
+ <tileset firstgid="4" name="slime_walk" tilewidth="43" tileheight="26" tilecount="1">
+  <image source="../Art/enemies/slime_walk.png" width="43" height="26"/>
+ </tileset>
  <layer name="Tile Layer 1" width="19" height="11">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,
 0,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,4,0,0,
 1,1,0,0,0,1,1,1,1,1,1,0,0,0,0,1,1,1,1,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
 2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2
 </data>
