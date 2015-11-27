@@ -162,6 +162,7 @@
     <ClInclude Include="Coin.h" />
     <ClInclude Include="CoreEngine.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="Globals.h" />
     <ClInclude Include="Input_Handler.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="terrain.h" />

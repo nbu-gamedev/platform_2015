@@ -5,7 +5,9 @@
 #include <SDL.h>
 #endif
 
+
 #include <utility>
+enum Object;
 
 class Actor
 {
@@ -19,6 +21,7 @@ public:
 
 	SDL_Rect pos_rect;
 	SDL_Rect img_rect;
+
 	int speed; //
 	// The number in the World::loadedObjects
 	int loadedNumber;

@@ -1,5 +1,4 @@
 #pragma once
-
 #include "Actor.h"
 
 /*
@@ -13,7 +12,9 @@ class Enemy :public Actor
 public:
     // if enemy is static (not moving): maxx = minx = pos.x && spd = 0
     Enemy (SDL_Rect pos, int maxx, int minx, int spd, int direction);
+	Enemy(SDL_Rect rect, Object obj);
 
+	Object type;
     void update(Actor*** grid, int time_passed);
     //void render();
 private:
@@ -22,3 +23,5 @@ private:
     float real_x,real_y; //if not float, movement can't be registered because of flooring
 
 };
+
+

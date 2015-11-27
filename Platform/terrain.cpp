@@ -1,13 +1,13 @@
 #include "terrain.h"
 
-
 terrain::terrain()
 {
 }
 
-terrain::terrain(int loadedNumber)
+terrain::terrain(SDL_Rect rect, Object obj)
 {
-	this->loadedNumber = loadedNumber;
+	pos_rect = rect;
+	type = obj;
 }
 
 terrain::~terrain()
@@ -20,4 +20,5 @@ void terrain::update()
 
 void terrain::render()
 {
+	
 }

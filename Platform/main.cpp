@@ -12,6 +12,7 @@ int main( int argc, char* args[] ) {
 
 	CoreEngine coreEngine;
 	coreEngine.runGamingLoop();
+	
 
 	return 0;
 }

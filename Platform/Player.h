@@ -3,6 +3,7 @@
 #include "Enemy.h"
 #include "Input_Handler.h"
 
+
 const int max_speed_player = 300;
 const int jump_start_speed = 500;
 const int max_acceleration = 400;
@@ -20,7 +21,7 @@ public:
     void collide_with_terrain(terrain* terra);
     void collide_with_enemy(Enemy* enemy);
 
-    float real_x,real_y;
+    double real_x,real_y;
     int h_direction;
     int v_direction;
     int speed_y;

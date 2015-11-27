@@ -1,4 +1,7 @@
 #include "World.h"
+#include "Globals.h"
+#include "Player.h"
+#include "Enemy.h"
 
 bool World::loadWorld(string file)
 {
@@ -117,16 +120,33 @@ void World::parseGrid(const string & line, ifstream &file)
 		for (int j = 0; j < grid_width; j++)
 		{
 			rowDataStream >> current >> comma;
+			
+			SDL_Rect rect;
+			if (current != 0)
+			{
+				rect.w = loadedObjects[current-1].width;
+				rect.h = loadedObjects[current-1].height;
+				rect.y = (i + 1) * mapInfo.tileHeight - loadedObjects[current-1].height;
+				rect.x = j*mapInfo.tileWidth + mapInfo.tileWidth / 2. - loadedObjects[current-1].width / 2.;
+			}
+
 			switch (current)
 			{
 			case 0:
 				worldGrid[i][j] = NULL;
 				break;
 			case 1:
-				worldGrid[i][j] = new terrain(0);
+				
+				worldGrid[i][j] = new terrain(rect, GROUND);
 				break;
 			case 2:
-				worldGrid[i][j] = new terrain(1);
+				worldGrid[i][j] = new terrain(rect, GROUND_DIRT);
+				break;
+			case 3:
+				worldGrid[i][j] = new Player(rect);
+				break;
+			case 4:
+				worldGrid[i][j] = new Enemy(rect, SLIME);
 				break;
 			default:
 				worldGrid[i][j] = NULL;

@@ -9,6 +9,16 @@
     this->direction = direction;
  }
 
+ Enemy::Enemy(SDL_Rect rect, Object obj)
+ {
+	
+	pos_rect = rect;
+	type = obj;
+	max_x = min_x = rect.x;
+	direction = 1;
+	 
+ }
+
 
 void Enemy::update(Actor*** grid, int time_passed)
 {

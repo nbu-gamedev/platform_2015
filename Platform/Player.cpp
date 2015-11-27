@@ -20,7 +20,7 @@ Player::Player(SDL_Rect pos/*, SDL_Rect img*/)
 }
 void Player::move_player(int time)
 {
-    float moved = 0;
+    double moved = 0;
 
     if(jumping)
     {

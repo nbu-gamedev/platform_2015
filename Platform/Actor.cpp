@@ -4,6 +4,7 @@ Actor::~Actor()
 {
 }
 
+
 void Actor::update()
 {
 }
