@@ -149,6 +149,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Actor.cpp" />
+    <ClCompile Include="Coin.cpp" />
     <ClCompile Include="CoreEngine.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Globals.cpp" />
