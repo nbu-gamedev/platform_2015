@@ -229,7 +229,7 @@ void CoreEngine::runGamingLoop()
                     //Update screen
                     SDL_RenderPresent(gRenderer);
                     //SDL_Delay(33);
-                
+
                 }
             }
         }

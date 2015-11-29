@@ -20,8 +20,9 @@ public:
     //void render();
     void move_player(int time);
     void collide_with_terrain(terrain* terra);
-    void collide_with_enemy(Enemy* enemy);
+  //  void collide_with_enemy(Enemy* enemy);
     void get_coin(Coin* coin);
+    void die();
 
     double real_x,real_y;
     int h_direction;
