@@ -11,5 +11,6 @@ public:
 	Object type;
 
 	void update();
+	virtual void update(Actor*** grid, int time_passed, Key key, Type key_type) {};
 	void render();
 };

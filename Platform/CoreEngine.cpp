@@ -153,7 +153,8 @@ void CoreEngine::runGamingLoop()
     }
     else
     {
-         //TODO maybe wrap into class
+        // TODO maybe wrap into class
+		// NOTE-SAMIR: Create new world for each new level to clear data from previous level.
         if (!m_world.loadWorld("../Maps/testmap.tmx"))
         {
             std::cout << "Error loading map !!" << std::endl;
@@ -213,11 +214,17 @@ void CoreEngine::runGamingLoop()
                                 virtual void m_world.worldGrid[i][y]->update();
                                 virtual void m_world.worldGrid[i][y]->render();
                                 */
+								/*
                                 tile.y = i * m_world.loadedObjects[0].height;
                                 tile.x = y * m_world.loadedObjects[0].width;
-                                int index = m_world.worldGrid[i][y]->loadedNumber;
+								*/
+								m_world.worldGrid[i][y]->update(m_world.worldGrid, time_passed, ce.k, ce.tp);
 
-                                SDL_RenderCopy(gRenderer, gTilesTexture[index], NULL, &tile);
+                                int index = m_world.worldGrid[i][y]->loadedNumber;
+								
+								tile = m_world.worldGrid[i][y]->pos_rect;
+
+								SDL_RenderCopy(gRenderer, gTilesTexture[index], NULL, &tile);
 
                             }
                         }

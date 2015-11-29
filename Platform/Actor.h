@@ -4,6 +4,8 @@
 #else
 #include <SDL.h>
 #endif
+
+#include "Input_Handler.h"
 enum Object
 {
 	GROUND, GROUND_DIRT, PLAYER, SLIME
@@ -16,11 +18,12 @@ class Actor
 {
 
 public:
-    virtual ~Actor();
+	virtual ~Actor();
 	virtual void update();
+	virtual void update(Actor*** grid, int time_passed, Key key, Type key_type) = 0;
 	virtual void render();
 	std::pair< std::pair<int,int>, std::pair<int,int> > getGridCoords();
-    bool overlap(Actor* actor);
+	bool overlap(Actor* actor);
 
 	SDL_Rect pos_rect;
 	SDL_Rect img_rect;

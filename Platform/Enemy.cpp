@@ -14,12 +14,17 @@
 	
 	pos_rect = rect;
 	type = obj;
-	max_x = min_x = rect.x;
+	//max_x = min_x = rect.x;
+	max_x = rect.x + 200;
+	min_x = rect.x - 200;
+	speed = 100;
 	direction = 1;
+	real_x = rect.x+rect.w/2;
 	 
  }
 
-
+#include <iostream>
+ using namespace std;
 void Enemy::update(Actor*** grid, int time_passed)
 {
     real_x += (direction)*(speed * time_passed)/ 1000;
@@ -34,4 +39,9 @@ void Enemy::update(Actor*** grid, int time_passed)
         pos_rect.x = min_x;
         direction = 1;
     }
+	else
+	{
+		cout << pos_rect.x << endl;
+
+	}
 }
