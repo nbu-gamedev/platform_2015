@@ -19,7 +19,7 @@
 	min_x = rect.x - 100;
 	speed = 100;
 	direction = 1;
-	real_x = rect.x+rect.w/2;
+	real_x = rect.x;
 	 
  }
 
