@@ -70,43 +70,95 @@ bool CoreEngine::loadMedia()
 	//Loading success flag
 	bool success = true;
 
-	//Load PNG texture
-	gTexture = loadTexture("Art/platformerArt/png/character/walk/walk0001.png");
-	if (gTexture == NULL)
+	// load player files
+	std::string path = "Art/platformerArt/png/character/walk/walk0001.png";
+	int index = path.size() - 5;
+	char counter = '1';
+	for (int i = 0; i < 11; ++i)
 	{
-		printf("Failed to load texture image!\n");
-		success = false;
-	}
-	// TODO must take variable
-	//Loading tiles
-	std::string path;
-	for (int i = 0; i < 4; ++i)
-	{
-		path = m_world.loadedObjects[i].filePath;
-		gTilesTexture[i] = loadTexture(path);
-		if (gTilesTexture[i] == NULL)
+		path[index] = counter;
+		player_textures.push_back(loadTexture(path));
+		if (player_textures[i] == NULL)
 		{
-			printf("Failed to load tile image!\n");
+			printf("Failed to load texture image!\n");
 			success = false;
 		}
+		counter++;
+		if (counter > '9')
+		{
+			counter = '0';
+			path[index - 1]++;
+		}
 	}
+	
+	//Loading tiles
+	path = "Art/platformerArt/png/ground.png";
+	tiles_textures.push_back(loadTexture(path));
+	if ( tiles_textures.back() == NULL)
+	{
+		printf("Failed to load tile image!\n");
+		success = false;
+	}
+
+	path = "Art/platformerArt/png/ground_dirt.png";
+	tiles_textures.push_back(loadTexture(path));
+	if (tiles_textures.back() == NULL)
+	{
+		printf("Failed to load tile image!\n");
+		success = false;
+	}
+
+	//load enemy files
+
+	path = "Art/platformerArt/png/enemies/slime_normal.png";
+
+	enemy_textures.push_back(loadTexture(path));
+	if (tiles_textures.back() == NULL)
+	{
+		printf("Failed to load tile image!\n");
+		success = false;
+	}
+	path = "Art/platformerArt/png/enemies/slime_walk.png";
+
+	enemy_textures.push_back(loadTexture(path));
+	if (tiles_textures.back() == NULL)
+	{
+		printf("Failed to load tile image!\n");
+		success = false;
+	}
+	path = "Art/platformerArt/png/enemies/slime_dead.png";
+
+	enemy_textures.push_back(loadTexture(path));
+	if (tiles_textures.back() == NULL)
+	{
+		printf("Failed to load tile image!\n");
+		success = false;
+	}
+
 	return success;
 }
 
 void CoreEngine::close()
 {
-	//Free loaded image
-	SDL_DestroyTexture(gTexture);
-	gTexture = NULL;
-
-	//free tiles;
-	//TODO yavor loop shoud take variale
-	for (int i = 0; i < 4; ++i)
+	//Free loaded image player
+	for (int i = 0; i < player_textures.size(); ++i)
 	{
-		SDL_DestroyTexture(gTilesTexture[i]);
-		gTilesTexture[i] = NULL;
+		SDL_DestroyTexture(player_textures[i]);
+		player_textures[i] = NULL;
 	}
 
+	//free tiles;
+	for (int i = 0; i < tiles_textures.size() ; ++i)
+	{
+		SDL_DestroyTexture(tiles_textures[i]);
+		tiles_textures[i] = NULL;
+	}
+	//free enemies
+	for (int i = 0; i < enemy_textures.size(); ++i)
+	{
+		SDL_DestroyTexture(enemy_textures[i]);
+		enemy_textures[i] = NULL;
+	}
 	//Destroy window
 	SDL_DestroyRenderer(gRenderer);
 	SDL_DestroyWindow(gWindow);
@@ -218,11 +270,12 @@ void CoreEngine::runGamingLoop()
 								tile.x = y * m_world.loadedObjects[0].width;
 								*/
 								m_world.worldGrid[i][y]->update(m_world.worldGrid, time_passed, ce.k, ce.tp);
-
-								int index = m_world.worldGrid[i][y]->loadedNumber;
-								tile = m_world.worldGrid[i][y]->pos_rect;
+								m_world.worldGrid[i][y]->render(gRenderer, time_passed, *this);
+								//m_world.worldGrid[i][y]->render(gRenderer, time_passed);
+								//int index = m_world.worldGrid[i][y]->loadedNumber;
+								//tile = m_world.worldGrid[i][y]->pos_rect;
 								
-								SDL_RenderCopy(gRenderer, gTilesTexture[index], NULL, &tile);
+								//SDL_RenderCopy(gRenderer, gTilesTexture[index], NULL, &tile);
 
 							}
 						}

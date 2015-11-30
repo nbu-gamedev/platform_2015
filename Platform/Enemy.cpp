@@ -1,5 +1,5 @@
 #include "Enemy.h"
-
+#include "CoreEngine.h"
  Enemy::Enemy (SDL_Rect pos, int maxx, int minx, int spd, int direction = 1)
  {
 	pos_rect = pos;
@@ -40,4 +40,9 @@ void Enemy::update(Actor*** grid, int time_passed)
 		direction = 1;
 	}
 
+}
+
+void Enemy::render(SDL_Renderer * renderer, int time_passed, CoreEngine & core)
+{
+	SDL_RenderCopy(renderer, core.enemy_textures[0], NULL, &pos_rect);
 }

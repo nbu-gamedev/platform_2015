@@ -18,30 +18,25 @@
 
 class CoreEngine
 {
-private:
+public:
 
     
     const char* M_WINDOW_NAME = "Platform";
 
-
-
-
 	//The window we'll be rendering to
 	SDL_Window* gWindow;
-
-	//The surface contained by the window
-//	SDL_Surface* gScreenSurface;
-
-	//Current displayed PNG image
-//	SDL_Surface* gPNGSurface;
 
 	//The window renderer
 	SDL_Renderer* gRenderer = NULL;
 
-	//Current displayed texture
-	SDL_Texture* gTexture = NULL;
-	//Tiles textures
-	SDL_Texture* gTilesTexture[4];  // TODO yavor   must take the number of tiles from the loaded map
+	//Player textures
+	vector<SDL_Texture*> player_textures;
+
+	//Terrain textures
+	vector<SDL_Texture*> tiles_textures;
+
+	//Enemy textures
+	 vector<SDL_Texture*> enemy_textures;
 
 	//world
 	World m_world;

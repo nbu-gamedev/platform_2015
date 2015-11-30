@@ -12,6 +12,7 @@ void Coin::update()
 {
 }
 
-void Coin::render()
+void Coin::render(SDL_Renderer * renderer, int time_passed, CoreEngine & core)
 {
+	//SDL_RenderCopy(renderer, core., NULL, &pos_rect);
 }

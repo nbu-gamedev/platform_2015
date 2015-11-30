@@ -16,6 +16,7 @@ class Player:public Actor
 public:
     Player(SDL_Rect pos);//, SDL_Rect& img);
     void update(Actor*** grid, int time_passed, Key key, Type key_type);
+	void render(SDL_Renderer* renderer, int time_passed, CoreEngine &core);
     void check_collisions(Actor*** grid);
     //void render();
     void move_player(int time);

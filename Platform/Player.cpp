@@ -1,4 +1,5 @@
 #include <algorithm>
+#include "CoreEngine.h"
 #include "Player.h"
 #include <iostream>
 using namespace std;
@@ -154,6 +155,49 @@ void Player::update(Actor*** grid, int time_passed, Key key, Type key_type)
     check_collisions(grid);
 
 }
+
+void Player::render(SDL_Renderer * renderer, int time_passed, CoreEngine & core)
+{
+	static SDL_RendererFlip flip = SDL_FLIP_VERTICAL;
+	static int lastUpdated = 0;
+	static int frame = 0;
+	lastUpdated += time_passed;
+	if (lastUpdated > 100)
+	{
+		frame++;
+		frame %= core.player_textures.size();
+		lastUpdated -= 100;
+		//lastUpdated = 0;
+	}
+	//TODO yavor / samir  make it start from first frame every time the player stops 
+	if (moving)
+	{
+		if (h_direction < 0)
+		{
+			// core.player_textures.size()-frame-1   //TODO test if frames are correct order
+			SDL_RenderCopyEx( renderer, core.player_textures[frame], NULL, &pos_rect, 180.0f, NULL,flip);
+		
+		}
+		else
+		{
+			SDL_RenderCopy(renderer, core.player_textures[frame], NULL, &pos_rect);
+		}
+	}
+	else
+	{
+		frame = 0;
+		if (h_direction < 0)
+		{
+			SDL_RenderCopyEx(renderer, core.player_textures[frame], NULL, &pos_rect, 180.0f, NULL, flip);
+		}
+		else
+		{
+			SDL_RenderCopy(renderer, core.player_textures[frame], NULL, &pos_rect);
+		}
+	}
+}
+
+
 
 void Player:: collide_with_terrain(terrain* terra)
 {

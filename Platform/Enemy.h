@@ -20,7 +20,7 @@ public:
 	{
 		update(grid, time_passed);
 	}
-	//void render();
+	void render(SDL_Renderer* renderer, int time_passed, CoreEngine &core);
 private:
 	int direction;
 	int min_x, max_x; // range for movement, when reached max or min, change direction

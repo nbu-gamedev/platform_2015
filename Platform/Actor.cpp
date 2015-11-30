@@ -1,5 +1,4 @@
 #include "Actor.h"
-
 Actor::~Actor()
 {
 }
@@ -9,9 +8,6 @@ void Actor::update()
 {
 }
 
-void Actor::render()
-{
-}
 
 
 // check if two actors' rectangles overlap

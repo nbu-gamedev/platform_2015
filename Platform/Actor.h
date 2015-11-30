@@ -5,6 +5,7 @@
 #include <SDL.h>
 #endif
 
+#include <vector>
 #include "Input_Handler.h"
 enum Object
 {
@@ -14,6 +15,7 @@ enum Object
 #include <utility>
 #include "Globals.h"
 
+class CoreEngine;
 class Actor
 {
 
@@ -21,7 +23,7 @@ public:
 	virtual ~Actor();
 	virtual void update();
 	virtual void update(Actor*** grid, int time_passed, Key key, Type key_type) = 0;
-	virtual void render();
+	virtual void render(SDL_Renderer* renderer , int time_passed, CoreEngine &core) = 0;
 	std::pair< std::pair<int,int>, std::pair<int,int> > getGridCoords();
 	bool overlap(Actor* actor);
 
