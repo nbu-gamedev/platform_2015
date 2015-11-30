@@ -76,31 +76,6 @@ bool CoreEngine::loadMedia()
         printf("Failed to load texture image!\n");
         success = false;
     }
-
-	// load player files
-	std::string fileName = "Art/platformerArt/png/character/walk/walk0001.png";
-	int index = fileName.size()-5;
-	char counter = '1';
-	for (int i = 0; i < 11; ++i)
-	{
-		fileName[index] = counter;
-		player_textures.push_back(loadTexture(fileName));
-		if (player_textures[i] == NULL)
-		{
-			printf("Failed to load texture image!\n");
-			success = false;
-		}
-		counter++;
-		if (counter > '9')
-		{
-			counter = '0';
-			fileName[index - 1]++;
-		}
-	}
-	
-	// load tiles files
-
-
     // TODO must take variable
     //Loading tiles
     std::string path;

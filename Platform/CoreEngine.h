@@ -9,7 +9,6 @@
 #include <SDL_image.h>
 #endif
 
-#include <vector>
 #include "Coin.h"
 #include "World.h"
 #include "Actor.h"
@@ -43,15 +42,7 @@ private:
 	SDL_Texture* gTexture = NULL;
 	//Tiles textures
 	SDL_Texture* gTilesTexture[4];  // TODO yavor   must take the number of tiles from the loaded map
-	
-	//Player textures
-	vector<SDL_Texture*> player_textures;
 
-	//Terrain textures
-	vector<SDL_Texture*> tiles_textures;
-
-	//Enemy textures
-	vector< vector<SDL_Texture*> > enemy_textures;
 	//world
 	World m_world;
 
