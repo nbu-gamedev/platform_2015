@@ -134,6 +134,31 @@ bool CoreEngine::loadMedia()
 		printf("Failed to load tile image!\n");
 		success = false;
 	}
+	// load coins
+	path = "Art/platformerArt/png/coin_bronze.png";
+
+	coin_textures.push_back(loadTexture(path));
+	if (coin_textures.back() == NULL)
+	{
+		printf("Failed to load tile image!\n");
+		success = false;
+	}
+	path = "Art/platformerArt/png/coin_silver.png";
+
+	coin_textures.push_back(loadTexture(path));
+	if (coin_textures.back() == NULL)
+	{
+		printf("Failed to load tile image!\n");
+		success = false;
+	}
+	path = "Art/platformerArt/png/coin_gold.png";
+
+	coin_textures.push_back(loadTexture(path));
+	if (coin_textures.back() == NULL)
+	{
+		printf("Failed to load tile image!\n");
+		success = false;
+	}
 
 	return success;
 }
@@ -159,11 +184,18 @@ void CoreEngine::close()
 		SDL_DestroyTexture(enemy_textures[i]);
 		enemy_textures[i] = NULL;
 	}
+	//free coins
+	for (int i = 0; i < coin_textures.size(); ++i)
+	{
+		SDL_DestroyTexture(coin_textures[i]);
+		coin_textures[i] = NULL;
+	}
 	//Destroy window
 	SDL_DestroyRenderer(gRenderer);
 	SDL_DestroyWindow(gWindow);
 	gWindow = NULL;
 	gRenderer = NULL;
+
 
 	//Quit SDL subsystems
 	IMG_Quit();
