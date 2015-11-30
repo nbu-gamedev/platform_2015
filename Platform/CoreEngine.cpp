@@ -171,8 +171,7 @@ void CoreEngine::runGamingLoop()
 			else
 			{
 
-				SDL_Rect pos{ 0,M_WINDOW_HEIGHT - 240,70,100 };
-				Player* player = new Player(pos);
+				
 				bool game_running = true;
 				//TODO yavor  move this
 				SDL_Rect tile;
@@ -189,7 +188,7 @@ void CoreEngine::runGamingLoop()
 				{
 					curr_time = SDL_GetTicks();
 					time_passed = curr_time - prev_time;
-					if (time_passed < 500)
+					if (time_passed < 15)
 					{
 						continue;
 					}
@@ -199,8 +198,7 @@ void CoreEngine::runGamingLoop()
 
 					if (ce.src == QUIT) game_running = false;
 					//update();
-					player->update(m_world.worldGrid, time_passed, ce.k, ce.tp);
-
+					
 					//Clear screen
 					SDL_RenderClear(gRenderer);
 
@@ -223,18 +221,15 @@ void CoreEngine::runGamingLoop()
 
 								int index = m_world.worldGrid[i][y]->loadedNumber;
 								tile = m_world.worldGrid[i][y]->pos_rect;
-								tile.h *= SCALE_FACTOR;
-								tile.w *= SCALE_FACTOR;
-								tile.x *= SCALE_FACTOR;
-								tile.y *= SCALE_FACTOR;
+								
 								SDL_RenderCopy(gRenderer, gTilesTexture[index], NULL, &tile);
 
 							}
 						}
 					}
 
-					//Render texture to screen
-					SDL_RenderCopy(gRenderer, gTexture, NULL, &player->pos_rect);
+					
+					
 
 					//Update screen
 					SDL_RenderPresent(gRenderer);
