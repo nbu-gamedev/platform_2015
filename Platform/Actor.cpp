@@ -23,7 +23,7 @@ bool Actor::overlap(Actor* actor)
     return true;
 }
 
-std::pair< std::pair<int,int>, std::pair<int,int> > Actor::getGridCoords()
+/*std::pair< std::pair<int,int>, std::pair<int,int> > Actor::getGridCoords()
 {
     int i_beg_grid = pos_rect.y / TILE_SIZE; // pixel per tile
     int j_beg_grid = pos_rect.x / TILE_SIZE;
@@ -31,4 +31,12 @@ std::pair< std::pair<int,int>, std::pair<int,int> > Actor::getGridCoords()
     int j_end_grid = ( pos_rect.x + pos_rect.w ) / TILE_SIZE;
 
     return std::make_pair(std::make_pair(i_beg_grid,j_beg_grid),std::make_pair(i_end_grid,j_end_grid));
+}*/
+
+std::pair<int,int> Actor::getGridCoords()
+{
+    int i = ( pos_rect.y + pos_rect.h / 2) / TILE_SIZE;
+    int j = ( pos_rect.x + pos_rect.w / 2) / TILE_SIZE;
+
+    return std::make_pair(i,j);
 }

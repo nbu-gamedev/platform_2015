@@ -31,17 +31,17 @@ void Player::move_player(int time)
         speed_y += (-v_direction)*gravity_acceleration*time/1000;
         real_y += (-v_direction)*moved;
         pos_rect.y = real_y;
-       /* if ( pos_rect.y > M_WINDOW_HEIGHT - pos_rect.h)
+        if ( pos_rect.y > M_WINDOW_HEIGHT - pos_rect.h)
         {
             pos_rect.y = real_y = M_WINDOW_HEIGHT - pos_rect.h;
             jumping = false;
             speed_y = 0;
             // if (out of screen) die;
         }
-        else*/
+        else
         if( real_y < 0)
         {
-            pos_rect.y = 0;
+            pos_rect.y = real_y = 0;
             speed_y = 0;
         }
 
@@ -74,15 +74,12 @@ void Player::check_collisions(Actor*** grid)//(grid*)
 
     if(!alive) return;
 
-    int i_beg_grid = getGridCoords().first.first;
-    int j_beg_grid = getGridCoords().first.second;
-    int i_end_grid = getGridCoords().second.first;
-    int j_end_grid = getGridCoords().second.second;
-
+    int i_pos= getGridCoords().first;
+    int j_pos = getGridCoords().second;
     // check if collide with close objects
-    for (int i = i_beg_grid; i<= i_end_grid; i++)
+    for (int i = i_pos - 1; i <= i_pos + 1; i++)
     {
-        for(int j = j_beg_grid; j <= j_end_grid; j++)
+        for(int j = j_pos - 1; j <= j_pos + 1; j++)
         {
             if (i < 0 || i >= GRID_HEIGHT || j < 0 || j >= GRID_WIDTH) break; // world ' out of bounds ' ?
             if (grid[i][j] && overlap(grid[i][j]))
@@ -90,7 +87,7 @@ void Player::check_collisions(Actor*** grid)//(grid*)
                 Actor* actor = grid[i][j];
                 if (dynamic_cast<terrain*>(actor))
                 {
-                    collide_with_terrain(dynamic_cast<terrain*>(actor));
+                  //  collide_with_terrain(dynamic_cast<terrain*>(actor));
                 }
                 if (dynamic_cast<Coin*>(actor) && !dynamic_cast<Coin*>(actor)->taken)
                 {
@@ -106,14 +103,18 @@ void Player::check_collisions(Actor*** grid)//(grid*)
     //check for any floor (not necessarily stable)
     //
 
-    if(!alive || i_end_grid >= GRID_HEIGHT - 1 || v_direction > 0) return;
+    if(!alive || i_pos >= GRID_HEIGHT - 1 || v_direction > 0) return;
+
     terrain* floor = NULL;
-    for(int j = j_beg_grid; j <= j_end_grid; j++)
+    if (grid[i_pos][j_pos] && dynamic_cast<terrain*>(grid[i_pos][j_pos]) && overlap(dynamic_cast<terrain*>(grid[i_pos][j_pos])))
+
     {
-        if (j < GRID_WIDTH && grid[i_end_grid + 1][j] && dynamic_cast<terrain*>(grid[i_end_grid + 1][j]))
-        {
-            floor = dynamic_cast<terrain*>(grid[i_end_grid + 1][j]);
-        }
+        floor = dynamic_cast<terrain*>(grid[i_pos][j_pos]);
+    }
+    else if(i_pos + 1 < GRID_HEIGHT && grid[i_pos + 1][j_pos] && dynamic_cast<terrain*>(grid[i_pos + 1][j_pos])
+            && dynamic_cast<terrain*>(grid[i_pos + 1][j_pos]) -> pos_rect.y <= pos_rect.y + pos_rect.h + 1)
+    {
+        floor = dynamic_cast<terrain*>(grid[i_pos + 1][j_pos]);
     }
 
     if(!floor && !(jumping || falling))
@@ -169,14 +170,14 @@ void Player::render(SDL_Renderer * renderer, int time_passed, CoreEngine & core)
 		lastUpdated -= 100;
 		//lastUpdated = 0;
 	}
-	//TODO yavor / samir  make it start from first frame every time the player stops 
+	//TODO yavor / samir  make it start from first frame every time the player stops
 	if (moving)
 	{
 		if (h_direction < 0)
 		{
 			// core.player_textures.size()-frame-1   //TODO test if frames are correct order
 			SDL_RenderCopyEx( renderer, core.player_textures[frame], NULL, &pos_rect, 180.0f, NULL,flip);
-		
+
 		}
 		else
 		{

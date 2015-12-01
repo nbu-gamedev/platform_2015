@@ -24,7 +24,8 @@ public:
 	virtual void update();
 	virtual void update(Actor*** grid, int time_passed, Key key, Type key_type) = 0;
 	virtual void render(SDL_Renderer* renderer , int time_passed, CoreEngine &core) = 0;
-	std::pair< std::pair<int,int>, std::pair<int,int> > getGridCoords();
+	//std::pair< std::pair<int,int>, std::pair<int,int> > getGridCoords();
+	std::pair<int,int> getGridCoords();
 	bool overlap(Actor* actor);
 
 	SDL_Rect pos_rect;
