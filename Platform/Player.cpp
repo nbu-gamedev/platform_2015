@@ -54,9 +54,9 @@ void Player::move_player(int time)
         real_x += (h_direction)*moved;
         pos_rect.x = real_x;
         if ( pos_rect.x > M_WINDOW_WIDTH - pos_rect.w)
-            pos_rect.x = M_WINDOW_WIDTH - pos_rect.w;
+            pos_rect.x = real_x = M_WINDOW_WIDTH - pos_rect.w;
         else if( pos_rect.x < 0)
-            pos_rect.x = 0;
+            pos_rect.x = real_x = 0;
         speed = std::min(speed + acceleration*time / 1000, max_speed_player);
 
        // acceleration = std::max((int)0.95*time/1000*acceleration, max_acceleration/2);
@@ -163,11 +163,11 @@ void Player::render(SDL_Renderer * renderer, int time_passed, CoreEngine & core)
 	static int lastUpdated = 0;
 	static int frame = 0;
 	lastUpdated += time_passed;
-	if (lastUpdated > 100)
+	if (lastUpdated > 50)
 	{
 		frame++;
 		frame %= core.player_textures.size();
-		lastUpdated -= 100;
+		lastUpdated %= 50;
 		//lastUpdated = 0;
 	}
 	//TODO yavor / samir  make it start from first frame every time the player stops
