@@ -167,7 +167,7 @@ void Player::render(SDL_Renderer * renderer, int time_passed, CoreEngine & core)
 	{
 		frame++;
 		frame %= core.player_textures.size();
-		lastUpdated %= 50;
+		lastUpdated -= 50;
 		//lastUpdated = 0;
 	}
 	//TODO yavor / samir  make it start from first frame every time the player stops
