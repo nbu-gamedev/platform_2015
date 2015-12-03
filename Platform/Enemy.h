@@ -16,7 +16,7 @@ public:
 
 	Object type;
 	void update(Actor*** grid, int time_passed);
-	virtual void update(Actor*** grid, int time_passed, Key key, Type key_type)
+	virtual void update(Actor*** grid, int time_passed, Key_event* ke)
 	{
 		update(grid, time_passed);
 	}

@@ -7,7 +7,7 @@
 
 const int max_speed_player = 300 * SCALE_FACTOR;
 const int jump_start_speed = 500 * SCALE_FACTOR;
-const int max_acceleration = 400 * SCALE_FACTOR;
+const int acceleration = 1000 * SCALE_FACTOR;
 const int gravity_acceleration = 550 * SCALE_FACTOR; // reach max height in about a second
 
 
@@ -15,7 +15,7 @@ class Player:public Actor
 {
 public:
     Player(SDL_Rect pos);//, SDL_Rect& img);
-    void update(Actor*** grid, int time_passed, Key key, Type key_type);
+    void update(Actor*** grid, int time_passed, Key_event* ke);
 	void render(SDL_Renderer* renderer, int time_passed, CoreEngine &core);
     void check_collisions(Actor*** grid);
     //void render();
@@ -32,6 +32,5 @@ public:
     bool moving;
     bool jumping;
     bool falling;
-    int acceleration;
     bool alive;
 };

@@ -16,7 +16,6 @@ Player::Player(SDL_Rect pos/*, SDL_Rect img*/)
     falling = false;
     h_direction = 1;
     v_direction = 1;
-    acceleration = max_acceleration;
     alive = true;
 }
 void Player::move_player(int time)
@@ -48,9 +47,10 @@ void Player::move_player(int time)
         if (speed_y <= 0) v_direction = -1;
     }
 
-    if (moving && !falling)
+    if (moving && alive)
     {
         moved = std::min(time*(speed + acceleration*time/2000.)/1000., max_speed_player*time/1000.);
+        if(moved < 0) moved *= -1;
         real_x += (h_direction)*moved;
         pos_rect.x = real_x;
         if ( pos_rect.x > M_WINDOW_WIDTH - pos_rect.w)
@@ -58,9 +58,6 @@ void Player::move_player(int time)
         else if( pos_rect.x < 0)
             pos_rect.x = real_x = 0;
         speed = std::min(speed + acceleration*time / 1000, max_speed_player);
-
-       // acceleration = std::max((int)0.95*time/1000*acceleration, max_acceleration/2);
-       // std::cout << speed <<std::endl;
     }
 
     if (!(jumping || falling || moving))
@@ -132,29 +129,29 @@ void Player::check_collisions(Actor*** grid)//(grid*)
     }
 }
 
-void Player::update(Actor*** grid, int time_passed, Key key, Type key_type)
+void Player::update(Actor*** grid, int time_passed, Key_event* ke) // (int time_passed)
 {
-    if (alive && (key == LEFT || key == RIGHT))
+    if (ke && alive)
     {
-        if(key_type == PRESSED && !falling)
+        if (ke->left_pressed || ke->right_pressed)
         {
             moving = true;
-            h_direction = key == LEFT ? -1 : 1;
-            acceleration = max_acceleration;
+            h_direction = ke->left_pressed ? -1 : 1;
         }
         else
+        {
             moving  = false;
         }
-     if (alive && (key == JUMP && !jumping) && key_type == PRESSED)
-     {
-        jumping = true;
-        v_direction = 1;
-        speed_y = jump_start_speed;
-     }
+         if (ke->jump_pressed && !jumping)
+        {
+            jumping = true;
+            v_direction = 1;
+            speed_y = jump_start_speed;
+        }
+    }
 
     move_player(time_passed);
     check_collisions(grid);
-
 }
 
 void Player::render(SDL_Renderer * renderer, int time_passed, CoreEngine & core)

@@ -1,33 +1,40 @@
 #pragma once
 #ifdef __linux__
-#include <SDL2/SDL_keyboard.h>
-#include <SDL2/SDL_events.h>
+#include <SDL2/SDL.h>
+#include <SDL2/SDL.h>
 #else
 #include <SDL_keyboard.h>
 #include <SDL_events.h>
 #endif
 
-#include <map>
-
-enum Key {NO_KEY, JUMP, RIGHT, LEFT};
-enum Source_Type {NO_SOURCE_TYPE, MOUSE, KEY, QUIT};
-enum Type {NO_TYPE,PRESSED, RELEASED};
-
-struct Custom_Event
+struct Key_event
 {
-    Source_Type src;
-    Key k;
-    Type tp;
+    bool jump_pressed;
+    bool left_pressed;
+    bool right_pressed;
+};
+
+struct Mouse_event
+{
+   //
+};
+
+struct Custom_event
+{
+    bool quit;
+    Mouse_event* me;
+    Key_event* ke;
 };
 
 class InputHandler
 {
-    std::map<SDL_Keycode,Key> keys;
     SDL_Event event;
+
 public:
 
-    InputHandler();
+    Mouse_event me;
+    Key_event ke;
 
-    Custom_Event handle();
+    Custom_event handle();
 
 };

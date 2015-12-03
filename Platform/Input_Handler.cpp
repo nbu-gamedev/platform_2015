@@ -1,33 +1,40 @@
 #include "Input_Handler.h"
 
-
-InputHandler::InputHandler()
+Custom_event
+InputHandler::handle()
 {
-    // map all player' keys
-    keys[SDLK_UP] = keys[SDLK_SPACE] = keys[SDLK_w] = JUMP;
-    keys[SDLK_LEFT] = keys[SDLK_a] = LEFT;
-    keys[SDLK_RIGHT] = keys[SDLK_d] = RIGHT;
-}
+    Custom_event result;
 
-Custom_Event InputHandler::handle()
-{
-    Custom_Event result{(Source_Type)0,(Key)0,(Type)0};
+    result.quit = false; // QUIT
+    result.me = NULL;
+    result.ke = NULL;
+
     while(SDL_PollEvent(&event))
     {
         if (event.type == SDL_QUIT)
         {
-            result.src = QUIT;
+            result.quit = true;
         }
         else if(event.type == SDL_MOUSEBUTTONDOWN || event.type == SDL_MOUSEBUTTONUP)
         {
-            result.src = MOUSE;
+            //
         }
          else if(event.type == SDL_KEYDOWN || event.type == SDL_KEYUP)
         {
-            result.src = KEY;
-            result.tp = event.type == SDL_KEYDOWN ? PRESSED : RELEASED;
-            auto k = keys.find(event.key.keysym.sym);
-            result.k = k != keys.end() ? k->second : NO_KEY;
+            const Uint8* key_state = SDL_GetKeyboardState(NULL);
+            ke.jump_pressed = key_state[SDL_SCANCODE_UP] || key_state[SDL_SCANCODE_SPACE] || key_state[SDL_SCANCODE_W];
+            ke.left_pressed = key_state[SDL_SCANCODE_LEFT] || key_state[SDL_SCANCODE_A];
+            ke.right_pressed = key_state[SDL_SCANCODE_RIGHT] || key_state[SDL_SCANCODE_D];
+            if (event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_LEFT || event.key.keysym.sym == SDLK_a))
+            {
+                ke.right_pressed = false;
+            }
+            else if (event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_RIGHT || event.key.keysym.sym == SDLK_d))
+            {
+                ke.left_pressed = false;
+            }
+
+            result.ke = &ke;
         }
 
     }

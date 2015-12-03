@@ -8,7 +8,7 @@ public:
 
     Coin(SDL_Rect pos);
     void update();
-    virtual void update(Actor*** grid, int time_passed, Key key, Type key_type) {};
+    virtual void update(Actor*** grid, int time_passed, Key_event* ke) {};
 	void render(SDL_Renderer * renderer, int time_passed, CoreEngine & core);
 
     static int taken_coins;

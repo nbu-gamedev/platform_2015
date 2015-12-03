@@ -90,7 +90,7 @@ bool CoreEngine::loadMedia()
 			path[index - 1]++;
 		}
 	}
-	
+
 	//Loading tiles
 	path = "Art/platformerArt/png/ground.png";
 	tiles_textures.push_back(loadTexture(path));
@@ -255,7 +255,7 @@ void CoreEngine::runGamingLoop()
 			else
 			{
 
-				
+
 				bool game_running = true;
 				//TODO yavor  move this
 				SDL_Rect tile;
@@ -266,7 +266,7 @@ void CoreEngine::runGamingLoop()
 				prev_time = SDL_GetTicks();
 
 				InputHandler handler;
-				Custom_Event ce;
+				Custom_event ce;
 				// The Game loop
 				while (game_running)
 				{
@@ -280,9 +280,9 @@ void CoreEngine::runGamingLoop()
 					prev_time = curr_time;
 					ce = handler.handle();
 
-					if (ce.src == QUIT) game_running = false;
+					if (ce.quit) game_running = false;
 					//update();
-					
+
 					//Clear screen
 					SDL_RenderClear(gRenderer);
 
@@ -293,28 +293,15 @@ void CoreEngine::runGamingLoop()
 						{
 							if (m_world.worldGrid[i][y] != NULL)
 							{
-								/*
-								virtual void m_world.worldGrid[i][y]->update();
-								virtual void m_world.worldGrid[i][y]->render();
-								*/
-								/*
-								tile.y = i * m_world.loadedObjects[0].height;
-								tile.x = y * m_world.loadedObjects[0].width;
-								*/
-								m_world.worldGrid[i][y]->update(m_world.worldGrid, time_passed, ce.k, ce.tp);
+								m_world.worldGrid[i][y]->update(m_world.worldGrid, time_passed, ce.ke);
 								m_world.worldGrid[i][y]->render(gRenderer, time_passed, *this);
-								//m_world.worldGrid[i][y]->render(gRenderer, time_passed);
-								//int index = m_world.worldGrid[i][y]->loadedNumber;
-								//tile = m_world.worldGrid[i][y]->pos_rect;
-								
-								//SDL_RenderCopy(gRenderer, gTilesTexture[index], NULL, &tile);
 
 							}
 						}
 					}
 
-					
-					
+
+
 
 					//Update screen
 					SDL_RenderPresent(gRenderer);
