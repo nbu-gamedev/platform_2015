@@ -3,12 +3,13 @@
 #include "Player.h"
 #include <iostream>
 using namespace std;
-Player::Player(SDL_Rect pos/*, SDL_Rect img*/)
+
+Player::Player(SDL_Rect pos, Actor*** world)
 {
     pos_rect = pos;
     real_x = pos.x;
     real_y = pos.y;
-    //img_rect = img;
+	grid = world;
     speed = 0;
     speed_y = 0;
     moving = false;
@@ -66,7 +67,7 @@ void Player::move_player(int time)
     }
 
 }
-void Player::check_collisions(Actor*** grid)//(grid*)
+void Player::check_collisions()//(grid*)
 {
 
     if(!alive) return;
@@ -129,7 +130,7 @@ void Player::check_collisions(Actor*** grid)//(grid*)
     }
 }
 
-void Player::update(Actor*** grid, int time_passed, Key_event* ke) // (int time_passed)
+void Player::update(int time_passed, Key_event* ke) // (int time_passed)
 {
     if (ke && alive)
     {
@@ -151,7 +152,7 @@ void Player::update(Actor*** grid, int time_passed, Key_event* ke) // (int time_
     }
 
     move_player(time_passed);
-    check_collisions(grid);
+    check_collisions();
 }
 
 void Player::render(SDL_Renderer * renderer, int time_passed, CoreEngine & core)

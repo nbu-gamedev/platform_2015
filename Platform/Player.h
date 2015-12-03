@@ -14,10 +14,10 @@ const int gravity_acceleration = 550 * SCALE_FACTOR; // reach max height in abou
 class Player:public Actor
 {
 public:
-    Player(SDL_Rect pos);//, SDL_Rect& img);
-    void update(Actor*** grid, int time_passed, Key_event* ke);
+    Player(SDL_Rect pos, Actor*** world);
+    void update(int time_passed, Key_event* ke);
 	void render(SDL_Renderer* renderer, int time_passed, CoreEngine &core);
-    void check_collisions(Actor*** grid);
+    void check_collisions();
     //void render();
     void move_player(int time);
     void collide_with_terrain(terrain* terra);
@@ -25,6 +25,7 @@ public:
     void get_coin(Coin* coin);
     void die();
 
+    Actor*** grid;
     double real_x,real_y;
     int h_direction;
     int v_direction;

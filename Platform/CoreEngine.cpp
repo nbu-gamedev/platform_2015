@@ -293,7 +293,7 @@ void CoreEngine::runGamingLoop()
 						{
 							if (m_world.worldGrid[i][y] != NULL)
 							{
-								m_world.worldGrid[i][y]->update(m_world.worldGrid, time_passed, ce.ke);
+								m_world.worldGrid[i][y]->update(time_passed, ce.ke);
 								m_world.worldGrid[i][y]->render(gRenderer, time_passed, *this);
 
 							}

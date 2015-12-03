@@ -120,7 +120,7 @@ void World::parseGrid(const string & line, ifstream &file)
 		for (int j = 0; j < grid_width; j++)
 		{
 			rowDataStream >> current >> comma;
-			
+
 			SDL_Rect rect;
 			if (current != 0)
 			{
@@ -134,7 +134,7 @@ void World::parseGrid(const string & line, ifstream &file)
 				rect.y *= SCALE_FACTOR;
 
 			}
-			
+
 			switch (current)
 			{
 			case 0:
@@ -149,11 +149,11 @@ void World::parseGrid(const string & line, ifstream &file)
 				worldGrid[i][j]->loadedNumber = current - 1;
 				break;
 			case 3:
-				worldGrid[i][j] = new Player(rect);
+				worldGrid[i][j] = new Player(rect, worldGrid);
 				worldGrid[i][j]->loadedNumber = current - 1;
 				break;
 			case 4:
-				worldGrid[i][j] = new Enemy(rect, SLIME);
+				worldGrid[i][j] = new Enemy(rect, worldGrid, SLIME);
 				worldGrid[i][j]->loadedNumber = current - 1;
 				break;
 			case 5:
