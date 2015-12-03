@@ -156,6 +156,10 @@ void World::parseGrid(const string & line, ifstream &file)
 				worldGrid[i][j] = new Enemy(rect, SLIME);
 				worldGrid[i][j]->loadedNumber = current - 1;
 				break;
+			case 5:
+				worldGrid[i][j] = new Coin(rect);
+				worldGrid[i][j]->loadedNumber = current - 1;
+				break;
 			default:
 				worldGrid[i][j] = NULL;
 				break;
