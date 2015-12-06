@@ -6,7 +6,7 @@ class terrain :
 {
 public:
 	terrain();
-	terrain(SDL_Rect rect, Object obj);
+	terrain(SDL_Rect rect, int i, int j, Object obj);
 	~terrain();
 	Object type;
 

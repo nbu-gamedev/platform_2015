@@ -10,6 +10,8 @@ Player::Player(SDL_Rect pos, Actor*** world)
     real_x = pos.x;
     real_y = pos.y;
 	grid = world;
+    i_grid = get_grid_coords().first;
+    j_grid = get_grid_coords().second;
     speed = 0;
     speed_y = 0;
     moving = false;
@@ -34,7 +36,7 @@ void Player::move_player(int time)
         if ( pos_rect.y > M_WINDOW_HEIGHT - pos_rect.h)
         {
             pos_rect.y = real_y = M_WINDOW_HEIGHT - pos_rect.h;
-            jumping = false;
+            jumping = falling = false;
             speed_y = 0;
             // if (out of screen) die;
         }
@@ -72,20 +74,26 @@ void Player::check_collisions()//(grid*)
 
     if(!alive) return;
 
-    int i_pos= getGridCoords().first;
-    int j_pos = getGridCoords().second;
+    int i_pos = get_grid_coords().first;
+    int j_pos = get_grid_coords().second;
     // check if collide with close objects
     for (int i = i_pos - 1; i <= i_pos + 1; i++)
     {
         for(int j = j_pos - 1; j <= j_pos + 1; j++)
         {
-            if (i < 0 || i >= GRID_HEIGHT || j < 0 || j >= GRID_WIDTH) break; // world ' out of bounds ' ?
-            if (grid[i][j] && overlap(grid[i][j]))
+            if (i < 0 || i >= GRID_HEIGHT || j < 0 || j >= GRID_WIDTH) continue; // world ' out of bounds ' ?
+            if (grid[i][j] && overlap(grid[i][j]) && !dynamic_cast<Player*>(grid[i][j]))
             {
                 Actor* actor = grid[i][j];
+                /*
+                    cout<<"overlap::"<<endl;
+                    cout<<pos_rect.x << " " << pos_rect.y << " " << pos_rect.x + pos_rect.w << " " << pos_rect.y + pos_rect.h<<endl;
+                    cout<<"\\ "<<actor->pos_rect.x << " " << actor->pos_rect.y << " " << actor->pos_rect.x + actor->pos_rect.w <<
+                        " " << actor->pos_rect.y + actor->pos_rect.h<<endl;
+                */
                 if (dynamic_cast<terrain*>(actor))
                 {
-                  //  collide_with_terrain(dynamic_cast<terrain*>(actor));
+                    collide_with_terrain(dynamic_cast<terrain*>(actor));
                 }
                 if (dynamic_cast<Coin*>(actor) && !dynamic_cast<Coin*>(actor)->taken)
                 {
@@ -104,12 +112,7 @@ void Player::check_collisions()//(grid*)
     if(!alive || i_pos >= GRID_HEIGHT - 1 || v_direction > 0) return;
 
     terrain* floor = NULL;
-    if (grid[i_pos][j_pos] && dynamic_cast<terrain*>(grid[i_pos][j_pos]) && overlap(dynamic_cast<terrain*>(grid[i_pos][j_pos])))
-
-    {
-        floor = dynamic_cast<terrain*>(grid[i_pos][j_pos]);
-    }
-    else if(i_pos + 1 < GRID_HEIGHT && grid[i_pos + 1][j_pos] && dynamic_cast<terrain*>(grid[i_pos + 1][j_pos])
+    if(i_pos + 1 < GRID_HEIGHT && grid[i_pos + 1][j_pos] && dynamic_cast<terrain*>(grid[i_pos + 1][j_pos])
             && dynamic_cast<terrain*>(grid[i_pos + 1][j_pos]) -> pos_rect.y <= pos_rect.y + pos_rect.h + 1)
     {
         floor = dynamic_cast<terrain*>(grid[i_pos + 1][j_pos]);
@@ -143,7 +146,7 @@ void Player::update(int time_passed, Key_event* ke) // (int time_passed)
         {
             moving  = false;
         }
-         if (ke->jump_pressed && !jumping)
+        if (ke->jump_pressed && !(jumping || falling))
         {
             jumping = true;
             v_direction = 1;
@@ -153,6 +156,8 @@ void Player::update(int time_passed, Key_event* ke) // (int time_passed)
 
     move_player(time_passed);
     check_collisions();
+
+    update_grid_pos();
 }
 
 void Player::render(SDL_Renderer * renderer, int time_passed, CoreEngine & core)
@@ -200,7 +205,50 @@ void Player::render(SDL_Renderer * renderer, int time_passed, CoreEngine & core)
 
 void Player:: collide_with_terrain(terrain* terra)
 {
+    i_grid = get_grid_coords().first;
+    j_grid = get_grid_coords().second;
+    static unsigned long long kk = 0;
 
+    if(i_grid < terra -> i_grid)
+    {
+        if(j_grid == terra -> j_grid)
+        {
+            pos_rect.y = real_y = terra -> pos_rect.y - pos_rect.h - 1;
+            speed_y = 0;
+            jumping = falling = false;
+        }
+
+    }
+
+    else if(i_grid == terra -> i_grid)
+    {
+        if (j_grid < terra -> j_grid)
+        {
+            pos_rect.x = real_x = terra -> pos_rect.x - pos_rect.w - 1;
+        }
+        else
+        {
+            pos_rect.x = real_x = terra -> pos_rect.x + terra -> pos_rect.w + 1;
+        }
+
+        moving = false;
+        speed = 0;
+
+        if (jumping)
+        {
+            jumping = false;
+            falling = true;
+            speed_y = 0;
+        }
+    }
+    else
+    {
+        if (v_direction < 0) return;
+        pos_rect.y = real_y = terra -> pos_rect.y + terra -> pos_rect.w + 1;
+        speed_y = 0;
+        jumping = false;
+        falling = true;
+    }
 }
 /*void Player:: collide_with_enemy(Enemy* enemy)
 {
@@ -218,5 +266,11 @@ void Player::die()
     falling = true;
     moving = jumping = false;
     speed_y = 0;
+}
+
+void Player::update_grid_pos()
+{
+    i_grid = get_grid_coords().first;
+    j_grid = get_grid_coords().second;
 }
 

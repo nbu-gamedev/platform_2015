@@ -24,13 +24,14 @@ public:
 	virtual void update();
 	virtual void update(int time_passed, Key_event* ke) = 0;
 	virtual void render(SDL_Renderer* renderer , int time_passed, CoreEngine &core) = 0;
-	//std::pair< std::pair<int,int>, std::pair<int,int> > getGridCoords();
-	std::pair<int,int> getGridCoords();
+	//std::pair< std::pair<int,int>, std::pair<int,int> > get_grid_coords();
+	std::pair<int,int> get_grid_coords();
 	bool overlap(Actor* actor);
 
 	SDL_Rect pos_rect;
 	SDL_Rect img_rect;
 
+    int i_grid, j_grid;
 	int speed; //
 	// The number in the World::loadedObjects
 	int loadedNumber;

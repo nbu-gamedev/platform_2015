@@ -141,11 +141,11 @@ void World::parseGrid(const string & line, ifstream &file)
 				worldGrid[i][j] = NULL;
 				break;
 			case 1:
-				worldGrid[i][j] = new terrain(rect, GROUND);
+				worldGrid[i][j] = new terrain(rect, i, j, GROUND);
 				worldGrid[i][j]->loadedNumber = current - 1;
 				break;
 			case 2:
-				worldGrid[i][j] = new terrain(rect, GROUND_DIRT);
+				worldGrid[i][j] = new terrain(rect, i, j, GROUND_DIRT);
 				worldGrid[i][j]->loadedNumber = current - 1;
 				break;
 			case 3:

@@ -24,6 +24,7 @@ public:
   //  void collide_with_enemy(Enemy* enemy);
     void get_coin(Coin* coin);
     void die();
+	void update_grid_pos();
 
     Actor*** grid;
     double real_x,real_y;
