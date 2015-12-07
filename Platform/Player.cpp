@@ -109,7 +109,7 @@ void Player::check_collisions()//(grid*)
     //check for any floor (not necessarily stable)
     //
 
-    if(!alive || i_pos >= GRID_HEIGHT - 1 || v_direction > 0) return;
+    if(!alive || i_pos >= GRID_HEIGHT - 1 || jumping) return;
 
     terrain* floor = NULL;
     if(i_pos + 1 < GRID_HEIGHT && grid[i_pos + 1][j_pos] && dynamic_cast<terrain*>(grid[i_pos + 1][j_pos])
@@ -117,7 +117,6 @@ void Player::check_collisions()//(grid*)
     {
         floor = dynamic_cast<terrain*>(grid[i_pos + 1][j_pos]);
     }
-
     if(!floor && !(jumping || falling))
     {
         falling = true;
