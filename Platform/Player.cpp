@@ -48,6 +48,7 @@ void Player::move_player(int time)
         }
 
         if (speed_y <= 0) v_direction = -1;
+        if (speed_y >= terminal_velocity) speed_y = terminal_velocity;
     }
 
     if (moving && alive)

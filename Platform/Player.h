@@ -9,6 +9,7 @@ const int max_speed_player = 300 * SCALE_FACTOR;
 const int jump_start_speed = 670 * SCALE_FACTOR;
 const int acceleration = 1000 * SCALE_FACTOR;
 const int gravity_acceleration = 1550 * SCALE_FACTOR; // reach max height in about a second
+const int terminal_velocity = 830;
 
 
 class Player:public Actor
