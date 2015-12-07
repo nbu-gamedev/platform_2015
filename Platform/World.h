@@ -19,8 +19,8 @@ public:
 
 
 	// the grid with all the interactable objects
+	//vector<Actor*> **worldGrid;
 	Actor*** worldGrid;
-
 	// Load the world from tmx file
 	bool loadWorld(string file);
 

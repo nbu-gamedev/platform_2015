@@ -36,8 +36,8 @@
 	//max_x = min_x = rect.x;
     i_grid = get_grid_coords().first;
     j_grid = get_grid_coords().second;
-	max_x = pos.x + 300;
-	min_x = pos.x - 200;
+	max_x = pos.x + 140 * SCALE_FACTOR;
+	min_x = pos.x - 140 * SCALE_FACTOR;
 	speed = 100;
 	speed_y = 0;
 	direction = 1;
