@@ -240,7 +240,7 @@ void CoreEngine::runGamingLoop()
 	{
 		// TODO maybe wrap into class
 		// NOTE-SAMIR: Create new world for each new level to clear data from previous level.
-		if (!m_world.loadWorld("../Maps/testmap - Copy.tmx"))
+		if (!m_world.loadWorld("../Maps/testmap.tmx"))
 		{
 			std::cout << "Error loading map !!" << std::endl;
 		}
@@ -296,10 +296,10 @@ void CoreEngine::runGamingLoop()
 					{
 						for (int y = 0; y < GRID_WIDTH; ++y)
 						{
-							if (m_world.worldGrid[i][y] != NULL)
+							for (Actor* actor : m_world.worldGrid[i][y])
 							{
-								m_world.worldGrid[i][y]->update(time_passed, ce.ke);
-								m_world.worldGrid[i][y]->render(gRenderer, time_passed, *this);
+								actor->update(time_passed, ce.ke);
+								actor->render(gRenderer, time_passed, *this);
 
 							}
 						}

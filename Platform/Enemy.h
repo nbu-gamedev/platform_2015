@@ -11,8 +11,8 @@ class Enemy :public Actor
 {
 public:
 	// if enemy is static (not moving): maxx = minx = pos.x && spd = 0
-	Enemy (SDL_Rect pos, Actor*** world, int maxx, int minx, int spd, Object obj, int direction);
-	Enemy(SDL_Rect pos, Actor*** world, Object obj);
+	Enemy(SDL_Rect pos, std::vector<Actor*>** world, int maxx, int minx, int spd, Object obj, int direction);
+	Enemy(SDL_Rect pos, std::vector<Actor*>** world, Object obj);
 
 	Object type;
 	void update(int time_passed);
@@ -25,7 +25,7 @@ public:
 	void update_grid_pos();
 private:
 
-    Actor*** grid;
+	std::vector<Actor*>** grid;
 	int direction;
 	int min_x, max_x; // range for movement, when reached max or min, change direction
 	float real_x,real_y; //if not float, movement can't be registered because of flooring

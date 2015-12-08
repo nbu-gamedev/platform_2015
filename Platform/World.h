@@ -20,8 +20,8 @@ public:
 
 
 	// the grid with all the interactable objects
-	//vector<Actor*> **worldGrid;
-	Actor*** worldGrid;
+	vector<Actor*> **worldGrid;
+	//Actor*** worldGrid;
 	Player* player;
 	// Load the world from tmx file
 	bool loadWorld(string file);

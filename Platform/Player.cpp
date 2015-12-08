@@ -4,7 +4,7 @@
 #include <iostream>
 using namespace std;
 
-Player::Player(SDL_Rect pos, Actor*** world)
+Player::Player(SDL_Rect pos, std::vector<Actor*>** world)
 {
     pos_rect = pos;
     real_x = pos.x;
@@ -52,11 +52,11 @@ void Player::move_player(int time)
         if (speed_y <= 0) v_direction = -1;
 
         //if (speed_y >= terminal_velocity) speed_y = terminal_velocity;
-		/*
+		
 		cout.setf(ios_base::fixed, ios_base::floatfield);
 		cout.precision(2);
 		cout << speed_y << " " << accelerated << endl;
-		*/
+		
 
     }
 
@@ -92,34 +92,37 @@ void Player::check_collisions()//(grid*)
         for(int j = j_pos - 1; j <= j_pos + 1; j++)
         {
             if (i < 0 || i >= GRID_HEIGHT || j < 0 || j >= GRID_WIDTH) continue; // world ' out of bounds ' ?
-            if (grid[i][j] && overlap(grid[i][j]) && !dynamic_cast<Player*>(grid[i][j]))
-            {
-                Actor* actor = grid[i][j];
-                /*
-                    cout<<"overlap::"<<endl;
-                    cout<<pos_rect.x << " " << pos_rect.y << " " << pos_rect.x + pos_rect.w << " " << pos_rect.y + pos_rect.h<<endl;
-                    cout<<"\\ "<<actor->pos_rect.x << " " << actor->pos_rect.y << " " << actor->pos_rect.x + actor->pos_rect.w <<
-                        " " << actor->pos_rect.y + actor->pos_rect.h<<endl;
-                */
-                if (dynamic_cast<terrain*>(actor))
-                {
-                    collide_with_terrain(dynamic_cast<terrain*>(actor));
-                }
-                if (dynamic_cast<Coin*>(actor) && !dynamic_cast<Coin*>(actor)->taken)
-                {
-                    get_coin(dynamic_cast<Coin*>(actor));
-                }
-                if (dynamic_cast<Enemy*>(actor))
-                {
-                    die();
-                }
-                /*
+			for (Actor* actor : grid[i][j])
+			{
+				
+				if (overlap(actor) && !(dynamic_cast<Player*>(actor)));
+				{
+					/*
+					cout<<"overlap::"<<endl;
+					cout<<pos_rect.x << " " << pos_rect.y << " " << pos_rect.x + pos_rect.w << " " << pos_rect.y + pos_rect.h<<endl;
+					cout<<"\\ "<<actor->pos_rect.x << " " << actor->pos_rect.y << " " << actor->pos_rect.x + actor->pos_rect.w <<
+					" " << actor->pos_rect.y + actor->pos_rect.h<<endl;
+					*/
+					if (dynamic_cast<terrain*>(actor))
+					{
+						collide_with_terrain(dynamic_cast<terrain*>(actor));
+					}
+					if (dynamic_cast<Coin*>(actor) && !(dynamic_cast<Coin*>(actor)->taken))
+					{
+						get_coin(dynamic_cast<Coin*>(actor));
+					}
+					if (dynamic_cast<Enemy*>(actor))
+					{
+						die();
+					}
+					/*
 
-                if (dynamic_cast<Exit*>(actor) && !Coin::coins_to_collect)
-                {
-                   end_level = true;
-                */
-            }
+					if (dynamic_cast<Exit*>(actor) && !Coin::coins_to_collect)
+					{
+					end_level = true;
+					*/
+				}
+			}
         }
     }
     //check for any floor (not necessarily stable)
@@ -127,11 +130,16 @@ void Player::check_collisions()//(grid*)
 
     if(!alive || i_pos >= GRID_HEIGHT - 1 || jumping || falling) return;
 
+	/* SAMIR: Terren should Always be possitioned at [0] in the vector.
+	*         Just future reminder that if its not there might be bugs when checking for 
+	*         terrain with dynamic_cast<terrain*>(grid[i_pos + 1][j_pos][0]
+	*/
     terrain* floor = NULL;
-    if(i_pos + 1 < GRID_HEIGHT && grid[i_pos + 1][j_pos] && dynamic_cast<terrain*>(grid[i_pos + 1][j_pos])
-            && dynamic_cast<terrain*>(grid[i_pos + 1][j_pos]) -> pos_rect.y <= pos_rect.y + pos_rect.h + 1)
+    if(i_pos + 1 < GRID_HEIGHT && !grid[i_pos + 1][j_pos].empty() && dynamic_cast<terrain*>(grid[i_pos + 1][j_pos][0])
+            && dynamic_cast<terrain*>(grid[i_pos + 1][j_pos][0]) -> pos_rect.y <= pos_rect.y + pos_rect.h + 1)
     {
-        floor = dynamic_cast<terrain*>(grid[i_pos + 1][j_pos]);
+        floor = dynamic_cast<terrain*>(grid[i_pos + 1][j_pos][0]);
+
     }
     if(!floor && !(jumping || falling))
     {
@@ -222,7 +230,7 @@ void Player:: collide_with_terrain(terrain* terra)
 {
     i_grid = get_grid_coords().first;
     j_grid = get_grid_coords().second;
-
+	
     if(i_grid < terra -> i_grid)
     {
         if(j_grid == terra -> j_grid)

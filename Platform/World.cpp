@@ -102,15 +102,15 @@ void World::parseGrid(const string & line, ifstream &file)
 	string row;
 	getline(file, row);
 	// init the array
-	worldGrid = new Actor**[GRID_HEIGHT];
+	worldGrid = new std::vector<Actor*>*[GRID_HEIGHT];
 	for (int i = 0; i < GRID_HEIGHT; i++)
 	{
-		worldGrid[i] = new Actor*[GRID_WIDTH];
+		worldGrid[i] = new std::vector<Actor*>[GRID_WIDTH];
 	}
 	// clear if any left coins (from another level or sth)
 	if (Coin::coins_to_collect)
 	{
-        Coin::coins_to_collect = 0;
+		Coin::coins_to_collect = 0;
 	}
 	int current;
 	char comma;
@@ -125,10 +125,10 @@ void World::parseGrid(const string & line, ifstream &file)
 			SDL_Rect rect;
 			if (current != 0)
 			{
-				rect.w = loadedObjects[current-1].width;
-				rect.h = loadedObjects[current-1].height;
-				rect.y = (i + 1) * mapInfo.tileHeight - loadedObjects[current-1].height;
-				rect.x = j*mapInfo.tileWidth + mapInfo.tileWidth / 2. - loadedObjects[current-1].width / 2.;
+				rect.w = loadedObjects[current - 1].width;
+				rect.h = loadedObjects[current - 1].height;
+				rect.y = (i + 1) * mapInfo.tileHeight - loadedObjects[current - 1].height;
+				rect.x = j*mapInfo.tileWidth + mapInfo.tileWidth / 2. - loadedObjects[current - 1].width / 2.;
 				rect.h *= SCALE_FACTOR;
 				rect.w *= SCALE_FACTOR;
 				rect.x *= SCALE_FACTOR;
@@ -139,40 +139,38 @@ void World::parseGrid(const string & line, ifstream &file)
 			switch (current)
 			{
 			case 0:
-				worldGrid[i][j] = NULL;
+				//worldGrid[i][j][0] = NULL;
 				break;
 			case 1:
-				worldGrid[i][j] = new terrain(rect, i, j, GROUND);
-				worldGrid[i][j]->loadedNumber = current - 1;
+				worldGrid[i][j].push_back(new terrain(rect, i, j, GROUND));
+				worldGrid[i][j][0]->loadedNumber = current - 1;
 				break;
 			case 2:
-				worldGrid[i][j] = new terrain(rect, i, j, GROUND_DIRT);
-				worldGrid[i][j]->loadedNumber = current - 1;
+				worldGrid[i][j].push_back(new terrain(rect, i, j, GROUND_DIRT));
+				worldGrid[i][j][0]->loadedNumber = current - 1;
 				break;
 			case 3:
-                player = new Player(rect, worldGrid);
-				worldGrid[i][j] = player;
-				worldGrid[i][j]->loadedNumber = current - 1;
+				player = new Player(rect, worldGrid);
+				worldGrid[i][j].push_back(player);
+				worldGrid[i][j][0]->loadedNumber = current - 1;
 				player_i = i;
 				player_j = j;
 				player_pos = rect;
 				break;
 			case 4:
-				worldGrid[i][j] = new Enemy(rect, worldGrid, SLIME);
-				worldGrid[i][j]->loadedNumber = current - 1;
+				worldGrid[i][j].push_back(new Enemy(rect, worldGrid, SLIME));
+				worldGrid[i][j][0]->loadedNumber = current - 1;
 				break;
 			case 5:
-				worldGrid[i][j] = new Coin(rect);
-				worldGrid[i][j]->loadedNumber = current - 1;
+				worldGrid[i][j].push_back(new Coin(rect));
+				worldGrid[i][j][0]->loadedNumber = current - 1;
 				Coin::coins_to_collect++;
 				break;
 			default:
-				worldGrid[i][j] = NULL;
 				break;
 			}
 		}
 	}
-
 }
 
 // Get the int value between the toParse string and the next quotation mark
@@ -202,14 +200,17 @@ void World::respawn()
 	{
         for (int j = 0; j < GRID_WIDTH; j++)
 		{
-            if (worldGrid[i][j] && dynamic_cast<Player*>(worldGrid[i][j]))
-            {
-                //delete old player
-                delete player;
-                player = new Player(player_pos, worldGrid);
-                worldGrid[player_i][player_j] = player;
-                return;
-            }
+			for (Actor* actor : worldGrid[i][j])
+			{
+				if (dynamic_cast<Player*>(actor) )
+				{
+					//delete old player
+					delete player;
+					player = new Player(player_pos, worldGrid);
+					worldGrid[player_i][player_j].push_back(player);
+					return;
+				}
+			}
 		}
     }
 }

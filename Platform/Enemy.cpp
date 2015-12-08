@@ -1,6 +1,6 @@
 #include "Enemy.h"
 #include "CoreEngine.h"
- Enemy::Enemy (SDL_Rect pos, Actor*** world, int maxx, int minx, int spd, Object obj, int direction = 1)
+ Enemy::Enemy(SDL_Rect pos, std::vector<Actor*>** world, int maxx, int minx, int spd, Object obj, int direction = 1)
  {
 	pos_rect = pos;
     real_x = pos.x;
@@ -25,7 +25,7 @@
 
  }
 
- Enemy::Enemy(SDL_Rect pos, Actor*** world, Object obj)
+ Enemy::Enemy(SDL_Rect pos, std::vector<Actor*>** world, Object obj)
  {
 
 	pos_rect = pos;
@@ -113,38 +113,46 @@ void Enemy::collide_with_terrain()
         for(int j = j_pos - 1; j <= j_pos + 1; j++)
         {
             if (i < 0 || i >= GRID_HEIGHT || j < 0 || j >= GRID_WIDTH) continue; // world ' out of bounds ' ?
-            if (grid[i][j] && overlap(grid[i][j]) && dynamic_cast<terrain*>(grid[i][j]))
-            {
-                terra = dynamic_cast<terrain*>(grid[i][j]);
-                collide = true;
-                if(i_grid < terra -> i_grid && j_grid == terra -> j_grid)
-                {
-                    pos_rect.y = real_y = terra -> pos_rect.y - pos_rect.h - 1;
-                    speed_y = 0;
-                    falling = false;
-                }
-                else if(i_grid == terra -> i_grid && !falling)
-                {
-                    if (j_grid < terra -> j_grid)
-                    {
-                        pos_rect.x = real_x = terra -> pos_rect.x - pos_rect.w - 1;
-                    }
-                    else
-                    {
-                        pos_rect.x = real_x = terra -> pos_rect.x + terra -> pos_rect.w + 1;
-                    }
-                    direction *= -1;
-                }
-            }
+			for (Actor* actor : grid[i][j])
+			{
+				if (overlap(actor) && dynamic_cast<terrain*>(actor) )
+				{
+					terra = dynamic_cast<terrain*>(actor);
+					collide = true;
+					if(i_grid < terra -> i_grid && j_grid == terra -> j_grid)
+					{
+						pos_rect.y = real_y = terra -> pos_rect.y - pos_rect.h - 1;
+						speed_y = 0;
+						falling = false;
+					}
+					else if(i_grid == terra -> i_grid && !falling)
+					{
+						if (j_grid < terra -> j_grid)
+						{
+							pos_rect.x = real_x = terra -> pos_rect.x - pos_rect.w - 1;
+						}
+						else
+						{
+							pos_rect.x = real_x = terra -> pos_rect.x + terra -> pos_rect.w + 1;
+						}
+						direction *= -1;
+					}
+				}
+			}
         }
     }
     terra = NULL;
     //check for any floor
     if(i_pos >= GRID_HEIGHT - 1) return;
-    if(i_pos + 1 < GRID_HEIGHT && grid[i_pos + 1][j_pos] && dynamic_cast<terrain*>(grid[i_pos + 1][j_pos])
-            && dynamic_cast<terrain*>(grid[i_pos + 1][j_pos]) -> pos_rect.y <= pos_rect.y + pos_rect.h + 1)
+
+	/* SAMIR: Terren should Always be possitioned at [0] in the vector.
+	*         Just future reminder that if its not there might be bugs when checking for 
+	*         terrain with dynamic_cast<terrain*>(grid[i_pos + 1][j_pos][0]
+	*/
+    if(i_pos + 1 < GRID_HEIGHT && !grid[i_pos + 1][j_pos].empty() && dynamic_cast<terrain*>(grid[i_pos + 1][j_pos][0])
+            && dynamic_cast<terrain*>(grid[i_pos + 1][j_pos][0]) -> pos_rect.y <= pos_rect.y + pos_rect.h + 1)
     {
-        terra = dynamic_cast<terrain*>(grid[i_pos + 1][j_pos]);
+        terra = dynamic_cast<terrain*>(grid[i_pos + 1][j_pos][0]);
     }
 
     if(!terra && !falling)
