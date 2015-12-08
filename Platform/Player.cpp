@@ -20,6 +20,9 @@ Player::Player(SDL_Rect pos, Actor*** world)
     h_direction = 1;
     v_direction = 1;
     alive = true;
+    completely_dead = false;
+    end_level = false;
+    if (!lives) lives  = 3;
 }
 void Player::move_player(int time)
 {
@@ -35,12 +38,9 @@ void Player::move_player(int time)
         speed_y += (-v_direction)*accelerated*(double)time/1000;
         real_y += (-v_direction)*moved;
         pos_rect.y = real_y;
-        if ( pos_rect.y > M_WINDOW_HEIGHT - pos_rect.h)
+        if ( pos_rect.y > M_WINDOW_HEIGHT)
         {
-            pos_rect.y = real_y = M_WINDOW_HEIGHT - pos_rect.h;
-            jumping = falling = false;
-            speed_y = 0;
-            // if (out of screen) die;
+            completely_dead = true;
         }
         else
         if( real_y < 0)
@@ -50,10 +50,14 @@ void Player::move_player(int time)
         }
 
         if (speed_y <= 0) v_direction = -1;
+
         //if (speed_y >= terminal_velocity) speed_y = terminal_velocity;
+		/*
 		cout.setf(ios_base::fixed, ios_base::floatfield);
 		cout.precision(2);
 		cout << speed_y << " " << accelerated << endl;
+		*/
+
     }
 
     if (moving && alive)
@@ -109,13 +113,19 @@ void Player::check_collisions()//(grid*)
                 {
                     die();
                 }
+                /*
+
+                if (dynamic_cast<Exit*>(actor) && !Coin::coins_to_collect)
+                {
+                   end_level = true;
+                */
             }
         }
     }
     //check for any floor (not necessarily stable)
     //
 
-    if(!alive || i_pos >= GRID_HEIGHT - 1 || jumping) return;
+    if(!alive || i_pos >= GRID_HEIGHT - 1 || jumping || falling) return;
 
     terrain* floor = NULL;
     if(i_pos + 1 < GRID_HEIGHT && grid[i_pos + 1][j_pos] && dynamic_cast<terrain*>(grid[i_pos + 1][j_pos])
@@ -212,7 +222,6 @@ void Player:: collide_with_terrain(terrain* terra)
 {
     i_grid = get_grid_coords().first;
     j_grid = get_grid_coords().second;
-    static unsigned long long kk = 0;
 
     if(i_grid < terra -> i_grid)
     {
@@ -255,18 +264,15 @@ void Player:: collide_with_terrain(terrain* terra)
         falling = true;
     }
 }
-/*void Player:: collide_with_enemy(Enemy* enemy)
-{
-
-}*/
 void Player:: get_coin(Coin* coin)
 {
     coin -> taken = true;
-    Coin::taken_coins++;
+    Coin::coins_to_collect--;
 }
 
 void Player::die()
 {
+    lives--;
     alive = false;
     falling = true;
     moving = jumping = false;
@@ -279,3 +285,4 @@ void Player::update_grid_pos()
     j_grid = get_grid_coords().second;
 }
 
+int Player::lives = 3;

@@ -5,6 +5,7 @@
 #include <vector>
 #include <sstream>
 #include "Actor.h"
+#include "Player.h"
 #include "terrain.h"
 
 using namespace std;
@@ -21,9 +22,14 @@ public:
 	// the grid with all the interactable objects
 	//vector<Actor*> **worldGrid;
 	Actor*** worldGrid;
+	Player* player;
 	// Load the world from tmx file
 	bool loadWorld(string file);
 
+	//player's info(needed for respawn)
+	int player_i;
+	int player_j;
+    SDL_Rect player_pos;
 
 	// Construcor and destructor l
 	World();
@@ -36,6 +42,9 @@ public:
 	void parseObject(const string &line, ifstream &file);
 	void parseGrid(const string &line, ifstream &file);
 	int getValueAfter(const string &toParse, const string &line);
+
+	void respawn();
+
 	// Size of the world
 	int screenWidth;
 	int screenHeight;
