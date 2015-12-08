@@ -280,8 +280,13 @@ void CoreEngine::runGamingLoop()
 					prev_time = curr_time;
 					ce = handler.handle();
 
-					if (ce.quit) game_running = false;
-					//update();
+					if (ce.quit || (m_world.player -> completely_dead && !Player::lives)) game_running = false;
+
+                    //respawn if neccessary
+                    if (m_world.player -> completely_dead)
+                    {
+                        m_world.respawn();
+                    }
 
 					//Clear screen
 					SDL_RenderClear(gRenderer);
@@ -300,12 +305,8 @@ void CoreEngine::runGamingLoop()
 						}
 					}
 
-
-
-
 					//Update screen
 					SDL_RenderPresent(gRenderer);
-					//SDL_Delay(33);
 
 				}
 			}

@@ -1,6 +1,5 @@
 #include "World.h"
 #include "Globals.h"
-#include "Player.h"
 #include "Enemy.h"
 
 bool World::loadWorld(string file)
@@ -111,6 +110,11 @@ void World::parseGrid(const string & line, ifstream &file)
 	{
 		worldGrid[i] = new Actor*[grid_width];
 	}
+	// clear if any left coins (from another level or sth)
+	if (Coin::coins_to_collect)
+	{
+        Coin::coins_to_collect = 0;
+	}
 	int current;
 	char comma;
 	for (int i = 0; i < grid_height; i++)
@@ -149,8 +153,12 @@ void World::parseGrid(const string & line, ifstream &file)
 				worldGrid[i][j]->loadedNumber = current - 1;
 				break;
 			case 3:
-				worldGrid[i][j] = new Player(rect, worldGrid);
+                player = new Player(rect, worldGrid);
+				worldGrid[i][j] = player;
 				worldGrid[i][j]->loadedNumber = current - 1;
+				player_i = i;
+				player_j = j;
+				player_pos = rect;
 				break;
 			case 4:
 				worldGrid[i][j] = new Enemy(rect, worldGrid, SLIME);
@@ -159,6 +167,7 @@ void World::parseGrid(const string & line, ifstream &file)
 			case 5:
 				worldGrid[i][j] = new Coin(rect);
 				worldGrid[i][j]->loadedNumber = current - 1;
+				Coin::coins_to_collect++;
 				break;
 			default:
 				worldGrid[i][j] = NULL;
@@ -189,7 +198,24 @@ int World::getValueAfter(const string &toParse, const string &line)
 	return result;
 }
 
-
+void World::respawn()
+{
+    //find player
+    for (int i = 0; i < grid_height; i++)
+	{
+        for (int j = 0; j < grid_width; j++)
+		{
+            if (worldGrid[i][j] && dynamic_cast<Player*>(worldGrid[i][j]))
+            {
+                //delete old player
+                delete player;
+                player = new Player(player_pos, worldGrid);
+                worldGrid[player_i][player_j] = player;
+                return;
+            }
+		}
+    }
+}
 
 
 
