@@ -43,14 +43,11 @@ bool World::loadWorld(string file)
 	}
 
 
-	// Set world size
+	// Set world size 
 	pixelsPerTile = mapInfo.tileWidth;
-	screenWidth = mapInfo.yTiles * pixelsPerTile;
-	screenHeight = mapInfo.xTiles * pixelsPerTile;
-	/* REMINDER: This is getting initialized in parseGrid()
-	grid_width = screenWidth / pixelsPerTile;
-	grid_height = screenHeight / pixelsPerTile;
-	*/
+	world_width_in_pixels = GRID_WIDTH * pixelsPerTile;
+	world_height_in_pixels = GRID_HEIGHT * pixelsPerTile;
+	
 
 	return true;
 }
@@ -100,15 +97,15 @@ void World::parseObject(const string & line, ifstream &file)
 }
 void World::parseGrid(const string & line, ifstream &file)
 {
-	grid_width = getValueAfter("width=\"", line);
-	grid_height = getValueAfter("height=\"", line);
+	GRID_WIDTH = getValueAfter("width=\"", line);
+	GRID_HEIGHT = getValueAfter("height=\"", line);
 	string row;
 	getline(file, row);
 	// init the array
-	worldGrid = new Actor**[grid_height];
-	for (int i = 0; i < grid_height; i++)
+	worldGrid = new Actor**[GRID_HEIGHT];
+	for (int i = 0; i < GRID_HEIGHT; i++)
 	{
-		worldGrid[i] = new Actor*[grid_width];
+		worldGrid[i] = new Actor*[GRID_WIDTH];
 	}
 	// clear if any left coins (from another level or sth)
 	if (Coin::coins_to_collect)
@@ -117,11 +114,11 @@ void World::parseGrid(const string & line, ifstream &file)
 	}
 	int current;
 	char comma;
-	for (int i = 0; i < grid_height; i++)
+	for (int i = 0; i < GRID_HEIGHT; i++)
 	{
 		getline(file, row);
 		stringstream rowDataStream(row);
-		for (int j = 0; j < grid_width; j++)
+		for (int j = 0; j < GRID_WIDTH; j++)
 		{
 			rowDataStream >> current >> comma;
 
@@ -201,9 +198,9 @@ int World::getValueAfter(const string &toParse, const string &line)
 void World::respawn()
 {
     //find player
-    for (int i = 0; i < grid_height; i++)
+    for (int i = 0; i < GRID_HEIGHT; i++)
 	{
-        for (int j = 0; j < grid_width; j++)
+        for (int j = 0; j < GRID_WIDTH; j++)
 		{
             if (worldGrid[i][j] && dynamic_cast<Player*>(worldGrid[i][j]))
             {

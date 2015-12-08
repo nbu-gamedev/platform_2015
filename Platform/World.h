@@ -46,11 +46,9 @@ public:
 	void respawn();
 
 	// Size of the world
-	int screenWidth;
-	int screenHeight;
+	int world_width_in_pixels;
+	int world_height_in_pixels;
 	int pixelsPerTile;
-	int grid_width;
-	int grid_height;
 	// The number of vertical and horizontal tiles and the width and height of each tile
 	struct TiledMap
 	{

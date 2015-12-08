@@ -240,7 +240,7 @@ void CoreEngine::runGamingLoop()
 	{
 		// TODO maybe wrap into class
 		// NOTE-SAMIR: Create new world for each new level to clear data from previous level.
-		if (!m_world.loadWorld("../Maps/testmap.tmx"))
+		if (!m_world.loadWorld("../Maps/testmap - Copy.tmx"))
 		{
 			std::cout << "Error loading map !!" << std::endl;
 		}
@@ -292,9 +292,9 @@ void CoreEngine::runGamingLoop()
 					SDL_RenderClear(gRenderer);
 
 					//Render Tiles to screen
-					for (int i = 0; i <  m_world.grid_height; ++i)
+					for (int i = 0; i <  GRID_HEIGHT; ++i)
 					{
-						for (int y = 0; y < m_world.grid_width; ++y)
+						for (int y = 0; y < GRID_WIDTH; ++y)
 						{
 							if (m_world.worldGrid[i][y] != NULL)
 							{
