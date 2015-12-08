@@ -5,11 +5,11 @@
 #include "Input_Handler.h"
 
 
-const int max_speed_player = 300 * SCALE_FACTOR;
-const int jump_start_speed = 670 * SCALE_FACTOR;
-const int acceleration = 1000 * SCALE_FACTOR;
-const int gravity_acceleration = 1550 * SCALE_FACTOR; // reach max height in about a second
-const int terminal_velocity = 830;
+const double max_speed_player = 300 * SCALE_FACTOR;
+const double jump_start_speed = 525 * SCALE_FACTOR;
+const double acceleration = 1000 * SCALE_FACTOR;
+const double gravity_acceleration = 2200 * SCALE_FACTOR; // reach max height in about a second
+const double terminal_velocity = 700 * SCALE_FACTOR;
 
 
 class Player:public Actor
@@ -31,7 +31,7 @@ public:
     double real_x,real_y;
     int h_direction;
     int v_direction;
-    int speed_y;
+    double speed_y;
     bool moving;
     bool jumping;
     bool falling;
