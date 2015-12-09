@@ -6,9 +6,9 @@
 
 
 const double max_speed_player = 300 * SCALE_FACTOR;
-const double jump_start_speed = 530 * SCALE_FACTOR;
+const double jump_start_speed = 630 * SCALE_FACTOR;
 const double acceleration = 1000 * SCALE_FACTOR;
-const double gravity_acceleration = 2200 * SCALE_FACTOR; // reach max height in about a second
+const double gravity_acceleration = 1250 * SCALE_FACTOR; // reach max height in about a second
 const double terminal_velocity = 700 * SCALE_FACTOR;
 
 class Player:public Actor

@@ -31,11 +31,9 @@ void Player::move_player(int time)
     if(jumping || falling)
     {
         // moving on y
-		double friction = 1.-(speed_y / terminal_velocity); // 1 -> no friction, 0-> max friction
-		double accelerated =  gravity_acceleration * friction;
-        moved = (double)time*(speed_y - accelerated * (double)time/ 2000.) / 1000.;
+        moved = time*(speed_y - gravity_acceleration *time/ 2000.) / 1000.;
         if(moved < 0) moved *= -1;
-        speed_y += (-v_direction)*accelerated*(double)time/1000;
+        speed_y += (-v_direction)*gravity_acceleration*time/1000;
         real_y += (-v_direction)*moved;
         pos_rect.y = real_y;
         if ( pos_rect.y > M_WINDOW_HEIGHT)
@@ -51,13 +49,7 @@ void Player::move_player(int time)
 
         if (speed_y <= 0) v_direction = -1;
 
-        //if (speed_y >= terminal_velocity) speed_y = terminal_velocity;
-		/*
-		cout.setf(ios_base::fixed, ios_base::floatfield);
-		cout.precision(2);
-		cout << speed_y << " " << accelerated << endl;
-
-        */
+        if (speed_y >= terminal_velocity) speed_y = terminal_velocity;
     }
 
     if (moving && alive)
@@ -279,7 +271,7 @@ void Player::die()
     alive = false;
     falling = true;
     moving = jumping = false;
-    speed_y = 0;
+    speed_y = speed = 0;
 }
 
 void Player::update_grid_pos()

@@ -43,11 +43,11 @@ bool World::loadWorld(string file)
 	}
 
 
-	// Set world size 
+	// Set world size
 	pixelsPerTile = mapInfo.tileWidth;
 	world_width_in_pixels = GRID_WIDTH * pixelsPerTile;
 	world_height_in_pixels = GRID_HEIGHT * pixelsPerTile;
-	
+
 
 	return true;
 }
@@ -200,11 +200,12 @@ void World::respawn()
 	{
         for (int j = 0; j < GRID_WIDTH; j++)
 		{
-			for (Actor* actor : worldGrid[i][j])
+			for (int k = 0; k < worldGrid[i][j].size(); k++)
 			{
-				if (dynamic_cast<Player*>(actor) )
+				if (dynamic_cast<Player*>(worldGrid[i][j][k]) )
 				{
 					//delete old player
+                    worldGrid[i][j].erase (worldGrid[i][j].begin()+k);
 					delete player;
 					player = new Player(player_pos, worldGrid);
 					worldGrid[player_i][player_j].push_back(player);
