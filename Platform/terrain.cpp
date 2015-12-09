@@ -16,8 +16,9 @@ terrain::~terrain()
 {
 }
 
-void terrain::update()
+bool terrain::update(int time_passed, Key_event* ke)
 {
+    return false;
 }
 
 void terrain::render(SDL_Renderer* renderer, int time_passed, CoreEngine &core)

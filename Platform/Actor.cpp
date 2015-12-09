@@ -3,13 +3,6 @@ Actor::~Actor()
 {
 }
 
-
-void Actor::update()
-{
-}
-
-
-
 // check if two actors' rectangles overlap
 bool Actor::overlap(Actor* actor)
 {

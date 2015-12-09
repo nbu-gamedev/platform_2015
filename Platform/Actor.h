@@ -21,8 +21,7 @@ class Actor
 
 public:
 	virtual ~Actor();
-	virtual void update();
-	virtual void update(int time_passed, Key_event* ke) = 0;
+	virtual bool update(int time_passed, Key_event* ke) = 0;
 	virtual void render(SDL_Renderer* renderer , int time_passed, CoreEngine &core) = 0;
 	//std::pair< std::pair<int,int>, std::pair<int,int> > get_grid_coords();
 	std::pair<int,int> get_grid_coords();

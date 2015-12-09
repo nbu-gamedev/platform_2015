@@ -256,6 +256,7 @@ void CoreEngine::runGamingLoop()
 			{
 
 				bool game_running = true;
+				bool deletion = false;
 				//TODO yavor  move this
 				SDL_Rect tile;
 				tile.h = m_world.loadedObjects[0].height;
@@ -295,11 +296,14 @@ void CoreEngine::runGamingLoop()
 					{
 						for (int y = 0; y < GRID_WIDTH; ++y)
 						{
-							for (Actor* actor : m_world.worldGrid[i][y])
-							{
-								actor->update(time_passed, ce.ke);
-								actor->render(gRenderer, time_passed, *this);
+                            auto actor_it =  m_world.worldGrid[i][y].begin();
 
+							while(actor_it != m_world.worldGrid[i][y].end())
+							{
+
+								deletion = (*actor_it)->update(time_passed, ce.ke);
+								(*actor_it)->render(gRenderer, time_passed, *this);
+                                if (!deletion) actor_it++;
 							}
 						}
 					}

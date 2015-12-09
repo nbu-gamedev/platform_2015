@@ -9,8 +9,9 @@ Coin::Coin(SDL_Rect pos)
 	taken = false;
 }
 
-void Coin::update()
+bool Coin::update(int time_passed, Key_event* ke)
 {
+    return false;
 }
 
 void Coin::render(SDL_Renderer * renderer, int time_passed, CoreEngine & core)

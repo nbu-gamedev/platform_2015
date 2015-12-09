@@ -52,9 +52,8 @@
 
  }
 
-void Enemy::update(int time_passed)
+bool Enemy::update(int time_passed, Key_event* ke)
 {
-    double moved;
     if(!falling)
     {
         real_x += (direction)*(speed * time_passed)/ 1000;
@@ -85,7 +84,7 @@ void Enemy::update(int time_passed)
         }
     }
 	collide_with_terrain();
-    update_grid_pos();
+   return update_grid_pos();
 }
 
 void Enemy::render(SDL_Renderer * renderer, int time_passed, CoreEngine & core)
@@ -94,16 +93,16 @@ void Enemy::render(SDL_Renderer * renderer, int time_passed, CoreEngine & core)
 }
 
 
-void Enemy::update_grid_pos()
+bool Enemy::update_grid_pos()
 {
     int new_i_grid = get_grid_coords().first;
     int new_j_grid = get_grid_coords().second;
 
-    /*if ((new_i_grid == i_grid && new_j_grid == j_grid)
+    if ((new_i_grid == i_grid && new_j_grid == j_grid)
         || new_i_grid < 0 || new_i_grid >= GRID_HEIGHT
         || new_j_grid < 0 || new_j_grid >= GRID_WIDTH
-        ) return;
-    */
+        ) return false;
+
     for (int k = 0; k < grid[i_grid][j_grid].size(); k++)
     {
         if (grid[i_grid][j_grid][k] == this )
@@ -113,9 +112,10 @@ void Enemy::update_grid_pos()
             grid[new_i_grid][new_j_grid].push_back(this);
             i_grid = new_i_grid;
             j_grid = new_j_grid;
-            return;
+            return true;
         }
     }
+    return false;
 }
 
 void Enemy::collide_with_terrain()

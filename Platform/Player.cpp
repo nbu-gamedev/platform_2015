@@ -143,7 +143,7 @@ void Player::check_collisions()//(grid*)
     }
 }
 
-void Player::update(int time_passed, Key_event* ke) // (int time_passed)
+bool Player::update(int time_passed, Key_event* ke) // (int time_passed)
 {
     if (ke && alive)
     {
@@ -271,7 +271,7 @@ void Player::die()
     speed_y = speed = 0;
 }
 
-void Player::update_grid_pos()
+bool Player::update_grid_pos()
 {
 
     int new_i_grid = get_grid_coords().first;
@@ -279,7 +279,7 @@ void Player::update_grid_pos()
 
     // don't change position if dead (it's not neccessary)
     if ((new_i_grid == i_grid && new_j_grid == j_grid) || !alive)
-        return;
+        return false;
 
     for (int k = 0; k < grid[i_grid][j_grid].size(); k++)
     {
@@ -290,9 +290,10 @@ void Player::update_grid_pos()
             grid[new_i_grid][new_j_grid].push_back(this);
             i_grid = new_i_grid;
             j_grid = new_j_grid;
-            return;
+            return true;
         }
     }
+    return false;
 }
 
 int Player::lives = 3;

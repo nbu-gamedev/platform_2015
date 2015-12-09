@@ -15,7 +15,7 @@ class Player:public Actor
 {
 public:
     Player(SDL_Rect pos, std::vector<Actor*>** world);
-    void update(int time_passed, Key_event* ke);
+    bool update(int time_passed, Key_event* ke);
 	void render(SDL_Renderer* renderer, int time_passed, CoreEngine &core);
     void check_collisions();
     //void render();
@@ -24,7 +24,7 @@ public:
   //  void collide_with_enemy(Enemy* enemy);
     void get_coin(Coin* coin);
     void die();
-	void update_grid_pos();
+	bool update_grid_pos();
 
 	std::vector<Actor*>** grid;
     double real_x,real_y;

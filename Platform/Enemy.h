@@ -15,14 +15,10 @@ public:
 	Enemy(SDL_Rect pos, std::vector<Actor*>** world, Object obj);
 
 	Object type;
-	void update(int time_passed);
-	virtual void update(int time_passed, Key_event* ke)
-	{
-		update(time_passed);
-	}
+	bool update(int time_passed, Key_event* ke);
 	void render(SDL_Renderer* renderer, int time_passed, CoreEngine &core);
 	void collide_with_terrain();
-	void update_grid_pos();
+	bool update_grid_pos();
 private:
 
 	std::vector<Actor*>** grid;
