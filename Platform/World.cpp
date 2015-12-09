@@ -196,23 +196,17 @@ int World::getValueAfter(const string &toParse, const string &line)
 void World::respawn()
 {
     //find player
-    for (int i = 0; i < GRID_HEIGHT; i++)
-	{
-        for (int j = 0; j < GRID_WIDTH; j++)
-		{
-			for (int k = 0; k < worldGrid[i][j].size(); k++)
-			{
-				if (dynamic_cast<Player*>(worldGrid[i][j][k]) )
-				{
-					//delete old player
-                    worldGrid[i][j].erase (worldGrid[i][j].begin()+k);
-					delete player;
-					player = new Player(player_pos, worldGrid);
-					worldGrid[player_i][player_j].push_back(player);
-					return;
-				}
-			}
-		}
+    for (int k = 0; k < worldGrid[player->i_grid][player->j_grid].size(); k++)
+    {
+        if (worldGrid[player->i_grid][player->j_grid][k] == player)
+        {
+            //delete old player
+            worldGrid[player->i_grid][player->j_grid].erase (worldGrid[player->i_grid][player->j_grid].begin()+k);
+            delete player;
+            player = new Player(player_pos, worldGrid);
+            worldGrid[player_i][player_j].push_back(player);
+            return;
+        }
     }
 }
 

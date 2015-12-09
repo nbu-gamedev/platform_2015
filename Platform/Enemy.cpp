@@ -96,9 +96,26 @@ void Enemy::render(SDL_Renderer * renderer, int time_passed, CoreEngine & core)
 
 void Enemy::update_grid_pos()
 {
-    i_grid = get_grid_coords().first;
-    j_grid = get_grid_coords().second;
+    int new_i_grid = get_grid_coords().first;
+    int new_j_grid = get_grid_coords().second;
 
+    /*if ((new_i_grid == i_grid && new_j_grid == j_grid)
+        || new_i_grid < 0 || new_i_grid >= GRID_HEIGHT
+        || new_j_grid < 0 || new_j_grid >= GRID_WIDTH
+        ) return;
+    */
+    for (int k = 0; k < grid[i_grid][j_grid].size(); k++)
+    {
+        if (grid[i_grid][j_grid][k] == this )
+        {
+            //delete old player
+            grid[i_grid][j_grid].erase (grid[i_grid][j_grid].begin() + k);
+            grid[new_i_grid][new_j_grid].push_back(this);
+            i_grid = new_i_grid;
+            j_grid = new_j_grid;
+            return;
+        }
+    }
 }
 
 void Enemy::collide_with_terrain()
@@ -145,10 +162,6 @@ void Enemy::collide_with_terrain()
     //check for any floor
     if(i_pos >= GRID_HEIGHT - 1) return;
 
-	/* SAMIR: Terren should Always be possitioned at [0] in the vector.
-	*         Just future reminder that if its not there might be bugs when checking for 
-	*         terrain with dynamic_cast<terrain*>(grid[i_pos + 1][j_pos][0]
-	*/
     if(i_pos + 1 < GRID_HEIGHT && !grid[i_pos + 1][j_pos].empty() && dynamic_cast<terrain*>(grid[i_pos + 1][j_pos][0])
             && dynamic_cast<terrain*>(grid[i_pos + 1][j_pos][0]) -> pos_rect.y <= pos_rect.y + pos_rect.h + 1)
     {

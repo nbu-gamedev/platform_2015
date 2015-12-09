@@ -166,7 +166,6 @@ void Player::update(int time_passed, Key_event* ke) // (int time_passed)
 
     move_player(time_passed);
     check_collisions();
-
     update_grid_pos();
 }
 
@@ -215,9 +214,6 @@ void Player::render(SDL_Renderer * renderer, int time_passed, CoreEngine & core)
 
 void Player:: collide_with_terrain(terrain* terra)
 {
-    i_grid = get_grid_coords().first;
-    j_grid = get_grid_coords().second;
-
     if(i_grid < terra -> i_grid)
     {
         if(j_grid == terra -> j_grid)
@@ -259,6 +255,7 @@ void Player:: collide_with_terrain(terrain* terra)
         falling = true;
     }
 }
+
 void Player:: get_coin(Coin* coin)
 {
     coin -> taken = true;
@@ -276,8 +273,26 @@ void Player::die()
 
 void Player::update_grid_pos()
 {
-    i_grid = get_grid_coords().first;
-    j_grid = get_grid_coords().second;
+
+    int new_i_grid = get_grid_coords().first;
+    int new_j_grid = get_grid_coords().second;
+
+    // don't change position if dead (it's not neccessary)
+    if ((new_i_grid == i_grid && new_j_grid == j_grid) || !alive)
+        return;
+
+    for (int k = 0; k < grid[i_grid][j_grid].size(); k++)
+    {
+        if (grid[i_grid][j_grid][k] == this )
+        {
+            //delete old player
+            grid[i_grid][j_grid].erase (grid[i_grid][j_grid].begin() + k);
+            grid[new_i_grid][new_j_grid].push_back(this);
+            i_grid = new_i_grid;
+            j_grid = new_j_grid;
+            return;
+        }
+    }
 }
 
 int Player::lives = 3;
