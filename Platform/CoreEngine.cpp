@@ -240,7 +240,7 @@ void CoreEngine::runGamingLoop()
 	{
 		// TODO maybe wrap into class
 		// NOTE-SAMIR: Create new world for each new level to clear data from previous level.
-		if (!m_world.loadWorld("../Maps/testmap.tmx"))
+		if (!m_world.loadWorld("../Maps/testmap - Copy.tmx"))
 		{
 			std::cout << "Error loading map !!" << std::endl;
 		}
@@ -254,7 +254,6 @@ void CoreEngine::runGamingLoop()
 			}
 			else
 			{
-
 
 				bool game_running = true;
 				//TODO yavor  move this
