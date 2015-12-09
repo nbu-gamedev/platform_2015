@@ -166,7 +166,7 @@ bool Player::update(int time_passed, Key_event* ke) // (int time_passed)
 
     move_player(time_passed);
     check_collisions();
-    update_grid_pos();
+    return update_grid_pos();
 }
 
 void Player::render(SDL_Renderer * renderer, int time_passed, CoreEngine & core)

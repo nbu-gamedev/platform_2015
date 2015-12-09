@@ -122,7 +122,6 @@ void Enemy::collide_with_terrain()
 {
     int i_pos = get_grid_coords().first;
     int j_pos = get_grid_coords().second;
-    bool collide = false;
     terrain* terra = NULL;
     // check if collide with close objects
     for (int i = i_pos - 1; i <= i_pos + 1; i++)
@@ -135,7 +134,6 @@ void Enemy::collide_with_terrain()
 				if (overlap(actor) && dynamic_cast<terrain*>(actor) )
 				{
 					terra = dynamic_cast<terrain*>(actor);
-					collide = true;
 					if(i_grid < terra -> i_grid && j_grid == terra -> j_grid)
 					{
 						pos_rect.y = real_y = terra -> pos_rect.y - pos_rect.h - 1;

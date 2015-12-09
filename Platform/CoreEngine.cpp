@@ -296,14 +296,12 @@ void CoreEngine::runGamingLoop()
 					{
 						for (int y = 0; y < GRID_WIDTH; ++y)
 						{
-                            auto actor_it =  m_world.worldGrid[i][y].begin();
-
-							while(actor_it != m_world.worldGrid[i][y].end())
+                             for (int k = 0; k < m_world.worldGrid[i][y].size();)
 							{
-
-								deletion = (*actor_it)->update(time_passed, ce.ke);
-								(*actor_it)->render(gRenderer, time_passed, *this);
-                                if (!deletion) actor_it++;
+                                Actor* actor = m_world.worldGrid[i][y][k];
+								deletion = actor->update(time_passed, ce.ke);
+								actor->render(gRenderer, time_passed, *this);
+                                if (!deletion) k++;
 							}
 						}
 					}
