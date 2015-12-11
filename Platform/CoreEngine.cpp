@@ -1,7 +1,7 @@
 #include "CoreEngine.h"
 
 #include <iostream>
-
+#include <fstream>
 CoreEngine::CoreEngine()
 {
 	gWindow = NULL;
@@ -64,7 +64,116 @@ bool CoreEngine :: init()
 
 	return success;
 }
-
+bool CoreEngine::loadMedia()
+{
+	//Loading success flag
+	bool success = true;
+	
+	//Open image config file
+	ifstream input_file;
+	string path, line;
+	int num_of_textures;
+	//Load images
+	input_file.open("Config/configImage.txt");
+	if(!input_file.is_open())
+	{
+		cout << "Couldn't open image config file !!" << endl;
+	}
+	else
+	{
+		while (getline(input_file, line))
+		{
+			//Load player texture
+			if (line == "player")
+			{
+				input_file >> num_of_textures;
+				getline(input_file, path);
+				for (int i = 0; i < num_of_textures - 2; ++i) // -2 , because one is for jump and one is for dead
+				{
+					getline(input_file, path);
+					player_textures.push_back( loadTexture(path));
+					if (player_textures[i] == NULL)
+					{
+						printf("Failed to load texture image!\n");
+						success = false;
+					}
+				}
+				getline(input_file, path);
+				player_jump_texture = loadTexture(path);
+				if (player_jump_texture == NULL)
+				{
+					printf("Failed to load texture image!\n");
+					success = false;
+				}
+				getline(input_file, path);
+				player_dead_texture = loadTexture(path);
+				if (player_dead_texture == NULL)
+				{
+					printf("Failed to load texture image!\n");
+					success = false;
+				}
+			}
+			//Load tile textures
+			else if (line == "tiles")
+			{
+				input_file >> num_of_textures;
+				getline(input_file, path);
+				for (int i = 0; i < num_of_textures; ++i)
+				{
+					getline(input_file, path);
+					tiles_textures.push_back(loadTexture(path));
+					if (tiles_textures[i] == NULL)
+					{
+						printf("Failed to load texture image!\n");
+						success = false;
+					}
+				}
+			}
+			//Load enemy textures
+			else if (line == "enemy")
+			{
+				input_file >> num_of_textures;
+				getline(input_file, path);
+				for (int i = 0; i < num_of_textures - 1; ++i)  // 1 is reserved for dead texture
+				{
+					getline(input_file, path);
+					enemy_textures.push_back(loadTexture(path));
+					if (enemy_textures[i] == NULL)
+					{
+						printf("Failed to load texture image!\n");
+						success = false;
+					}
+				}
+				getline(input_file, path);
+				enemy_dead_texture = loadTexture(path);
+				if (enemy_dead_texture == NULL)
+				{
+					printf("Failed to load texture image!\n");
+					success = false;
+				}
+			}
+			//Load coins
+			else if (line == "coin")
+			{
+				input_file >> num_of_textures;
+				getline(input_file, path);
+				for (int i = 0; i < num_of_textures; ++i)
+				{
+					getline(input_file, path);
+					coin_textures.push_back(loadTexture(path));
+					if (coin_textures[i] == NULL)
+					{
+						printf("Failed to load texture image!\n");
+						success = false;
+					}
+				}
+			}
+		}
+		input_file.close();
+	}
+	return success;
+}
+/*
 bool CoreEngine::loadMedia()
 {
 	//Loading success flag
@@ -162,6 +271,7 @@ bool CoreEngine::loadMedia()
 
 	return success;
 }
+*/
 
 void CoreEngine::close()
 {
@@ -171,6 +281,11 @@ void CoreEngine::close()
 		SDL_DestroyTexture(player_textures[i]);
 		player_textures[i] = NULL;
 	}
+	SDL_DestroyTexture( player_dead_texture);
+	player_dead_texture = NULL;
+
+	SDL_DestroyTexture( player_jump_texture);
+	player_jump_texture = NULL;
 
 	//free tiles;
 	for (int i = 0; i < tiles_textures.size() ; ++i)
@@ -184,6 +299,8 @@ void CoreEngine::close()
 		SDL_DestroyTexture(enemy_textures[i]);
 		enemy_textures[i] = NULL;
 	}
+	SDL_DestroyTexture(enemy_dead_texture);
+	enemy_dead_texture = NULL;
 	//free coins
 	for (int i = 0; i < coin_textures.size(); ++i)
 	{
