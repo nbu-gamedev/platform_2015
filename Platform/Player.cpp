@@ -131,7 +131,6 @@ void Player::check_collisions()//(grid*)
     if(!floor && !(jumping || falling))
     {
         falling = true;
-        moving = false;
         v_direction = -1;
         speed_y = 0;
     }
@@ -151,7 +150,11 @@ bool Player::update(int time_passed, Key_event* ke) // (int time_passed)
         if (ke->left_pressed || ke->right_pressed)
         {
             moving = true;
-            h_direction = ke->left_pressed ? -1 : 1;
+            if (h_direction != (ke->left_pressed ? -1 : 1))
+            {
+                h_direction = ke->left_pressed ? -1 : 1;
+                speed = 0;
+            }
         }
         else
         {
@@ -236,8 +239,8 @@ void Player:: collide_with_Terrain(Terrain* terra)
             pos_rect.x = real_x = terra -> pos_rect.x + terra -> pos_rect.w + 1;
         }
 
-        moving = false;
-        speed = 0;
+      //  moving = false;
+       // speed = 0;
 
        /* if (jumping)
         {
