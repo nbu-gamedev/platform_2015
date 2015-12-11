@@ -1,5 +1,5 @@
 #pragma once
-#include "terrain.h"
+#include "Terrain.h"
 #include "Enemy.h"
 #include "Coin.h"
 #include "Input_Handler.h"
@@ -20,7 +20,7 @@ public:
     void check_collisions();
     //void render();
     void move_player(int time);
-    void collide_with_terrain(terrain* terra);
+    void collide_with_Terrain(Terrain* terra);
   //  void collide_with_enemy(Enemy* enemy);
     void get_coin(Coin* coin);
     void die();

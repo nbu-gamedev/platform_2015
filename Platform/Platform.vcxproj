@@ -156,7 +156,7 @@
     <ClCompile Include="Input_Handler.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Player.cpp" />
-    <ClCompile Include="terrain.cpp" />
+    <ClCompile Include="Terrain.cpp" />
     <ClCompile Include="World.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -167,7 +167,7 @@
     <ClInclude Include="Globals.h" />
     <ClInclude Include="Input_Handler.h" />
     <ClInclude Include="Player.h" />
-    <ClInclude Include="terrain.h" />
+    <ClInclude Include="Terrain.h" />
     <ClInclude Include="World.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

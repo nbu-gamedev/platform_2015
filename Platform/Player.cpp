@@ -94,9 +94,9 @@ void Player::check_collisions()//(grid*)
 					cout<<"\\ "<<actor->pos_rect.x << " " << actor->pos_rect.y << " " << actor->pos_rect.x + actor->pos_rect.w <<
 					" " << actor->pos_rect.y + actor->pos_rect.h<<endl;
                     */
-					if (dynamic_cast<terrain*>(actor))
+					if (dynamic_cast<Terrain*>(actor))
 					{
-						collide_with_terrain(dynamic_cast<terrain*>(actor));
+						collide_with_Terrain(dynamic_cast<Terrain*>(actor));
 					}
 					if (dynamic_cast<Coin*>(actor) && !(dynamic_cast<Coin*>(actor)->taken))
 					{
@@ -121,11 +121,11 @@ void Player::check_collisions()//(grid*)
 
     if(!alive || i_pos >= GRID_HEIGHT - 1 || jumping || falling) return;
 
-    terrain* floor = NULL;
-    if(i_pos + 1 < GRID_HEIGHT && !grid[i_pos + 1][j_pos].empty() && dynamic_cast<terrain*>(grid[i_pos + 1][j_pos][0])
-            && dynamic_cast<terrain*>(grid[i_pos + 1][j_pos][0]) -> pos_rect.y <= pos_rect.y + pos_rect.h + 1)
+    Terrain* floor = NULL;
+    if(i_pos + 1 < GRID_HEIGHT && !grid[i_pos + 1][j_pos].empty() && dynamic_cast<Terrain*>(grid[i_pos + 1][j_pos][0])
+            && dynamic_cast<Terrain*>(grid[i_pos + 1][j_pos][0]) -> pos_rect.y <= pos_rect.y + pos_rect.h + 1)
     {
-        floor = dynamic_cast<terrain*>(grid[i_pos + 1][j_pos][0]);
+        floor = dynamic_cast<Terrain*>(grid[i_pos + 1][j_pos][0]);
 
     }
     if(!floor && !(jumping || falling))
@@ -212,7 +212,7 @@ void Player::render(SDL_Renderer * renderer, int time_passed, CoreEngine & core)
 
 
 
-void Player:: collide_with_terrain(terrain* terra)
+void Player:: collide_with_Terrain(Terrain* terra)
 {
     if(i_grid < terra -> i_grid)
     {

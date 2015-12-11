@@ -1,10 +1,10 @@
-#include "terrain.h"
+#include "Terrain.h"
 #include "CoreEngine.h"
-terrain::terrain()
+Terrain::Terrain()
 {
 }
 
-terrain::terrain(SDL_Rect rect, int i, int j, Object obj)
+Terrain::Terrain(SDL_Rect rect, int i, int j, Object obj)
 {
 	pos_rect = rect;
 	i_grid = i;
@@ -12,16 +12,16 @@ terrain::terrain(SDL_Rect rect, int i, int j, Object obj)
 	type = obj;
 }
 
-terrain::~terrain()
+Terrain::~Terrain()
 {
 }
 
-bool terrain::update(int time_passed, Key_event* ke)
+bool Terrain::update(int time_passed, Key_event* ke)
 {
     return false;
 }
 
-void terrain::render(SDL_Renderer* renderer, int time_passed, CoreEngine &core)
+void Terrain::render(SDL_Renderer* renderer, int time_passed, CoreEngine &core)
 {
 
 	SDL_RenderCopy(renderer, core.tiles_textures[type] , NULL, &pos_rect);
