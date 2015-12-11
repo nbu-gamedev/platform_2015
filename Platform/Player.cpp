@@ -139,6 +139,7 @@ void Player::check_collisions()//(grid*)
     {
         pos_rect.y = real_y = floor -> pos_rect.y - pos_rect.h - 1;
         speed_y = 0;
+        v_direction = 1;
         jumping = falling = false;
     }
 }
@@ -222,7 +223,6 @@ void Player:: collide_with_terrain(terrain* terra)
             speed_y = 0;
             jumping = falling = false;
         }
-
     }
 
     else if(i_grid == terra -> i_grid)
@@ -239,20 +239,20 @@ void Player:: collide_with_terrain(terrain* terra)
         moving = false;
         speed = 0;
 
-        if (jumping)
+       /* if (jumping)
         {
             jumping = false;
             falling = true;
             speed_y = 0;
-        }
+        }*/
     }
     else
     {
-        if (v_direction < 0) return;
-        pos_rect.y = real_y = terra -> pos_rect.y + terra -> pos_rect.w + 1;
-        speed_y = 0;
-        jumping = false;
-        falling = true;
+        if(j_grid == terra -> j_grid)
+        {
+            pos_rect.y = real_y = terra -> pos_rect.y + terra -> pos_rect.w + 1;
+            speed_y = 0;
+        }
     }
 }
 
