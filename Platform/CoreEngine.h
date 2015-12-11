@@ -39,6 +39,12 @@ public:
 	 vector<SDL_Texture*> enemy_textures;
 	//coin textures
 	 vector<SDL_Texture*> coin_textures;
+
+	 
+	 SDL_Texture* player_dead_texture;
+	 SDL_Texture* player_jump_texture;
+	 SDL_Texture* enemy_dead_texture;
+
 	//world
 	World m_world;
 
