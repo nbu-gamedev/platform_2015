@@ -31,12 +31,14 @@ public:
 
 	//Player textures
 	vector<SDL_Texture*> player_textures;
-
+	SDL_Texture* player_dead_texture;
+	SDL_Texture* player_jump_texture;
 	//Terrain textures
 	vector<SDL_Texture*> tiles_textures;
 
 	//Enemy textures
 	 vector<SDL_Texture*> enemy_textures;
+	 SDL_Texture* enemy_dead_texture;
 	//coin textures
 	 vector<SDL_Texture*> coin_textures;
 	//world
