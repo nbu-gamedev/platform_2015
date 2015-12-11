@@ -131,7 +131,6 @@ void Player::check_collisions()//(grid*)
     if(!floor && !(jumping || falling))
     {
         falling = true;
-        moving = false;
         v_direction = -1;
         speed_y = 0;
     }
@@ -236,8 +235,6 @@ void Player:: collide_with_Terrain(Terrain* terra)
             pos_rect.x = real_x = terra -> pos_rect.x + terra -> pos_rect.w + 1;
         }
 
-        moving = false;
-        speed = 0;
 
        /* if (jumping)
         {
