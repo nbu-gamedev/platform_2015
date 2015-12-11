@@ -83,7 +83,7 @@ bool Enemy::update(int time_passed, Key_event* ke)
             speed_y = 0;
         }
     }
-	collide_with_terrain();
+	collide_with_Terrain();
    return update_grid_pos();
 }
 
@@ -118,11 +118,11 @@ bool Enemy::update_grid_pos()
     return false;
 }
 
-void Enemy::collide_with_terrain()
+void Enemy::collide_with_Terrain()
 {
     int i_pos = get_grid_coords().first;
     int j_pos = get_grid_coords().second;
-    terrain* terra = NULL;
+    Terrain* terra = NULL;
     // check if collide with close objects
     for (int i = i_pos - 1; i <= i_pos + 1; i++)
     {
@@ -131,9 +131,9 @@ void Enemy::collide_with_terrain()
             if (i < 0 || i >= GRID_HEIGHT || j < 0 || j >= GRID_WIDTH) continue; // world ' out of bounds ' ?
 			for (Actor* actor : grid[i][j])
 			{
-				if (overlap(actor) && dynamic_cast<terrain*>(actor) )
+				if (overlap(actor) && dynamic_cast<Terrain*>(actor) )
 				{
-					terra = dynamic_cast<terrain*>(actor);
+					terra = dynamic_cast<Terrain*>(actor);
 					if(i_grid < terra -> i_grid && j_grid == terra -> j_grid)
 					{
 						pos_rect.y = real_y = terra -> pos_rect.y - pos_rect.h - 1;
@@ -160,10 +160,10 @@ void Enemy::collide_with_terrain()
     //check for any floor
     if(i_pos >= GRID_HEIGHT - 1) return;
 
-    if(i_pos + 1 < GRID_HEIGHT && !grid[i_pos + 1][j_pos].empty() && dynamic_cast<terrain*>(grid[i_pos + 1][j_pos][0])
-            && dynamic_cast<terrain*>(grid[i_pos + 1][j_pos][0]) -> pos_rect.y <= pos_rect.y + pos_rect.h + 1)
+    if(i_pos + 1 < GRID_HEIGHT && !grid[i_pos + 1][j_pos].empty() && dynamic_cast<Terrain*>(grid[i_pos + 1][j_pos][0])
+            && dynamic_cast<Terrain*>(grid[i_pos + 1][j_pos][0]) -> pos_rect.y <= pos_rect.y + pos_rect.h + 1)
     {
-        terra = dynamic_cast<terrain*>(grid[i_pos + 1][j_pos][0]);
+        terra = dynamic_cast<Terrain*>(grid[i_pos + 1][j_pos][0]);
     }
 
     if(!terra && !falling)

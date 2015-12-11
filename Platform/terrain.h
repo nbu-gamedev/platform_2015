@@ -1,13 +1,13 @@
 #pragma once
 #include "Actor.h"
 
-class terrain :
+class Terrain :
 	public Actor
 {
 public:
-	terrain();
-	terrain(SDL_Rect rect, int i, int j, Object obj);
-	~terrain();
+	Terrain();
+	Terrain(SDL_Rect rect, int i, int j, Object obj);
+	~Terrain();
 	Object type;
 
 	bool update(int time_passed, Key_event* ke);

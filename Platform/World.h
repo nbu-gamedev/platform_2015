@@ -6,7 +6,7 @@
 #include <sstream>
 #include "Actor.h"
 #include "Player.h"
-#include "terrain.h"
+#include "Terrain.h"
 
 using namespace std;
 
