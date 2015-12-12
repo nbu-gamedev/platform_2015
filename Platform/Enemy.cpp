@@ -103,6 +103,7 @@ void Enemy::render(SDL_Renderer * renderer, int time_passed, CoreEngine & core)
 		if (direction < 0)
 		{
 			SDL_RenderCopy(renderer, core.enemy_textures[frame], NULL, &pos_rect);
+			
 		}
 		else
 		{

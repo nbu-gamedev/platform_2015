@@ -1,3 +1,5 @@
+background
+Art/transparent PNG/layer-1.png
 player
 13
 Art/platformerArt/png/character/walk/walk0001.png

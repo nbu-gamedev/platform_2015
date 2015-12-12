@@ -168,113 +168,29 @@ bool CoreEngine::loadMedia()
 					}
 				}
 			}
+			//Load background
+			else if (line == "background")
+			{
+				getline(input_file, path);
+				background_texture = loadTexture(path);
+				if (background_texture == NULL)
+				{
+					printf("Failed to load texture image!\n");
+					success = false;
+				}
+			}
 		}
 		input_file.close();
 	}
 	return success;
 }
-/*
-bool CoreEngine::loadMedia()
-{
-	//Loading success flag
-	bool success = true;
-
-	// load player files
-	std::string path = "Art/platformerArt/png/character/walk/walk0001.png";
-	int index = path.size() - 5;
-	char counter = '1';
-	for (int i = 0; i < 11; ++i)
-	{
-		path[index] = counter;
-		player_textures.push_back(loadTexture(path));
-		if (player_textures[i] == NULL)
-		{
-			printf("Failed to load texture image!\n");
-			success = false;
-		}
-		counter++;
-		if (counter > '9')
-		{
-			counter = '0';
-			path[index - 1]++;
-		}
-	}
-
-	//Loading tiles
-	path = "Art/platformerArt/png/ground.png";
-	tiles_textures.push_back(loadTexture(path));
-	if ( tiles_textures.back() == NULL)
-	{
-		printf("Failed to load tile image!\n");
-		success = false;
-	}
-
-	path = "Art/platformerArt/png/ground_dirt.png";
-	tiles_textures.push_back(loadTexture(path));
-	if (tiles_textures.back() == NULL)
-	{
-		printf("Failed to load tile image!\n");
-		success = false;
-	}
-
-	//load enemy files
-
-	path = "Art/platformerArt/png/enemies/slime_normal.png";
-
-	enemy_textures.push_back(loadTexture(path));
-	if (tiles_textures.back() == NULL)
-	{
-		printf("Failed to load tile image!\n");
-		success = false;
-	}
-	path = "Art/platformerArt/png/enemies/slime_walk.png";
-
-	enemy_textures.push_back(loadTexture(path));
-	if (tiles_textures.back() == NULL)
-	{
-		printf("Failed to load tile image!\n");
-		success = false;
-	}
-	path = "Art/platformerArt/png/enemies/slime_dead.png";
-
-	enemy_textures.push_back(loadTexture(path));
-	if (tiles_textures.back() == NULL)
-	{
-		printf("Failed to load tile image!\n");
-		success = false;
-	}
-	// load coins
-	path = "Art/platformerArt/png/coin_bronze.png";
-
-	coin_textures.push_back(loadTexture(path));
-	if (coin_textures.back() == NULL)
-	{
-		printf("Failed to load tile image!\n");
-		success = false;
-	}
-	path = "Art/platformerArt/png/coin_silver.png";
-
-	coin_textures.push_back(loadTexture(path));
-	if (coin_textures.back() == NULL)
-	{
-		printf("Failed to load tile image!\n");
-		success = false;
-	}
-	path = "Art/platformerArt/png/coin_gold.png";
-
-	coin_textures.push_back(loadTexture(path));
-	if (coin_textures.back() == NULL)
-	{
-		printf("Failed to load tile image!\n");
-		success = false;
-	}
-
-	return success;
-}
-*/
 
 void CoreEngine::close()
 {
+	//Free background 
+	SDL_DestroyTexture(background_texture);
+	background_texture = NULL;
+
 	//Free loaded image player
 	for (int i = 0; i < player_textures.size(); ++i)
 	{
@@ -407,7 +323,10 @@ void CoreEngine::runGamingLoop()
 
 					//Clear screen
 					SDL_RenderClear(gRenderer);
-
+					
+					//Render background
+					SDL_RenderCopy(gRenderer, background_texture, NULL, NULL);
+				
 					//Render Tiles to screen
 					for (int i = 0; i <  GRID_HEIGHT; ++i)
 					{
