@@ -65,13 +65,8 @@ void Player::move_player(int time)
         speed = std::min(speed + acceleration*time / 1000, max_speed_player);
     }
 
-    if (!(jumping || falling || moving))
-    {
-        speed = 0;
-    }
-
 }
-void Player::check_collisions()//(grid*)
+void Player::check_collisions()
 {
 
     if(!alive) return;
@@ -131,14 +126,13 @@ void Player::check_collisions()//(grid*)
     if(!floor && !(jumping || falling))
     {
         falling = true;
-        v_direction = -1;
         speed_y = 0;
+        v_direction = -1;
     }
     else if (floor)
     {
         pos_rect.y = real_y = floor -> pos_rect.y - pos_rect.h - 1;
         speed_y = 0;
-        v_direction = 1;
         jumping = falling = false;
     }
 }
@@ -150,6 +144,7 @@ bool Player::update(int time_passed, Key_event* ke) // (int time_passed)
         if (ke->left_pressed || ke->right_pressed)
         {
             moving = true;
+            // change direction
             if (h_direction != (ke->left_pressed ? -1 : 1))
             {
                 h_direction = ke->left_pressed ? -1 : 1;
@@ -159,6 +154,7 @@ bool Player::update(int time_passed, Key_event* ke) // (int time_passed)
         else
         {
             moving  = false;
+            speed = 0;
         }
         if (ke->jump_pressed && !(jumping || falling))
         {
@@ -238,16 +234,6 @@ void Player:: collide_with_Terrain(Terrain* terra)
         {
             pos_rect.x = real_x = terra -> pos_rect.x + terra -> pos_rect.w + 1;
         }
-
-      //  moving = false;
-       // speed = 0;
-
-       /* if (jumping)
-        {
-            jumping = false;
-            falling = true;
-            speed_y = 0;
-        }*/
     }
     else
     {
@@ -255,6 +241,7 @@ void Player:: collide_with_Terrain(Terrain* terra)
         {
             pos_rect.y = real_y = terra -> pos_rect.y + terra -> pos_rect.w + 1;
             speed_y = 0;
+            v_direction = -1;
         }
     }
 }
@@ -269,9 +256,9 @@ void Player::die()
 {
     lives--;
     alive = false;
+    moving = false;
     falling = true;
-    moving = jumping = false;
-    speed_y = speed = 0;
+    speed_y  = 0;
 }
 
 bool Player::update_grid_pos()
@@ -280,9 +267,11 @@ bool Player::update_grid_pos()
     int new_i_grid = get_grid_coords().first;
     int new_j_grid = get_grid_coords().second;
 
-    // don't change position if dead (it's not neccessary)
-    if ((new_i_grid == i_grid && new_j_grid == j_grid) || !alive)
-        return false;
+     if ((new_i_grid == i_grid && new_j_grid == j_grid)
+        || new_i_grid < 0 || new_i_grid >= GRID_HEIGHT
+        || new_j_grid < 0 || new_j_grid >= GRID_WIDTH
+        ) return false;
+
 
     for (int k = 0; k < grid[i_grid][j_grid].size(); k++)
     {
