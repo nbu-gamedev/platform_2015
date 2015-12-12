@@ -25,7 +25,10 @@ Art/platformerArt/png/enemies/slime_normal.png
 Art/platformerArt/png/enemies/slime_walk.png
 Art/platformerArt/png/enemies/slime_dead.png
 coin
-3
-Art/platformerArt/png/coin_bronze.png
-Art/platformerArt/png/coin_silver.png
-Art/platformerArt/png/coin_gold.png
+6
+Art/platformerArt/png/coin/1.png
+Art/platformerArt/png/coin/2.png
+Art/platformerArt/png/coin/3.png
+Art/platformerArt/png/coin/4.png
+Art/platformerArt/png/coin/5.png
+Art/platformerArt/png/coin/6.png
