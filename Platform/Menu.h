@@ -8,6 +8,8 @@
 #include <SDL_image.h>
 #endif
 
+#include "Globals.h"
+
 const int animation_speed = 500*SCALE_FACTOR;
 const int MENU_SIZE_W = 364*SCALE_FACTOR;
 const int MENU_S_SIZE_H = 74*SCALE_FACTOR;
