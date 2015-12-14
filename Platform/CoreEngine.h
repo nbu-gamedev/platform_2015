@@ -43,8 +43,10 @@ public:
 	//Enemy textures
 	 vector<SDL_Texture*> enemy_textures;
 	 SDL_Texture* enemy_dead_texture;
-	//coin textures
+	//Coin textures
 	 vector<SDL_Texture*> coin_textures;
+	//Exit textures
+	 vector<SDL_Texture*> exit_textures;
 
 	 
 

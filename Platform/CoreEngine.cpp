@@ -179,6 +179,21 @@ bool CoreEngine::loadMedia()
 					success = false;
 				}
 			}
+			else if (line == "exit")
+			{
+				input_file >> num_of_textures;
+				getline(input_file, path);
+				for (int i = 0; i < num_of_textures; ++i)
+				{
+					getline(input_file, path);
+					exit_textures.push_back(loadTexture(path));
+					if (exit_textures[i] == NULL)
+					{
+						printf("Failed to load texture image!\n");
+						success = false;
+					}
+				}
+			}
 		}
 		input_file.close();
 	}

@@ -32,3 +32,9 @@ Art/platformerArt/png/coin/3.png
 Art/platformerArt/png/coin/4.png
 Art/platformerArt/png/coin/5.png
 Art/platformerArt/png/coin/6.png
+exit
+4
+Art/platformerArt/png/exit/door_closedMid.png
+Art/platformerArt/png/exit/door_closedTop.png
+Art/platformerArt/png/exit/door_openMid.png
+Art/platformerArt/png/exit/door_openTop.png

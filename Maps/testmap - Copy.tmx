@@ -15,17 +15,14 @@
  <tileset firstgid="5" name="coin_gold" tilewidth="35" tileheight="35" tilecount="1">
   <image source="../Art/coin_gold.png" width="35" height="35"/>
  </tileset>
- <tileset firstgid="6" name="lock_blue" tilewidth="70" tileheight="70" tilecount="1">
-  <image source="../Art/lock_blue.png" width="70" height="70"/>
- </tileset>
- <tileset firstgid="7" name="hill_short" tilewidth="48" tileheight="102" tilecount="1">
-  <image source="../Art/hill_short.png" width="48" height="102"/>
+ <tileset firstgid="6" name="door_closedMid" tilewidth="70" tileheight="70" tilecount="1">
+  <image source="../Platform/Art/platformerArt/png/exit/door_closedMid.png" width="70" height="70"/>
  </tileset>
  <layer name="Tile Layer 1" width="25" height="13">
   <data encoding="csv">
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,0,0,0,0,
-5,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,0,0,0,0,
-1,1,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,6,0,0,7,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+5,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+1,1,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,6,0,0,
 5,5,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
 5,5,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,5,5,5,0,0,2,
 1,1,0,2,5,5,2,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
