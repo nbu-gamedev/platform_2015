@@ -27,11 +27,11 @@ void Coin::render(SDL_Renderer * renderer, int time_passed, CoreEngine & core)
 		frame %= core.enemy_textures.size();
 		lastUpdated -= 1000;
 	}
-	
+
 		if (direction < 0)
 		{
 			SDL_RenderCopy(renderer, core.enemy_textures[frame], NULL, &pos_rect);
-			
+
 		}
 		else
 		{

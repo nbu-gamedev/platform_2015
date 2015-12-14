@@ -1,4 +1,5 @@
 #include "CoreEngine.h"
+#include "Menu.h"
 
 #include <iostream>
 #include <fstream>
@@ -68,7 +69,7 @@ bool CoreEngine::loadMedia()
 {
 	//Loading success flag
 	bool success = true;
-	
+
 	//Open image config file
 	ifstream input_file;
 	string path, line;
@@ -194,6 +195,24 @@ bool CoreEngine::loadMedia()
 					}
 				}
 			}
+			// Load menu images
+			else if (line == "menu")
+			{
+				getline(input_file, path);
+				Menu::menu_opened = loadTexture(path);
+                if (Menu::menu_opened == NULL)
+                {
+                    printf("Failed to load menu texture image!\n");
+                    success = false;
+                }
+                getline(input_file, path);
+				Menu::menu_closed = loadTexture(path);
+                if (Menu::menu_closed == NULL)
+                {
+                    printf("Failed to load menu texture image!\n");
+                    success = false;
+                }
+			}
 		}
 		input_file.close();
 	}
@@ -202,7 +221,7 @@ bool CoreEngine::loadMedia()
 
 void CoreEngine::close()
 {
-	//Free background 
+	//Free background
 	SDL_DestroyTexture(background_texture);
 	background_texture = NULL;
 
@@ -315,6 +334,7 @@ void CoreEngine::runGamingLoop()
 
 				InputHandler handler;
 				Custom_event ce;
+				Menu menu;
 				// The Game loop
 				while (game_running)
 				{
@@ -338,10 +358,10 @@ void CoreEngine::runGamingLoop()
 
 					//Clear screen
 					SDL_RenderClear(gRenderer);
-					
+
 					//Render background
 					SDL_RenderCopy(gRenderer, background_texture, NULL, NULL);
-				
+
 					//Render Tiles to screen
 					for (int i = 0; i <  GRID_HEIGHT; ++i)
 					{
@@ -355,12 +375,17 @@ void CoreEngine::runGamingLoop()
 								{
 									actor->render(gRenderer, time_passed, *this);
 								}
+								if (!menu.menu)
+                                deletion = actor->update(time_passed, ce.ke);
+								actor->render(gRenderer, time_passed, *this);
                                 if (!deletion) k++;
 							}
 						}
 					}
 					m_world.player->render(gRenderer, time_passed, *this);
 
+					menu.update(time_passed, ce.me);
+                    menu.render_menu(gRenderer,time_passed);
 					//Update screen
 					SDL_RenderPresent(gRenderer);
 
