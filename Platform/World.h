@@ -42,6 +42,21 @@ public:
 	void parseObject(const string &line, ifstream &file);
 	void parseGrid(const string &line, ifstream &file);
 	int getValueAfter(const string &toParse, const string &line);
+	void destroyWorld()
+	{
+		for (int i = 0; i < GRID_HEIGHT; i++)
+		{
+			for (int j = 0; j < GRID_WIDTH; j++)
+			{
+				for (Actor* actor : worldGrid[i][j])
+				{
+					delete actor;
+				}
+				worldGrid[i][j].clear();
+			}
+		}
+		loadedObjects.clear();
+	}
 
 	void respawn();
 

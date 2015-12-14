@@ -1,6 +1,7 @@
 #include <algorithm>
 #include "CoreEngine.h"
 #include "Player.h"
+#include "Exit.h"
 #include <iostream>
 using namespace std;
 
@@ -102,12 +103,11 @@ void Player::check_collisions()
 					{
 						die();
 					}
-					/*
-
+					
 					if (dynamic_cast<Exit*>(actor) && !Coin::coins_to_collect)
 					{
-					end_level = true;
-					*/
+						end_level = true;
+					}
 				}
 			}
         }

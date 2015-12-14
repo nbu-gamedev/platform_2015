@@ -390,6 +390,15 @@ void CoreEngine::runGamingLoop()
 					//Update screen
 					SDL_RenderPresent(gRenderer);
 
+					if (m_world.player->end_level == true)
+					{
+						m_world.destroyWorld();
+						if (m_world.loadWorld("../Maps/level_2.tmx"))
+						{
+							cout << "ERROR s37: Failed to laod next level";
+						}
+					}
+
 				}
 			}
 		}
