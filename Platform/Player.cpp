@@ -6,6 +6,7 @@ using namespace std;
 
 Player::Player(SDL_Rect pos, std::vector<Actor*>** world)
 {
+	type = PLAYER;
     pos_rect = pos;
     real_x = pos.x;
     real_y = pos.y;

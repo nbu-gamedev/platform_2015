@@ -8,5 +8,6 @@ public:
 	~Exit();
 	virtual bool update(int time_passed, Key_event* ke);
 	virtual void render(SDL_Renderer* renderer, int time_passed, CoreEngine &core);
+	bool open = false;
 };
 

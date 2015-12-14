@@ -25,7 +25,6 @@ public:
     void get_coin(Coin* coin);
     void die();
 	bool update_grid_pos();
-
 	std::vector<Actor*>** grid;
     double real_x,real_y;
     int h_direction;

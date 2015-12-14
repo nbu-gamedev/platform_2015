@@ -9,7 +9,7 @@
 #include "Input_Handler.h"
 enum Object
 {
-	GROUND, GROUND_DIRT, PLAYER, SLIME
+	GROUND, GROUND_DIRT, PLAYER, SLIME, ACTOR
 };
 
 #include <utility>
@@ -26,9 +26,9 @@ public:
 	//std::pair< std::pair<int,int>, std::pair<int,int> > get_grid_coords();
 	std::pair<int,int> get_grid_coords();
 	bool overlap(Actor* actor);
-
 	SDL_Rect pos_rect;
 	SDL_Rect img_rect;
+	Object type;
 
     int i_grid, j_grid;
 	int speed; //
