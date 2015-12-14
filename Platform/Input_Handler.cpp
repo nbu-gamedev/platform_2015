@@ -15,9 +15,12 @@ InputHandler::handle()
         {
             result.quit = true;
         }
-        else if(event.type == SDL_MOUSEBUTTONDOWN || event.type == SDL_MOUSEBUTTONUP)
+        else if(event.type == SDL_MOUSEBUTTONDOWN && event.button.button == SDL_BUTTON_LEFT) //|| event.type == SDL_MOUSEBUTTONUP)
         {
-            //
+            me.x = event.button.x;
+            me.y = event.button.y;
+
+            result.me = &me;
         }
          else if(event.type == SDL_KEYDOWN || event.type == SDL_KEYUP)
         {

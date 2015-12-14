@@ -16,7 +16,8 @@ struct Key_event
 
 struct Mouse_event
 {
-   //
+   int x;
+   int y;
 };
 
 struct Custom_event

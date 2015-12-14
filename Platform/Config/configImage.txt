@@ -38,3 +38,7 @@ Art/platformerArt/png/exit/door_closedMid.png
 Art/platformerArt/png/exit/door_closedTop.png
 Art/platformerArt/png/exit/door_openMid.png
 Art/platformerArt/png/exit/door_openTop.png
+menu
+Art/platformerArt/png/menu/menu_open.png
+Art/platformerArt/png/menu/menu_close.png
+
