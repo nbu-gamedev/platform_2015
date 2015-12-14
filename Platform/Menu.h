@@ -11,7 +11,7 @@
 #include "Globals.h"
 #include "Input_Handler.h"
 
-const int animation_speed = 1300*SCALE_FACTOR;
+const int animation_speed = 3000*SCALE_FACTOR;
 const int MENU_SIZE_W = 343*SCALE_FACTOR;
 const int MENU_S_SIZE_H = 74*SCALE_FACTOR;
 const int MENU_L_SIZE_H = 849*SCALE_FACTOR;

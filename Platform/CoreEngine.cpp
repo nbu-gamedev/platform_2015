@@ -370,7 +370,6 @@ void CoreEngine::runGamingLoop()
                              for (int k = 0; k < m_world.worldGrid[i][y].size();)
 							{
                                 Actor* actor = m_world.worldGrid[i][y][k];
-								deletion = actor->update(time_passed, ce.ke);
 								if (actor->type != PLAYER)
 								{
 									actor->render(gRenderer, time_passed, *this);

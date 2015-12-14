@@ -1,6 +1,5 @@
 #include "Menu.h"
-#include <iostream>
-using namespace std;
+
 SDL_Texture* Menu::menu_closed = NULL;
 SDL_Texture* Menu::menu_opened = NULL;
 
@@ -13,7 +12,6 @@ Menu::Menu()
     menu = true;
     animation = false;
     direction = 1;
-
 }
 
 // NOT TESTED AT ALL!!!!!!!!!!!!!!
