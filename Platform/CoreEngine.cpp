@@ -85,7 +85,7 @@ bool CoreEngine::loadMedia()
 	input_file.open("Config/configImage.txt");
 	if(!input_file.is_open())
 	{
-		cout << "Couldn't open image config file !!" << endl;
+		cout << "Couldn't open image configImage file !!" << endl;
 	}
 	else
 	{
@@ -223,6 +223,31 @@ bool CoreEngine::loadMedia()
 		}
 		input_file.close();
 	}
+	// Load sound
+	input_file.open("Config/configSound.txt");
+	if (!input_file.is_open())
+	{
+		cout << "Couldn't open image configSound file !!" << endl;
+	}
+	else
+	{
+		while (getline(input_file, line))
+		{
+			if (line == "coin")
+			{
+				getline(input_file, path);
+				sound_effects.push_back(Mix_LoadWAV(path.c_str()));
+				if (sound_effects.back() == NULL)
+				{
+					printf("Failed to load beat music! SDL_mixer Error: %s\n", Mix_GetError());
+					success = false;
+				}
+			}
+		}
+		input_file.close();
+	}
+
+
 	return success;
 }
 
@@ -263,6 +288,13 @@ void CoreEngine::close()
 	{
 		SDL_DestroyTexture(coin_textures[i]);
 		coin_textures[i] = NULL;
+	}
+	// free sounds
+	for (int i = 0; i < sound_effects.size(); ++i)
+	{
+
+		Mix_FreeChunk( sound_effects[i] );
+		sound_effects[i] = NULL;
 	}
 	//Destroy window
 	SDL_DestroyRenderer(gRenderer);
@@ -328,6 +360,8 @@ void CoreEngine::runGamingLoop()
 			}
 			else
 			{
+				//todo yavor : remove that line, it was just for testing
+				Mix_PlayChannel(-1, sound_effects[0], 0);
 
 				bool game_running = true;
 				bool deletion = false;

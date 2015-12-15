@@ -249,6 +249,7 @@ void Player:: collide_with_Terrain(Terrain* terra)
 
 void Player:: get_coin(Coin* coin)
 {
+	// play coin sound
     coin -> taken = true;
     Coin::coins_to_collect--;
 }

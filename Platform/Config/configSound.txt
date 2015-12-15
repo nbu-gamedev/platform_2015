@@ -1,0 +1,2 @@
+coin
+Sound/coin.ogg
