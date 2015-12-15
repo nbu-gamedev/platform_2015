@@ -7,6 +7,7 @@
 #else
 #include <SDL.h>
 #include <SDL_image.h>
+#include <SDL_mixer.h>
 #endif
 
 #include "Coin.h"
@@ -48,6 +49,8 @@ public:
 	//Exit textures
 	 vector<SDL_Texture*> exit_textures;
 
+	 //Sound effects
+	 vector<Mix_Chunk*> sound_effects;
 	 
 
 	//world
