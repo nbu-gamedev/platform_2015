@@ -60,7 +60,7 @@ bool CoreEngine :: init()
 					printf("SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError());
 					success = false;
 				}
-				//Initialize SDL_mixer 
+				//Initialize SDL_mixer
 				if( Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048 ) < 0 )
 				{
 					printf( "SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError() );
@@ -346,7 +346,7 @@ void CoreEngine::runGamingLoop()
 	{
 		// TODO maybe wrap into class
 		// NOTE-SAMIR: Create new world for each new level to clear data from previous level.
-		if (!m_world.loadWorld("../Maps/testmap - Copy.tmx"))
+		if (!m_world.loadWorld("Maps/testmap - Copy.tmx"))
 		{
 			std::cout << "Error loading map !!" << std::endl;
 		}
@@ -433,7 +433,7 @@ void CoreEngine::runGamingLoop()
 					if (m_world.player->end_level == true)
 					{
 						m_world.destroyWorld();
-						if (m_world.loadWorld("../Maps/level_2.tmx"))
+						if (m_world.loadWorld("Maps/level_2.tmx"))
 						{
 							cout << "ERROR s37: Failed to laod next level";
 						}

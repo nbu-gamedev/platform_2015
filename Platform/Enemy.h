@@ -11,7 +11,6 @@ class Enemy :public Actor
 {
 public:
 	// if enemy is static (not moving): maxx = minx = pos.x && spd = 0
-	Enemy(SDL_Rect pos, std::vector<Actor*>** world, int maxx, int minx, int spd, Object obj, int direction);
 	Enemy(SDL_Rect pos, std::vector<Actor*>** world, Object obj);
 
 	Object type;

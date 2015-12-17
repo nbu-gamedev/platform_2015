@@ -1,29 +1,5 @@
 #include "Enemy.h"
 #include "CoreEngine.h"
- Enemy::Enemy(SDL_Rect pos, std::vector<Actor*>** world, int maxx, int minx, int spd, Object obj, int direction = 1)
- {
-	pos_rect = pos;
-    real_x = pos.x;
-    real_y = pos.y;
-	grid = world;
-	type = obj;
-    i_grid = get_grid_coords().first;
-    j_grid = get_grid_coords().second;
-	max_x = maxx;
-	min_x = minx;
-	speed = spd;
-	speed_y = 0;
-	falling = false;
-	this->direction = direction;
-
-
-	if(max_x > M_WINDOW_WIDTH - pos.w) max_x = M_WINDOW_WIDTH - pos.w;
-	if(min_x > M_WINDOW_WIDTH - pos.w) min_x = M_WINDOW_WIDTH - pos.w;
-	if(max_x < 0) max_x = 0;
-	if(min_x < 0) min_x = 0;
-	if (min_x > max_x) swap(max_x,min_x);
-
- }
 
  Enemy::Enemy(SDL_Rect pos, std::vector<Actor*>** world, Object obj)
  {
@@ -33,39 +9,31 @@
     real_y = pos.y;
 	grid = world;
 	type = obj;
-	//max_x = min_x = rect.x;
     i_grid = get_grid_coords().first;
     j_grid = get_grid_coords().second;
-	max_x = pos.x + 230 * SCALE_FACTOR;
-	min_x = pos.x - 230 * SCALE_FACTOR;
+    // if(type == "static enemy" (??)) pos.x*SCALE_FACTOR;
 	speed = 100;
 	speed_y = 0;
 	direction = 1;
 	falling = false;
-
-
-	if(max_x > M_WINDOW_WIDTH - pos.w) max_x = M_WINDOW_WIDTH - pos.w;
-	if(min_x > M_WINDOW_WIDTH - pos.w) min_x = M_WINDOW_WIDTH - pos.w;
-	if(max_x < 0) max_x = 0;
-	if(min_x < 0) min_x = 0;
-	if (min_x > max_x) swap(max_x,min_x);
-
  }
 
 bool Enemy::update(int time_passed, Key_event* ke)
 {
+
+     // if(type == "static enemy" (??)) retuen;
     if(!falling)
     {
         real_x += (direction)*(speed * time_passed)/ 1000;
         pos_rect.x = real_x;
-        if ( pos_rect.x > max_x)
+        if ( pos_rect.x >  M_WINDOW_WIDTH - pos_rect.w)
         {
-            pos_rect.x = max_x;
+            pos_rect.x =  M_WINDOW_WIDTH - pos_rect.w;
             direction = -1;
         }
-        else if( pos_rect.x < min_x)
+        else if( pos_rect.x < 0)
         {
-            pos_rect.x = min_x;
+            pos_rect.x = 0;
             direction = 1;
         }
     }
@@ -99,11 +67,11 @@ void Enemy::render(SDL_Renderer * renderer, int time_passed, CoreEngine & core)
 		frame %= core.enemy_textures.size();
 		lastUpdated -= 1000;
 	}
-	
+
 		if (direction < 0)
 		{
 			SDL_RenderCopy(renderer, core.enemy_textures[frame], NULL, &pos_rect);
-			
+
 		}
 		else
 		{
