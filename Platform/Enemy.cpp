@@ -153,10 +153,15 @@ void Enemy::collide_with_Terrain()
         terra = dynamic_cast<Terrain*>(grid[i_pos + 1][j_pos][0]);
     }
 
-    if(!terra && !falling)
+   /* if(!terra && !falling)//and type...fallable
     {
         falling = true;
         speed_y = 0;
+    }else
+    */
+    if(!terra && !falling)//and type...!fallable
+    {
+        direction*=-1;
     }
     else if (terra)
     {
