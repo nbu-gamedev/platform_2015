@@ -4,6 +4,7 @@
 #ifdef __linux__
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <SDL2/SDL_mixer.h>
 #else
 #include <SDL.h>
 #include <SDL_image.h>
@@ -21,7 +22,7 @@ class CoreEngine
 {
 public:
 
-    
+
     const char* M_WINDOW_NAME = "Platform";
 
 	//The window we'll be rendering to
@@ -51,7 +52,7 @@ public:
 
 	 //Sound effects
 	 vector<Mix_Chunk*> sound_effects;
-	 
+
 
 	//world
 	World m_world;
