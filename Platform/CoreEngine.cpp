@@ -7,7 +7,7 @@ CoreEngine::CoreEngine()
 {
 	gWindow = NULL;
 	gRenderer = NULL;
-
+	current_level = 0;
 	//gScreenSurface = NULL;
 	//gPNGSurface = NULL;
 }
@@ -488,9 +488,11 @@ void CoreEngine::runGamingLoop()
 					{
 						m_world.destroyWorld();
 						current_level++;
-						if (current_level == level_path.size())
+						if (current_level >= level_path.size())
 						{
 							GAME_WON = true;
+							GAME_RUNNING = false;
+							break;
 						}
 						else if (!m_world.loadWorld(level_path[current_level]))
 						{

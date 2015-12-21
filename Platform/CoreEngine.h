@@ -71,5 +71,5 @@ private:
 //	SDL_Surface* loadSurface(std::string path);   //outdated
 	//Loads individual image as texture
 	SDL_Texture* loadTexture(std::string path);
-	int current_level = 0;
+	int current_level;
 };
