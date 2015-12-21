@@ -9,3 +9,4 @@ extern int GRID_WIDTH;
 extern int TILE_SIZE;
 extern bool MUSIC;
 extern bool GAME_RUNNING;
+extern bool GAME_WON;

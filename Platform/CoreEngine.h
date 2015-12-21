@@ -52,7 +52,9 @@ public:
 
 	 //Sound effects
 	 vector<Mix_Chunk*> sound_effects;
-
+	
+	 //Map paths
+	 vector<string> level_path;
 
 	//world
 	World m_world;
@@ -62,10 +64,12 @@ public:
 	void runGamingLoop();
 	bool init();
 	bool loadMedia();
+	bool loadLevels(string levels);
 	void close();
 private:
 	//Loads individual image
 //	SDL_Surface* loadSurface(std::string path);   //outdated
 	//Loads individual image as texture
 	SDL_Texture* loadTexture(std::string path);
+	int current_level = 0;
 };

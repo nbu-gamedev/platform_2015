@@ -266,6 +266,29 @@ bool CoreEngine::loadMedia()
 	return success;
 }
 
+bool CoreEngine::loadLevels(string levels)
+{
+	ifstream input_file;
+	string path, line;
+	int num_of_textures;
+	//Load images
+	input_file.open(levels);
+	if (!input_file.is_open())
+	{
+		cout << "Couldn't open levels configImage file !!" << endl;
+		return false;
+	}
+	else
+	{
+		while (getline(input_file, line))
+		{
+			cout << "1: " << line << endl;
+			level_path.push_back(line);
+		}
+	}
+	return true;
+}
+
 void CoreEngine::close()
 {
 	//Free background
@@ -371,12 +394,18 @@ void CoreEngine::runGamingLoop()
 	{
 		// TODO maybe wrap into class
 		// NOTE-SAMIR: Create new world for each new level to clear data from previous level.
-		if (!m_world.loadWorld("Maps/testmap - Copy.tmx"))
+		
+		if (!loadLevels("Config/configLevels.txt") )
 		{
 			std::cout << "Error loading map !!" << std::endl;
 		}
 		else
+		{
+			if (!m_world.loadWorld(level_path[0]))
 			{
+				cout << level_path[0];
+				std::cout << "s07 error loading map" << std::endl;
+			}
 
 			//Load media
 			if (!loadMedia())
@@ -458,7 +487,12 @@ void CoreEngine::runGamingLoop()
 					if (m_world.player->end_level == true)
 					{
 						m_world.destroyWorld();
-						if (m_world.loadWorld("Maps/level_2.tmx"))
+						current_level++;
+						if (current_level == level_path.size())
+						{
+							GAME_WON = true;
+						}
+						else if (!m_world.loadWorld(level_path[current_level]))
 						{
 							cout << "ERROR s37: Failed to laod next level";
 						}
