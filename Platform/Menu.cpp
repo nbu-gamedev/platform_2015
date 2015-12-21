@@ -132,7 +132,7 @@ Button::Button(int tp, int number)
 {
     type = tp;
     num = number;
-
+    selected = false;
     //init collision points and position on the screen
     if(num == 0)
     {
