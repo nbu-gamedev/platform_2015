@@ -202,7 +202,7 @@ bool CoreEngine::loadMedia()
 					}
 				}
 			}
-			// Load menu images
+			//Load menu images
 			else if (line == "menu")
 			{
 				getline(input_file, path);
@@ -219,6 +219,21 @@ bool CoreEngine::loadMedia()
                     printf("Failed to load menu texture image!\n");
                     success = false;
                 }
+			}
+			else if (line == "buttons")
+			{
+                input_file >> num_of_textures;
+				getline(input_file, path);
+				for (int i = 0; i < num_of_textures; i++)
+				{
+					getline(input_file, path);
+					Menu::btns_images[i/2][i%2] = loadTexture(path);
+					if (Menu::btns_images[i/2][i%2] == NULL)
+					{
+						printf("Failed to load button image!\n");
+						success = false;
+					}
+				}
 			}
 		}
 		input_file.close();
@@ -288,6 +303,16 @@ void CoreEngine::close()
 	{
 		SDL_DestroyTexture(coin_textures[i]);
 		coin_textures[i] = NULL;
+	}
+	//free menu
+	SDL_DestroyTexture(Menu::menu_closed);
+	SDL_DestroyTexture(Menu::menu_opened);
+	Menu::menu_closed = Menu::menu_opened = NULL;
+	for (int i = 0; i < 6; ++i)
+	{
+		SDL_DestroyTexture(Menu::btns_images[i][0]);
+		SDL_DestroyTexture(Menu::btns_images[i][1]);
+		Menu::btns_images[i][0] = Menu::btns_images[i][1] = NULL;
 	}
 	// free sounds
 	for (int i = 0; i < sound_effects.size(); ++i)
@@ -363,7 +388,6 @@ void CoreEngine::runGamingLoop()
 				//todo yavor : remove that line, it was just for testing
 				Mix_PlayChannel(-1, sound_effects[0], 0);
 
-				bool game_running = true;
 				bool deletion = false;
 				//TODO yavor  move this
 				SDL_Rect tile;
@@ -377,7 +401,7 @@ void CoreEngine::runGamingLoop()
 				Custom_event ce;
 				Menu menu;
 				// The Game loop
-				while (game_running)
+				while (GAME_RUNNING)
 				{
 					curr_time = SDL_GetTicks();
 					time_passed = curr_time - prev_time;
@@ -389,7 +413,8 @@ void CoreEngine::runGamingLoop()
 					prev_time = curr_time;
 					ce = handler.handle();
 
-					if (ce.quit || (m_world.player -> completely_dead && !Player::lives)) game_running = false;
+                    //to be replaced with game over / win
+					if (m_world.player -> completely_dead && !Player::lives) GAME_RUNNING = false;
 
                     //respawn if neccessary
                     if (m_world.player -> completely_dead)
@@ -426,7 +451,7 @@ void CoreEngine::runGamingLoop()
 					m_world.player->render(gRenderer, time_passed, *this);
 
 					menu.update(time_passed, ce.me);
-                    menu.render_menu(gRenderer,time_passed);
+                    menu.render_menu(gRenderer);
 					//Update screen
 					SDL_RenderPresent(gRenderer);
 

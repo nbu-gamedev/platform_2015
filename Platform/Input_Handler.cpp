@@ -1,11 +1,11 @@
 #include "Input_Handler.h"
+#include "Globals.h"
 
 Custom_event
 InputHandler::handle()
 {
     Custom_event result;
 
-    result.quit = false; // QUIT
     result.me = NULL;
     result.ke = NULL;
 
@@ -13,10 +13,19 @@ InputHandler::handle()
     {
         if (event.type == SDL_QUIT)
         {
-            result.quit = true;
+            GAME_RUNNING = false;
         }
-        else if(event.type == SDL_MOUSEBUTTONDOWN && event.button.button == SDL_BUTTON_LEFT) //|| event.type == SDL_MOUSEBUTTONUP)
+        else if(event.type == SDL_MOUSEMOTION)
         {
+            me.clicked = false;
+            me.x = event.motion.x;
+            me.y = event.motion.y;
+
+            result.me = &me;
+        }
+        else if(event.type == SDL_MOUSEBUTTONDOWN && event.button.button == SDL_BUTTON_LEFT)
+        {
+            me.clicked = true;
             me.x = event.button.x;
             me.y = event.button.y;
 

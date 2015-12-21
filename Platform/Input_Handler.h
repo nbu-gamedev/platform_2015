@@ -16,13 +16,13 @@ struct Key_event
 
 struct Mouse_event
 {
-   int x;
-   int y;
+    bool clicked;
+    int x;
+    int y;
 };
 
 struct Custom_event
 {
-    bool quit;
     Mouse_event* me;
     Key_event* ke;
 };
