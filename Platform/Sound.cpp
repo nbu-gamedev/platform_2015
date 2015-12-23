@@ -1,7 +1,6 @@
 #include "Sound.h"
 #include <SDL_mixer.h>
 #include "CoreEngine.h"
-#include "SoundEvents.h"
 
 void Sound::play_sound(CoreEngine &core, int sound)
 {

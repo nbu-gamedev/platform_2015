@@ -2,7 +2,6 @@
 
 
 class CoreEngine;
-enum SoundEvents;
 class Sound
 {
 public:
