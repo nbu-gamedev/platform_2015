@@ -237,9 +237,6 @@ void Player::render(SDL_Renderer * renderer, int time_passed, CoreEngine & core)
 
 void Player:: collide_with_Terrain(Terrain* terra)
 {
-	//TODO yavor kari samir ; i hate this :D nz koga trqbva da collide ti go preceni
-	sound_events_to_play[player_colision] = true;
-	//end todo
     if(i_grid < terra -> i_grid)
     {
         if(j_grid == terra -> j_grid)
@@ -250,16 +247,19 @@ void Player:: collide_with_Terrain(Terrain* terra)
         }
         else if (j_grid < terra -> j_grid)
         {
+            sound_events_to_play[player_colision] = true;
             pos_rect.x = real_x = terra -> pos_rect.x - pos_rect.w - 1;
         }
         else
         {
+            sound_events_to_play[player_colision] = true;
             pos_rect.x = real_x = terra -> pos_rect.x + terra -> pos_rect.w + 1;
         }
     }
 
     else if(i_grid == terra -> i_grid)
     {
+        sound_events_to_play[player_colision] = true;
         if (j_grid < terra -> j_grid)
         {
             pos_rect.x = real_x = terra -> pos_rect.x - pos_rect.w - 1;
@@ -271,6 +271,7 @@ void Player:: collide_with_Terrain(Terrain* terra)
     }
     else
     {
+        sound_events_to_play[player_colision] = true;
         if(j_grid == terra -> j_grid)
         {
             pos_rect.y = real_y = terra -> pos_rect.y + terra -> pos_rect.w + 1;

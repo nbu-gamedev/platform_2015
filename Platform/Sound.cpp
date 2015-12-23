@@ -1,5 +1,9 @@
 #include "Sound.h"
+#ifdef __linux__
+#include <SDL2/SDL_mixer.h>
+#else
 #include <SDL_mixer.h>
+#endif
 #include "CoreEngine.h"
 
 void Sound::play_sound(CoreEngine &core, int sound)
@@ -13,24 +17,24 @@ void Sound::play_music(CoreEngine & core, int loop_number, bool music_enabled)
 	{
 		if (Mix_PlayingMusic() == 0)
 		{
-			//Play the music 
+			//Play the music
 			Mix_PlayMusic(core.music_loops[loop_number], -1);
 		}
-			//If the music is paused 
+			//If the music is paused
 		else if (Mix_PausedMusic() == 1)
 		{
-			//Resume the music 
+			//Resume the music
 			Mix_ResumeMusic();
 		}
-		
+
 	}
-	//If the music is playing 
+	//If the music is playing
 	else
 	{
-		//Pause the music 
+		//Pause the music
 		Mix_PauseMusic();
 	}
-	
-	//If music is being played 
-	
+
+	//If music is being played
+
 }
