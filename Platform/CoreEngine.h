@@ -17,7 +17,6 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "Input_Handler.h"
-
 class CoreEngine
 {
 public:
@@ -51,8 +50,8 @@ public:
 	 vector<SDL_Texture*> exit_textures;
 
 	 //Sound effects
-	 vector<Mix_Chunk*> sound_effects;
-	
+	vector<Mix_Chunk*> sound_effects;
+	vector<Mix_Music*> music_loops;
 	 //Map paths
 	 vector<string> level_path;
 

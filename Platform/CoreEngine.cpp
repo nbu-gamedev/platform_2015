@@ -3,6 +3,8 @@
 
 #include <iostream>
 #include <fstream>
+#include "SoundEvents.h"
+#include "Sound.h"
 CoreEngine::CoreEngine()
 {
 	gWindow = NULL;
@@ -248,11 +250,21 @@ bool CoreEngine::loadMedia()
 	{
 		while (getline(input_file, line))
 		{
-			if (line == "coin")
+			if ( line == "coin" || line == "jump" || line == "dead" || line == "colision" || line == "exit")
 			{
 				getline(input_file, path);
 				sound_effects.push_back(Mix_LoadWAV(path.c_str()));
 				if (sound_effects.back() == NULL)
+				{
+					printf("Failed to load beat music! SDL_mixer Error: %s\n", Mix_GetError());
+					success = false;
+				}
+			}
+			else if (line == "music")
+			{
+				getline(input_file, path);
+				music_loops.push_back(Mix_LoadMUS(path.c_str()));
+				if (music_loops.back() == NULL)
 				{
 					printf("Failed to load beat music! SDL_mixer Error: %s\n", Mix_GetError());
 					success = false;
@@ -344,6 +356,12 @@ void CoreEngine::close()
 		Mix_FreeChunk( sound_effects[i] );
 		sound_effects[i] = NULL;
 	}
+	// free music
+	for (int i = 0; i < music_loops.size(); ++i)
+	{
+		Mix_FreeMusic( music_loops[i] );
+		music_loops[i] = NULL;
+	}
 	//Destroy window
 	SDL_DestroyRenderer(gRenderer);
 	SDL_DestroyWindow(gWindow);
@@ -414,8 +432,7 @@ void CoreEngine::runGamingLoop()
 			}
 			else
 			{
-				//todo yavor : remove that line, it was just for testing
-				Mix_PlayChannel(-1, sound_effects[0], 0);
+				
 
 				bool deletion = false;
 				//TODO yavor  move this
@@ -432,6 +449,8 @@ void CoreEngine::runGamingLoop()
 				// The Game loop
 				while (GAME_RUNNING)
 				{
+					//TODO map to level , and button music
+					Sound::play_music(*this, 0, true);
 					curr_time = SDL_GetTicks();
 					time_passed = curr_time - prev_time;
 					if (time_passed < 15)
