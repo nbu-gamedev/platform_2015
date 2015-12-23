@@ -76,6 +76,7 @@ void Player::check_collisions()
 
     int i_pos = get_grid_coords().first;
     int j_pos = get_grid_coords().second;
+    bool collide = false;
     // check if collide with close objects
     for (int i = i_pos - 1; i <= i_pos + 1; i++)
     {
@@ -240,6 +241,14 @@ void Player:: collide_with_Terrain(Terrain* terra)
             speed_y = 0;
             jumping = falling = false;
         }
+        else if (j_grid < terra -> j_grid)
+        {
+            pos_rect.x = real_x = terra -> pos_rect.x - pos_rect.w - 1;
+        }
+        else
+        {
+            pos_rect.x = real_x = terra -> pos_rect.x + terra -> pos_rect.w + 1;
+        }
     }
 
     else if(i_grid == terra -> i_grid)
@@ -260,6 +269,14 @@ void Player:: collide_with_Terrain(Terrain* terra)
             pos_rect.y = real_y = terra -> pos_rect.y + terra -> pos_rect.w + 1;
             speed_y = 0;
             v_direction = -1;
+        }
+        else if (j_grid < terra -> j_grid)
+        {
+            pos_rect.x = real_x = terra -> pos_rect.x - pos_rect.w - 1;
+        }
+        else
+        {
+            pos_rect.x = real_x = terra -> pos_rect.x + terra -> pos_rect.w + 1;
         }
     }
 }
