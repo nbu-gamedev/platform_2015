@@ -3,8 +3,9 @@
 #include "Enemy.h"
 #include "Coin.h"
 #include "Input_Handler.h"
+//
 
-
+//
 const double max_speed_player = 300 * SCALE_FACTOR;
 const double jump_start_speed = 630 * SCALE_FACTOR;
 const double acceleration = 1000 * SCALE_FACTOR;
@@ -36,6 +37,10 @@ public:
     bool alive;
     bool completely_dead;
     bool end_level;
-
+	
+	//yavor test sound must be size of enum
+	bool sound_events_to_play[5];
+	void play_sound(CoreEngine &core);
+	//
     static int lives;
 };

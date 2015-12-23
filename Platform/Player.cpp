@@ -3,6 +3,8 @@
 #include "Player.h"
 #include "Exit.h"
 #include <iostream>
+#include "SoundEvents.h"
+#include "Sound.h"
 using namespace std;
 
 Player::Player(SDL_Rect pos, std::vector<Actor*>** world)
@@ -108,6 +110,7 @@ void Player::check_collisions()
 
 					if (dynamic_cast<Exit*>(actor) && !Coin::coins_to_collect)
 					{
+						sound_events_to_play[exit_door] = true;
 						end_level = true;
 					}
 				}
@@ -162,6 +165,7 @@ bool Player::update(int time_passed, Key_event* ke) // (int time_passed)
         if (ke->jump_pressed && !(jumping || falling))
         {
             jumping = true;
+			sound_events_to_play[player_jump] = true;
             v_direction = 1;
             speed_y = jump_start_speed;
         }
@@ -233,6 +237,9 @@ void Player::render(SDL_Renderer * renderer, int time_passed, CoreEngine & core)
 
 void Player:: collide_with_Terrain(Terrain* terra)
 {
+	//TODO yavor kari samir ; i hate this :D nz koga trqbva da collide ti go preceni
+	sound_events_to_play[player_colision] = true;
+	//end todo
     if(i_grid < terra -> i_grid)
     {
         if(j_grid == terra -> j_grid)
@@ -283,13 +290,16 @@ void Player:: collide_with_Terrain(Terrain* terra)
 
 void Player:: get_coin(Coin* coin)
 {
-	// play coin sound
-    coin -> taken = true;
+	// Yavor test
+	sound_events_to_play[take_coin] = true;
+	//
+	coin -> taken = true;
     Coin::coins_to_collect--;
 }
 
 void Player::die()
 {
+	sound_events_to_play[player_dead] = true;
     lives--;
     alive = false;
     moving = false;
@@ -322,6 +332,18 @@ bool Player::update_grid_pos()
         }
     }
     return false;
+}
+
+void Player::play_sound(CoreEngine &core)
+{
+	for (int i = 0; i < 5; ++i)
+	{
+		if (sound_events_to_play[i] == true)
+		{
+			Sound::play_sound(core, i);
+			sound_events_to_play[i] = false;
+		}
+	}
 }
 
 int Player::lives = 3;

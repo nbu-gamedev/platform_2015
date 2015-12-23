@@ -450,7 +450,7 @@ void CoreEngine::runGamingLoop()
 				while (GAME_RUNNING)
 				{
 					//TODO map to level , and button music
-					Sound::play_music(*this, 0, true);
+					Sound::play_music(*this, 0, false);
 					curr_time = SDL_GetTicks();
 					time_passed = curr_time - prev_time;
 					if (time_passed < 15)
@@ -497,7 +497,7 @@ void CoreEngine::runGamingLoop()
 						}
 					}
 					m_world.player->render(gRenderer, time_passed, *this);
-
+					m_world.player->play_sound(*this);
 					menu.update(time_passed, ce.me);
                     menu.render_menu(gRenderer);
 					//Update screen

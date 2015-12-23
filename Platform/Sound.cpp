@@ -3,7 +3,7 @@
 #include "CoreEngine.h"
 #include "SoundEvents.h"
 
-void Sound::play_sound(CoreEngine &core, SoundEvents sound)
+void Sound::play_sound(CoreEngine &core, int sound)
 {
 	Mix_PlayChannel(-1, core.sound_effects[sound], 0);
 }
