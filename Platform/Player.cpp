@@ -184,7 +184,24 @@ void Player::render(SDL_Renderer * renderer, int time_passed, CoreEngine & core)
 		//last_rendered = 0;
 	}
 	//TODO yavor / samir  make it start from first frame every time the player stops
-	if (moving)
+	if (!alive)
+	{
+		SDL_RenderCopy(renderer, core.player_dead_texture, NULL, &pos_rect);
+	}
+	else if (jumping)
+	{
+		if (h_direction < 0)
+		{
+			// core.player_textures.size()-frame-1   //TODO test if frames are correct order
+			SDL_RenderCopyEx(renderer, core.player_jump_texture, NULL, &pos_rect, 180.0f, NULL, flip);
+
+		}
+		else
+		{
+			SDL_RenderCopy(renderer, core.player_jump_texture, NULL, &pos_rect);
+		}
+	}
+	else if (moving)
 	{
 		if (h_direction < 0)
 		{
