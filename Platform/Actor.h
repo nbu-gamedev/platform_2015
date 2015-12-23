@@ -30,6 +30,7 @@ public:
 	SDL_Rect img_rect;
 	Object type;
 
+    int last_rendered;
     int i_grid, j_grid;
 	int speed; //
 	// The number in the World::loadedObjects

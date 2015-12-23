@@ -24,6 +24,7 @@ Player::Player(SDL_Rect pos, std::vector<Actor*>** world)
     alive = true;
     completely_dead = false;
     end_level = false;
+    last_rendered = 0;
     if (!lives) lives  = 3;
 }
 void Player::move_player(int time)
@@ -103,7 +104,7 @@ void Player::check_collisions()
 					{
 						die();
 					}
-					
+
 					if (dynamic_cast<Exit*>(actor) && !Coin::coins_to_collect)
 					{
 						end_level = true;
@@ -173,15 +174,14 @@ bool Player::update(int time_passed, Key_event* ke) // (int time_passed)
 void Player::render(SDL_Renderer * renderer, int time_passed, CoreEngine & core)
 {
 	static SDL_RendererFlip flip = SDL_FLIP_VERTICAL;
-	static int lastUpdated = 0;
 	static int frame = 0;
-	lastUpdated += time_passed;
-	if (lastUpdated > 50)
+	last_rendered += time_passed;
+	if (last_rendered > 50)
 	{
 		frame++;
 		frame %= core.player_textures.size();
-		lastUpdated -= 50;
-		//lastUpdated = 0;
+		last_rendered -= 50;
+		//last_rendered = 0;
 	}
 	//TODO yavor / samir  make it start from first frame every time the player stops
 	if (moving)

@@ -394,7 +394,7 @@ void CoreEngine::runGamingLoop()
 	{
 		// TODO maybe wrap into class
 		// NOTE-SAMIR: Create new world for each new level to clear data from previous level.
-		
+
 		if (!loadLevels("Config/configLevels.txt") )
 		{
 			std::cout << "Error loading map !!" << std::endl;
