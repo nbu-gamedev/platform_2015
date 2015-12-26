@@ -1,7 +1,7 @@
 background
 Art/Art/backgrounds/cosmos.png
 player
-13
+12
 Art/Art/character/walk/walk0001.png
 Art/Art/character/walk/walk0002.png
 Art/Art/character/walk/walk0003.png
@@ -12,7 +12,6 @@ Art/Art/character/walk/walk0007.png
 Art/Art/character/walk/walk0008.png
 Art/Art/character/walk/walk0009.png
 Art/Art/character/walk/walk0010.png
-Art/Art/character/walk/walk0011.png
 Art/Art/character/jump.png
 Art/Art/character/dead.png
 tiles
@@ -25,13 +24,15 @@ Art/Art/enemies/slime_normal.png
 Art/Art/enemies/slime_walk.png
 Art/Art/enemies/slime_dead.png
 coin
-6
+8
 Art/Art/coin/1.png
 Art/Art/coin/2.png
 Art/Art/coin/3.png
 Art/Art/coin/4.png
 Art/Art/coin/5.png
 Art/Art/coin/6.png
+Art/Art/coin/7.png
+Art/Art/coin/8.png
 exit
 4
 Art/Art/exit/door_closedMid.png

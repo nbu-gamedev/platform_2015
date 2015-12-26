@@ -8,6 +8,7 @@ Coin::Coin(SDL_Rect pos)
 	pos_rect = pos;
 	taken = false;
     last_rendered = 0;
+    frame = 0;
 }
 
 bool Coin::update(int time_passed, Key_event* ke)
@@ -17,13 +18,12 @@ bool Coin::update(int time_passed, Key_event* ke)
 
 void Coin::render(SDL_Renderer * renderer, int time_passed, CoreEngine & core)
 {
-	static int frame = 0;
 	last_rendered += time_passed;
-	if (last_rendered > 180)
+	if (last_rendered > 125)
 	{
 		frame++;
 		frame %= core.coin_textures.size();
-		last_rendered -= 180;
+		last_rendered -= 125;
 	}
 	if (!taken)
 	{

@@ -8,12 +8,15 @@
 
 void Sound::play_sound(CoreEngine &core, int sound)
 {
-	Mix_PlayChannel(-1, core.sound_effects[sound], 0);
+    if (MUSIC)
+    {
+        Mix_PlayChannel(-1, core.sound_effects[sound], 0);
+    }
 }
 
-void Sound::play_music(CoreEngine & core, int loop_number, bool music_enabled)
+void Sound::play_music(CoreEngine & core, int loop_number)
 {
-	if (music_enabled)
+	if (MUSIC)
 	{
 		if (Mix_PlayingMusic() == 0)
 		{

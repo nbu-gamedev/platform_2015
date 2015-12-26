@@ -31,6 +31,7 @@ public:
 	Object type;
 
     int last_rendered;
+    int frame;
     int i_grid, j_grid;
 	int speed; //
 	// The number in the World::loadedObjects

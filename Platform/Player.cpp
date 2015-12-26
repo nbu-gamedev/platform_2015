@@ -27,6 +27,7 @@ Player::Player(SDL_Rect pos, std::vector<Actor*>** world)
     completely_dead = false;
     end_level = false;
     last_rendered = 0;
+    frame = 0;
     if (!lives) lives  = 3;
 }
 void Player::move_player(int time)
@@ -179,7 +180,6 @@ bool Player::update(int time_passed, Key_event* ke) // (int time_passed)
 void Player::render(SDL_Renderer * renderer, int time_passed, CoreEngine & core)
 {
 	static SDL_RendererFlip flip = SDL_FLIP_VERTICAL;
-	static int frame = 0;
 	last_rendered += time_passed;
 	if (last_rendered > 50)
 	{

@@ -17,6 +17,7 @@
 	direction = 1;
 	falling = false;
     last_rendered = 0;
+    frame = 0;
  }
 
 bool Enemy::update(int time_passed, Key_event* ke)
@@ -59,7 +60,6 @@ bool Enemy::update(int time_passed, Key_event* ke)
 void Enemy::render(SDL_Renderer * renderer, int time_passed, CoreEngine & core)
 {
 	static SDL_RendererFlip flip = SDL_FLIP_VERTICAL;
-	static int frame = 0;
 	last_rendered += time_passed;
 	if (last_rendered > 1000)
 	{

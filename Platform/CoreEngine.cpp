@@ -432,7 +432,7 @@ void CoreEngine::runGamingLoop()
 			}
 			else
 			{
-				
+
 
 				bool deletion = false;
 				//TODO yavor  move this
@@ -450,7 +450,7 @@ void CoreEngine::runGamingLoop()
 				while (GAME_RUNNING)
 				{
 					//TODO map to level , and button music
-					Sound::play_music(*this, 0, false);
+					Sound::play_music(*this, 0);
 					curr_time = SDL_GetTicks();
 					time_passed = curr_time - prev_time;
 					if (time_passed < 15)
