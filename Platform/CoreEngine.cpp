@@ -221,6 +221,20 @@ bool CoreEngine::loadMedia()
                     printf("Failed to load menu texture image!\n");
                     success = false;
                 }
+                getline(input_file, path);
+				Menu::page_base = loadTexture(path);
+                if (Menu::page_base == NULL)
+                {
+                    printf("Failed to load menu texture image!\n");
+                    success = false;
+                }
+                getline(input_file, path);
+				Menu::page_controls = loadTexture(path);
+                if (Menu::page_controls == NULL)
+                {
+                    printf("Failed to load menu texture image!\n");
+                    success = false;
+                }
 			}
 			else if (line == "buttons")
 			{

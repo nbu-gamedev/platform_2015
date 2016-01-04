@@ -3,28 +3,37 @@
 
 SDL_Texture* Menu::menu_closed = NULL;
 SDL_Texture* Menu::menu_opened = NULL;
-SDL_Texture* Menu::btns_images[6][2] = {};
+SDL_Texture* Menu::page_base = NULL;
+SDL_Texture* Menu::page_controls = NULL;
+SDL_Texture* Menu::btns_images[7][2] = {};
 
 Menu::Menu()
 {
+    // position of menu
     pos.w = MENU_SIZE_W;
     pos.h = MENU_L_SIZE_H;
     pos.y = real_y = M_WINDOW_HEIGHT - MENU_L_SIZE_H;
     pos.x = (M_WINDOW_WIDTH - MENU_SIZE_W)/2;
+    // position of controls/about page when opened
+    page_pos.w = PAGE_SIZE_W;
+    page_pos.h = PAGE_SIZE_H;
+    page_pos.y = (M_WINDOW_HEIGHT - PAGE_SIZE_H)/2;
+    page_pos.x = (M_WINDOW_WIDTH - PAGE_SIZE_W)/2;
     menu = true;
     animation = false;
+    page_open = false;
     direction = 1;
 
     children[0] = new Button(0,0);
     children[1] = new Button(0,1);
-    for(int i = 2; i < 6; i++)
+    for(int i = 2; i < 7; i++)
     {
         children[i] = new Button(1,i);
     }
 }
 Menu::~Menu()
 {
-    for(int i = 0; i < 6; i++)
+    for(int i = 0; i < 7; i++)
     {
         delete children[i];
     }
@@ -32,18 +41,28 @@ Menu::~Menu()
 
 void Menu::render_menu(SDL_Renderer * renderer)
 {
-    SDL_RenderCopy(renderer, menu ? menu_opened : menu_closed, NULL, &pos);
-
-    if(menu)
+    if (page_open)
     {
-        for(int i = 1; i < 6; i++)
-        {
-           children[i] -> render(renderer);
-        }
+        SDL_RenderCopy(renderer, page_base , NULL, &page_pos);
+        //controls (button 2) or about (button 4) is selected
+        SDL_RenderCopy(renderer, children[2]->selected ? page_controls : page_about , NULL, &page_pos);
+        children[6] -> render(renderer);
     }
     else
     {
-        children[0] -> render(renderer);
+        SDL_RenderCopy(renderer, menu ? menu_opened : menu_closed, NULL, &pos);
+
+        if(menu)
+        {
+            for(int i = 1; i < 6; i++)
+            {
+               children[i] -> render(renderer);
+            }
+        }
+        else
+        {
+            children[0] -> render(renderer);
+        }
     }
 }
 
@@ -81,29 +100,42 @@ void Menu::update(int time, Mouse_event* me)
     }
     else if (me)
     {
-        if(menu)
+        if (page_open)
         {
-            for(int i = 1; i < 6; i++)
+            if ( children[6] -> update(me->x, me->y) && me->clicked)
             {
-                if ( children[i] -> update(me->x, me->y) && me->clicked)
-                {
-                    switch(i)
-                    {
-                        case 1: toggle_menu(); break;
-                        case 3: MUSIC = !MUSIC; break;
-                        case 5: GAME_RUNNING = false; break;
-                        default:break;
-
-                    }
-                break;
-               }
+                page_open = false;
+                //controls (button 2) or about (button 4) is selected
+                children[2] -> selected = children[4] -> selected = false;
             }
         }
         else
         {
-            if ( children[0] -> update(me->x, me->y) && me->clicked)
+            if(menu)
             {
-                toggle_menu();
+                for(int i = 1; i < 6; i++)
+                {
+                    if ( children[i] -> update(me->x, me->y) && me->clicked)
+                    {
+                        switch(i)
+                        {
+                            case 1: toggle_menu(); break;
+                            case 2: page_open = true; break;// controls page is opened
+                            case 3: MUSIC = !MUSIC; break;
+                            case 5: GAME_RUNNING = false; break;
+                            default:break;
+
+                        }
+                    break;
+                   }
+                }
+            }
+            else
+            {
+                if ( children[0] -> update(me->x, me->y) && me->clicked)
+                {
+                    toggle_menu();
+                }
             }
         }
     }
@@ -158,6 +190,16 @@ Button::Button(int tp, int number)
         pos.x = points[0][0];
         pos.y = points[0][1];
     }
+    else if (num == 6)
+    {
+        points[0][0] = 500*SCALE_FACTOR + (M_WINDOW_WIDTH- PAGE_SIZE_W)/2;
+        points[0][1] = 418*SCALE_FACTOR + (M_WINDOW_HEIGHT - PAGE_SIZE_H)/2;
+        points[1][0] = points[0][0] + btns_sizes[6][0];
+        points[1][1] = points[0][1] + btns_sizes[6][1];
+
+        pos.x = points[0][0];
+        pos.y = points[0][1];
+    }
     else
     {
         points[0][0] = (M_WINDOW_WIDTH - btns_sizes[num][0])/2;
@@ -165,7 +207,6 @@ Button::Button(int tp, int number)
         points[1][0] = (M_WINDOW_WIDTH + btns_sizes[num][0])/2;
         points[1][1] = relative_y[num] + btns_sizes[num][1] + M_WINDOW_HEIGHT - MENU_L_SIZE_H;
         points[2][0] = points[2][1] = 0;
-
 
         pos.x = points[0][0];
         pos.y = points[0][1];

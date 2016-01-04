@@ -15,18 +15,21 @@ const int animation_speed = 3000*SCALE_FACTOR;
 const int MENU_SIZE_W = 353*SCALE_FACTOR;
 const int MENU_S_SIZE_H = 74*SCALE_FACTOR;
 const int MENU_L_SIZE_H = 849*SCALE_FACTOR;
+const int PAGE_SIZE_H = 509*SCALE_FACTOR;
+const int PAGE_SIZE_W = 680*SCALE_FACTOR;
 
 // position on the menu
 static int relative_y[6] = {27*SCALE_FACTOR, 76*SCALE_FACTOR, 228*SCALE_FACTOR, 339*SCALE_FACTOR, 450*SCALE_FACTOR, 610*SCALE_FACTOR};
 
 // sizes of buttons
-static int btns_sizes[6][2] = {
+static int btns_sizes[7][2] = {
                                     {63*SCALE_FACTOR,35*SCALE_FACTOR},
                                     {124*SCALE_FACTOR,69*SCALE_FACTOR},
                                     {167*SCALE_FACTOR,75*SCALE_FACTOR},
                                     {167*SCALE_FACTOR,75*SCALE_FACTOR},
                                     {167*SCALE_FACTOR,75*SCALE_FACTOR},
-                                    {106*SCALE_FACTOR,57*SCALE_FACTOR}
+                                    {106*SCALE_FACTOR,57*SCALE_FACTOR},
+                                    {140*SCALE_FACTOR,63*SCALE_FACTOR}
 };
 
 class Button;
@@ -38,13 +41,18 @@ class Menu
 public:
     static SDL_Texture* menu_opened;
     static SDL_Texture* menu_closed;
-    static SDL_Texture* btns_images[6][2];
+    static SDL_Texture* page_base;
+    static SDL_Texture* page_controls;
+    static constexpr SDL_Texture* page_about = NULL;
+    static SDL_Texture* btns_images[7][2];
     SDL_Rect pos;
+    SDL_Rect page_pos;
     double real_y;
     bool menu;
     bool animation;
+    bool page_open;
     int direction;
-    Button* children[6];
+    Button* children[7];
     Menu ();
     ~Menu();
 
