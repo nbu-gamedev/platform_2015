@@ -106,7 +106,7 @@ void Menu::update(int time, Mouse_event* me)
             {
                 page_open = false;
                 //controls (button 2) or about (button 4) is selected
-                children[2] -> selected = children[4] -> selected = false;
+                children[2] -> selected = children[4] -> selected =  children[6] -> selected = false;
             }
         }
         else
@@ -119,7 +119,7 @@ void Menu::update(int time, Mouse_event* me)
                     {
                         switch(i)
                         {
-                            case 1: toggle_menu(); break;
+                            case 1: toggle_menu(); children[1] -> selected = false; break;
                             case 2: page_open = true; break;// controls page is opened
                             case 3: MUSIC = !MUSIC; break;
                             case 5: GAME_RUNNING = false; break;
@@ -135,6 +135,7 @@ void Menu::update(int time, Mouse_event* me)
                 if ( children[0] -> update(me->x, me->y) && me->clicked)
                 {
                     toggle_menu();
+                    children[0] -> selected = false;
                 }
             }
         }
