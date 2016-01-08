@@ -222,8 +222,8 @@ bool CoreEngine::loadMedia()
                     success = false;
                 }
                 getline(input_file, path);
-				Menu::page_base = loadTexture(path);
-                if (Menu::page_base == NULL)
+				Menu::page_about = loadTexture(path);
+                if (Menu::page_about == NULL)
                 {
                     printf("Failed to load menu texture image!\n");
                     success = false;

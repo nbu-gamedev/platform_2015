@@ -42,7 +42,7 @@ Art/Art/exit/door_openTop.png
 menu
 Art/Art/menu/menu_open.png
 Art/Art/menu/menu_close.png
-Art/Art/menu/page.png
+Art/Art/menu/about.png
 Art/Art/menu/cntrls.png
 buttons
 14

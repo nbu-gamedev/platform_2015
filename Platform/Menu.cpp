@@ -3,7 +3,7 @@
 
 SDL_Texture* Menu::menu_closed = NULL;
 SDL_Texture* Menu::menu_opened = NULL;
-SDL_Texture* Menu::page_base = NULL;
+SDL_Texture* Menu::page_about = NULL;
 SDL_Texture* Menu::page_controls = NULL;
 SDL_Texture* Menu::btns_images[7][2] = {};
 
@@ -15,10 +15,14 @@ Menu::Menu()
     pos.y = real_y = M_WINDOW_HEIGHT - MENU_L_SIZE_H;
     pos.x = (M_WINDOW_WIDTH - MENU_SIZE_W)/2;
     // position of controls/about page when opened
-    page_pos.w = PAGE_SIZE_W;
-    page_pos.h = PAGE_SIZE_H;
-    page_pos.y = (M_WINDOW_HEIGHT - PAGE_SIZE_H)/2;
-    page_pos.x = (M_WINDOW_WIDTH - PAGE_SIZE_W)/2;
+    page_c_pos.w = PAGE_CNTRLS_SIZE_W;
+    page_c_pos.h = PAGE_CNTRLS_SIZE_H;
+    page_c_pos.y = (M_WINDOW_HEIGHT - PAGE_CNTRLS_SIZE_H)/2;
+    page_c_pos.x = (M_WINDOW_WIDTH - PAGE_CNTRLS_SIZE_W)/2;
+    page_a_pos.w = PAGE_ABOUT_SIZE_W;
+    page_a_pos.h = PAGE_ABOUT_SIZE_H;
+    page_a_pos.y = (M_WINDOW_HEIGHT - PAGE_ABOUT_SIZE_H)/2;
+    page_a_pos.x = (M_WINDOW_WIDTH - PAGE_ABOUT_SIZE_W)/2;
     menu = true;
     animation = false;
     page_open = false;
@@ -26,14 +30,14 @@ Menu::Menu()
 
     children[0] = new Button(0,0);
     children[1] = new Button(0,1);
-    for(int i = 2; i < 7; i++)
+    for(int i = 2; i < 8; i++)
     {
         children[i] = new Button(1,i);
     }
 }
 Menu::~Menu()
 {
-    for(int i = 0; i < 7; i++)
+    for(int i = 0; i < 8; i++)
     {
         delete children[i];
     }
@@ -43,10 +47,17 @@ void Menu::render_menu(SDL_Renderer * renderer)
 {
     if (page_open)
     {
-        SDL_RenderCopy(renderer, page_base , NULL, &page_pos);
         //controls (button 2) or about (button 4) is selected
-        SDL_RenderCopy(renderer, children[2]->selected ? page_controls : page_about , NULL, &page_pos);
-        children[6] -> render(renderer);
+        if (children[2]->selected)
+        {
+            SDL_RenderCopy(renderer,  page_controls, NULL, &page_c_pos);
+            children[6] -> render(renderer);
+        }
+        else
+        {
+            SDL_RenderCopy(renderer, page_about , NULL, &page_a_pos);
+            children[7] -> render(renderer);
+        }
     }
     else
     {
@@ -102,11 +113,12 @@ void Menu::update(int time, Mouse_event* me)
     {
         if (page_open)
         {
-            if ( children[6] -> update(me->x, me->y) && me->clicked)
+            Button* active = children[2]->selected ? children[6] : children[7];
+            if ( active -> update(me->x, me->y) && me->clicked)
             {
                 page_open = false;
                 //controls (button 2) or about (button 4) is selected
-                children[2] -> selected = children[4] -> selected =  children[6] -> selected = false;
+                children[2] -> selected = children[4] -> selected =  active -> selected = false;
             }
         }
         else
@@ -120,7 +132,7 @@ void Menu::update(int time, Mouse_event* me)
                         switch(i)
                         {
                             case 1: toggle_menu(); children[1] -> selected = false; break;
-                            case 2: page_open = true; break;// controls page is opened
+                            case 2: case 4: page_open = true; break;// controls/about page is opened
                             case 3: MUSIC = !MUSIC; break;
                             case 5: GAME_RUNNING = false; break;
                             default:break;
@@ -193,8 +205,19 @@ Button::Button(int tp, int number)
     }
     else if (num == 6)
     {
-        points[0][0] = 500*SCALE_FACTOR + (M_WINDOW_WIDTH- PAGE_SIZE_W)/2;
-        points[0][1] = 418*SCALE_FACTOR + (M_WINDOW_HEIGHT - PAGE_SIZE_H)/2;
+        points[0][0] = 500*SCALE_FACTOR + (M_WINDOW_WIDTH - PAGE_CNTRLS_SIZE_W)/2;
+        points[0][1] = 418*SCALE_FACTOR + (M_WINDOW_HEIGHT - PAGE_CNTRLS_SIZE_H)/2;
+        points[1][0] = points[0][0] + btns_sizes[6][0];
+        points[1][1] = points[0][1] + btns_sizes[6][1];
+
+        pos.x = points[0][0];
+        pos.y = points[0][1];
+    }
+    else if (num == 7) // TO UPDATE
+    {
+        num = 6; // it's an OK button too, but with different position
+        points[0][0] = 500*SCALE_FACTOR + (M_WINDOW_WIDTH - PAGE_ABOUT_SIZE_W)/2;
+        points[0][1] = 418*SCALE_FACTOR + (M_WINDOW_HEIGHT - PAGE_ABOUT_SIZE_H)/2;
         points[1][0] = points[0][0] + btns_sizes[6][0];
         points[1][1] = points[0][1] + btns_sizes[6][1];
 

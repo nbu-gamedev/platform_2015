@@ -128,7 +128,6 @@ void Player::check_collisions()
             && dynamic_cast<Terrain*>(grid[i_pos + 1][j_pos][0]) -> pos_rect.y <= pos_rect.y + pos_rect.h + 1)
     {
         floor = dynamic_cast<Terrain*>(grid[i_pos + 1][j_pos][0]);
-
     }
     if(!floor && !(jumping || falling))
     {
@@ -245,12 +244,12 @@ void Player:: collide_with_Terrain(Terrain* terra)
             speed_y = 0;
             jumping = falling = false;
         }
-        else if (j_grid < terra -> j_grid)
+        else if (j_grid < terra -> j_grid && (grid[i_grid + 1][j_grid].empty() || !dynamic_cast<Terrain*>(grid[i_grid + 1][j_grid][0])))
         {
             sound_events_to_play[player_colision] = true;
             pos_rect.x = real_x = terra -> pos_rect.x - pos_rect.w - 1;
         }
-        else
+         else if (j_grid > terra -> j_grid && (grid[i_grid + 1][j_grid].empty() || !dynamic_cast<Terrain*>(grid[i_grid + 1][j_grid][0])))
         {
             sound_events_to_play[player_colision] = true;
             pos_rect.x = real_x = terra -> pos_rect.x + terra -> pos_rect.w + 1;
@@ -278,11 +277,11 @@ void Player:: collide_with_Terrain(Terrain* terra)
             speed_y = 0;
             v_direction = -1;
         }
-        else if (j_grid < terra -> j_grid)
+        else if (j_grid < terra -> j_grid && (grid[i_grid - 1][j_grid].empty() || !dynamic_cast<Terrain*>(grid[i_grid - 1][j_grid][0])))
         {
             pos_rect.x = real_x = terra -> pos_rect.x - pos_rect.w - 1;
         }
-        else
+        else if (j_grid > terra -> j_grid && (grid[i_grid - 1][j_grid].empty() || !dynamic_cast<Terrain*>(grid[i_grid - 1][j_grid][0])))
         {
             pos_rect.x = real_x = terra -> pos_rect.x + terra -> pos_rect.w + 1;
         }
