@@ -216,8 +216,8 @@ Button::Button(int tp, int number)
     else if (num == 7) // TO UPDATE
     {
         num = 6; // it's an OK button too, but with different position
-        points[0][0] = 500*SCALE_FACTOR + (M_WINDOW_WIDTH - PAGE_ABOUT_SIZE_W)/2;
-        points[0][1] = 418*SCALE_FACTOR + (M_WINDOW_HEIGHT - PAGE_ABOUT_SIZE_H)/2;
+        points[0][0] = 748*SCALE_FACTOR + (M_WINDOW_WIDTH - PAGE_ABOUT_SIZE_W)/2;
+        points[0][1] = 587*SCALE_FACTOR + (M_WINDOW_HEIGHT - PAGE_ABOUT_SIZE_H)/2;
         points[1][0] = points[0][0] + btns_sizes[6][0];
         points[1][1] = points[0][1] + btns_sizes[6][1];
 
