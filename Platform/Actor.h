@@ -9,7 +9,7 @@
 #include "Input_Handler.h"
 enum Object
 {
-	GROUND, GROUND_DIRT, PLAYER, SLIME, ACTOR
+	GROUND, GROUND_DIRT, PLAYER, SLIME, ACTOR, FLY
 };
 
 #include <utility>

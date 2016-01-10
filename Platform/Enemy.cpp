@@ -59,7 +59,6 @@ bool Enemy::update(int time_passed, Key_event* ke)
 
 void Enemy::render(SDL_Renderer * renderer, int time_passed, CoreEngine & core)
 {
-	static SDL_RendererFlip flip = SDL_FLIP_VERTICAL;
 	last_rendered += time_passed;
 	if (last_rendered > 1000)
 	{
@@ -75,7 +74,7 @@ void Enemy::render(SDL_Renderer * renderer, int time_passed, CoreEngine & core)
 		}
 		else
 		{
-			SDL_RenderCopyEx(renderer, core.enemy_textures[frame], NULL, &pos_rect, 180.0f, NULL, flip);
+			SDL_RenderCopyEx(renderer, core.enemy_textures[frame], NULL, &pos_rect, 180.0f, NULL, SDL_FLIP_VERTICAL);
 		}
 }
 
