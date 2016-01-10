@@ -20,6 +20,7 @@ public:
     static SDL_Texture* heart_full;
     static SDL_Texture* heart_empty;
     int size_element_x;
+    int size_element_y;
     int space;
     std::stack<int> digs;
     SDL_Rect pos;
