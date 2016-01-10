@@ -11,5 +11,6 @@ public:
 	void render(SDL_Renderer * renderer, int time_passed, CoreEngine & core);
 
     static int coins_to_collect;
+    static int coins_number;
     bool taken;
 };

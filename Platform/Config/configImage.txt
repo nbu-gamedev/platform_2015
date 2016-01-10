@@ -60,3 +60,17 @@ Art/Art/menu/quit0.png
 Art/Art/menu/quit1.png
 Art/Art/menu/OK0.png
 Art/Art/menu/OK1.png
+hud
+Art/Art/HUD/hud_0.png
+Art/Art/HUD/hud_1.png
+Art/Art/HUD/hud_2.png
+Art/Art/HUD/hud_3.png
+Art/Art/HUD/hud_4.png
+Art/Art/HUD/hud_5.png
+Art/Art/HUD/hud_6.png
+Art/Art/HUD/hud_7.png
+Art/Art/HUD/hud_8.png
+Art/Art/HUD/hud_9.png
+Art/Art/HUD/hud_coins.png
+Art/Art/HUD/hud_heartEmpty.png
+Art/Art/HUD/hud_heartFull.png
