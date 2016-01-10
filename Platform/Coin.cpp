@@ -2,6 +2,7 @@
 #include "CoreEngine.h"
 
 int Coin::coins_to_collect = 0;
+int Coin::coins_number = 0;
 
 Coin::Coin(SDL_Rect pos)
 {

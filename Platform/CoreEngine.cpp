@@ -5,6 +5,7 @@
 #include <fstream>
 #include "SoundEvents.h"
 #include "Sound.h"
+#include "HUD.h"
 CoreEngine::CoreEngine()
 {
 	gWindow = NULL;
@@ -274,6 +275,40 @@ bool CoreEngine::loadMedia()
 					}
 				}
 			}
+			else if (line == "hud")
+			{
+                for(int i = 0; i < 10; i++)
+                {
+                    getline(input_file, path);
+                    Hud::digits[i] = loadTexture(path);
+                    if (Hud::digits[i] == NULL)
+                    {
+                        printf("Failed to load hud texture image!\n");
+                        success = false;
+                    }
+                }
+                getline(input_file, path);
+                Hud::coin_icon = loadTexture(path);
+                if (Hud::coin_icon == NULL)
+                {
+                    printf("Failed to load hud texture image!\n");
+                    success = false;
+                }
+                getline(input_file, path);
+                Hud::heart_empty = loadTexture(path);
+                if (Hud::heart_empty == NULL)
+                {
+                    printf("Failed to load hud texture image!\n");
+                    success = false;
+                }
+                getline(input_file, path);
+                Hud::heart_full = loadTexture(path);
+                if (Hud::heart_full == NULL)
+                {
+                    printf("Failed to load hud texture image!\n");
+                    success = false;
+                }
+            }
 		}
 		input_file.close();
 	}
@@ -380,12 +415,24 @@ void CoreEngine::close()
 	//free menu
 	SDL_DestroyTexture(Menu::menu_closed);
 	SDL_DestroyTexture(Menu::menu_opened);
-	Menu::menu_closed = Menu::menu_opened = NULL;
+	SDL_DestroyTexture(Menu::page_about);
+	SDL_DestroyTexture(Menu::page_controls);
+	Menu::menu_closed = Menu::menu_opened = Menu::page_about = Menu::page_controls = NULL;
 	for (int i = 0; i < 6; ++i)
 	{
 		SDL_DestroyTexture(Menu::btns_images[i][0]);
 		SDL_DestroyTexture(Menu::btns_images[i][1]);
 		Menu::btns_images[i][0] = Menu::btns_images[i][1] = NULL;
+	}
+	//free hud
+	SDL_DestroyTexture(Hud::coin_icon);
+	SDL_DestroyTexture(Hud::heart_empty);
+	SDL_DestroyTexture(Hud::heart_full);
+	Hud::coin_icon = Hud::heart_empty = Hud::heart_full = NULL;
+	for (int i = 0; i < 10; ++i)
+	{
+		SDL_DestroyTexture(Hud::digits[i]);
+		Hud::digits[i] = NULL;
 	}
 	// free sounds
 	for (int i = 0; i < sound_effects.size(); ++i)
@@ -484,6 +531,7 @@ void CoreEngine::runGamingLoop()
 				InputHandler handler;
 				Custom_event ce;
 				Menu menu;
+				Hud hud;
 				// The Game loop
 				while (GAME_RUNNING)
 				{
@@ -499,8 +547,11 @@ void CoreEngine::runGamingLoop()
 					prev_time = curr_time;
 					ce = handler.handle();
 
-                    //to be replaced with game over / win
-					if (m_world.player -> completely_dead && !Player::lives) GAME_RUNNING = false;
+                    //to be replaced with game over
+					if (m_world.player -> completely_dead && !Player::lives)
+					{
+                        GAME_RUNNING = false;
+					}
 
                     //respawn if neccessary
                     if (m_world.player -> completely_dead)
@@ -536,8 +587,13 @@ void CoreEngine::runGamingLoop()
 					}
 					m_world.player->render(gRenderer, time_passed, *this);
 					m_world.player->play_sound(*this);
+                    if (!menu.menu)
+                    {
+                        hud.render(gRenderer);
+                    }
 					menu.update(time_passed, ce.me);
                     menu.render_menu(gRenderer);
+
 					//Update screen
 					SDL_RenderPresent(gRenderer);
 

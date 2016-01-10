@@ -155,6 +155,7 @@
     <ClCompile Include="Enemy_fly.cpp" />
     <ClCompile Include="Exit.cpp" />
     <ClCompile Include="Globals.cpp" />
+    <ClCompile Include="HUD.cpp" />
     <ClCompile Include="Input_Handler.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Menu.cpp" />
@@ -171,6 +172,7 @@
     <ClInclude Include="Enemy_fly.h" />
     <ClInclude Include="Exit.h" />
     <ClInclude Include="Globals.h" />
+    <ClInclude Include="HUD.h" />
     <ClInclude Include="Input_Handler.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="Player.h" />

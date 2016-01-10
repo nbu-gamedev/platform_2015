@@ -176,6 +176,7 @@ void World::parseGrid(const string & line, ifstream &file)
 				worldGrid[i][j].push_back(new Coin(rect));
 				worldGrid[i][j][0]->loadedNumber = current - 1;
 				Coin::coins_to_collect++;
+				Coin::coins_number++;
 				break;
 			case 6:
 				worldGrid[i][j].push_back(new Exit(rect, i, j));
