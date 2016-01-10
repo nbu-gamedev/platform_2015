@@ -1,5 +1,6 @@
 #include "CoreEngine.h"
 #include "Menu.h"
+#include <ctime>
 
 #include <iostream>
 #include <fstream>
