@@ -7,6 +7,8 @@
 	pos_rect = pos;
     real_x = pos.x;
     real_y = pos.y;
+    min_x = pos.x - (80 + rand()%300)*SCALE_FACTOR;
+    max_x = pos.x + (100 + rand()%250)*SCALE_FACTOR;
 	grid = world;
 	type = obj;
     i_grid = get_grid_coords().first;
@@ -14,8 +16,9 @@
     // if(type == "static enemy" (??)) pos.x*SCALE_FACTOR;
 	speed = 100;
 	speed_y = 0;
-	direction = 1;
+	direction = rand()%2 ? 1 : -1;
 	falling = false;
+	dead = false;
     last_rendered = 0;
     frame = 0;
  }
@@ -24,7 +27,7 @@ bool Enemy::update(int time_passed, Key_event* ke)
 {
 
      // if(type == "static enemy" (??)) retuen;
-    if(!falling)
+    if(!(falling || dead))
     {
         real_x += (direction)*(speed * time_passed)/ 1000;
         pos_rect.x = real_x;
@@ -106,6 +109,7 @@ bool Enemy::update_grid_pos()
 
 void Enemy::collide_with_Terrain()
 {
+    if (dead) return;
     int i_pos = get_grid_coords().first;
     int j_pos = get_grid_coords().second;
     Terrain* terra = NULL;

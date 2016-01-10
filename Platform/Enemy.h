@@ -18,6 +18,7 @@ public:
 	virtual void render(SDL_Renderer* renderer, int time_passed, CoreEngine &core);
 	void collide_with_Terrain();
 	bool update_grid_pos();
+    bool dead;
 protected:
 
 	std::vector<Actor*>** grid;

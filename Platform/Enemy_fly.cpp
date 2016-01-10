@@ -33,3 +33,46 @@ void Enemy_fly::render(SDL_Renderer * renderer, int time_passed, CoreEngine & co
 	}
 }
 
+bool Enemy_fly::update(int time_passed, Key_event* ke)
+{
+    if(!dead)
+    {
+        real_x += (direction)*(speed * time_passed)/ 1000;
+        pos_rect.x = real_x;
+        if ( pos_rect.x >  M_WINDOW_WIDTH - pos_rect.w )
+        {
+            pos_rect.x =  M_WINDOW_WIDTH - pos_rect.w;
+            direction *= -1;
+        }
+        else if (pos_rect.x > max_x)
+        {
+            pos_rect.x =  max_x;
+            direction *= -1;
+        }
+        else if( pos_rect.x < 0)
+        {
+            pos_rect.x = 0;
+            direction *= 1;
+        }
+        else if (pos_rect.x < min_x)
+        {
+            pos_rect.x =  min_x;
+            direction *= -1;
+        }
+    }
+    else
+    {
+        double moved = time_passed*(speed_y - gravity_acceleration * time_passed/ 2000.) / 1000.;
+        if (moved < 0) moved *= -1;
+        speed_y += gravity_acceleration*time_passed/1000;
+        real_y += moved;
+        pos_rect.y = real_y;
+        if ( pos_rect.y > M_WINDOW_HEIGHT - pos_rect.h)
+        {
+            pos_rect.y = real_y = M_WINDOW_HEIGHT - pos_rect.h;
+            falling = false;
+            speed_y = 0;
+        }
+    }
+    return update_grid_pos();
+}

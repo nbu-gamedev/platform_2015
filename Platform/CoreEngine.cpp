@@ -140,7 +140,7 @@ bool CoreEngine::loadMedia()
 					}
 				}
 			}
-			//Load enemy textures 
+			//Load enemy textures
 			else if (line == "enemy")
 			{
 				input_file >> num_of_textures;
@@ -163,7 +163,7 @@ bool CoreEngine::loadMedia()
 					success = false;
 				}
 			}
-			//Load enemy_fly textures 
+			//Load enemy_fly textures
 			else if (line == "enemy_fly")
 			{
 				input_file >> num_of_textures;
@@ -518,7 +518,7 @@ void CoreEngine::runGamingLoop()
 			else
 			{
 
-
+                srand(time(NULL));
 				bool deletion = false;
 				//TODO yavor  move this
 				SDL_Rect tile;

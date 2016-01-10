@@ -8,9 +8,8 @@ public:
 	~Enemy_fly();
 
 
-	void Enemy_fly::render(SDL_Renderer * renderer, int time_passed, CoreEngine & core);
-	
-
+	void render(SDL_Renderer * renderer, int time_passed, CoreEngine & core);
+    bool update(int time_passed, Key_event* ke);
 
 };
 
