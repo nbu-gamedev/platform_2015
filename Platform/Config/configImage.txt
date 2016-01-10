@@ -60,6 +60,11 @@ Art/Art/menu/quit0.png
 Art/Art/menu/quit1.png
 Art/Art/menu/OK0.png
 Art/Art/menu/OK1.png
+enemy_fly
+3
+Art/Art/enemies/fly_normal.png
+Art/Art/enemies/fly_fly.png
+Art/Art/enemies/fly_dead.png
 hud
 Art/Art/HUD/hud_0.png
 Art/Art/HUD/hud_1.png

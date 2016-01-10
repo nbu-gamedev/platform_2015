@@ -140,7 +140,7 @@ bool CoreEngine::loadMedia()
 					}
 				}
 			}
-			//Load enemy textures
+			//Load enemy textures 
 			else if (line == "enemy")
 			{
 				input_file >> num_of_textures;
@@ -158,6 +158,29 @@ bool CoreEngine::loadMedia()
 				getline(input_file, path);
 				enemy_dead_texture = loadTexture(path);
 				if (enemy_dead_texture == NULL)
+				{
+					printf("Failed to load texture image!\n");
+					success = false;
+				}
+			}
+			//Load enemy_fly textures 
+			else if (line == "enemy_fly")
+			{
+				input_file >> num_of_textures;
+				getline(input_file, path);
+				for (int i = 0; i < num_of_textures - 1; ++i)  // 1 is reserved for dead texture
+				{
+					getline(input_file, path);
+					enemy_fly_textures.push_back(loadTexture(path));
+					if (enemy_fly_textures[i] == NULL)
+					{
+						printf("Failed to load texture image!\n");
+						success = false;
+					}
+				}
+				getline(input_file, path);
+				enemy_fly_dead_texture = loadTexture(path);
+				if (enemy_fly_dead_texture == NULL)
 				{
 					printf("Failed to load texture image!\n");
 					success = false;
@@ -343,7 +366,8 @@ bool CoreEngine::loadLevels(string levels)
 	{
 		while (getline(input_file, line))
 		{
-			cout << "1: " << line << endl;
+			//static int i = 1;
+			//cout << "Level: "<< i << line << endl;
 			level_path.push_back(line);
 		}
 	}

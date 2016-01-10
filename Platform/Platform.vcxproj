@@ -152,8 +152,10 @@
     <ClCompile Include="Coin.cpp" />
     <ClCompile Include="CoreEngine.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="Enemy_fly.cpp" />
     <ClCompile Include="Exit.cpp" />
     <ClCompile Include="Globals.cpp" />
+    <ClCompile Include="HUD.cpp" />
     <ClCompile Include="Input_Handler.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Menu.cpp" />
@@ -167,8 +169,10 @@
     <ClInclude Include="Coin.h" />
     <ClInclude Include="CoreEngine.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="Enemy_fly.h" />
     <ClInclude Include="Exit.h" />
     <ClInclude Include="Globals.h" />
+    <ClInclude Include="HUD.h" />
     <ClInclude Include="Input_Handler.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="Player.h" />

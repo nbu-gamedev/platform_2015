@@ -1,6 +1,7 @@
 #include "World.h"
 #include "Globals.h"
 #include "Enemy.h"
+#include "Enemy_fly.h"
 #include "Exit.h"
 
 bool World::loadWorld(string file)
@@ -179,6 +180,10 @@ void World::parseGrid(const string & line, ifstream &file)
 				break;
 			case 6:
 				worldGrid[i][j].push_back(new Exit(rect, i, j));
+				worldGrid[i][j][0]->loadedNumber = current - 1;
+				break;
+			case 7:
+				worldGrid[i][j].push_back(new Enemy_fly(rect, worldGrid, SLIME));
 				worldGrid[i][j][0]->loadedNumber = current - 1;
 				break;
 			default:

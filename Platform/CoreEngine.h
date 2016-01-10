@@ -44,6 +44,9 @@ public:
 	//Enemy textures
 	 vector<SDL_Texture*> enemy_textures;
 	 SDL_Texture* enemy_dead_texture;
+	//Enemy_fly textures
+	 vector<SDL_Texture*> enemy_fly_textures;
+	 SDL_Texture* enemy_fly_dead_texture;
 	//Coin textures
 	 vector<SDL_Texture*> coin_textures;
 	//Exit textures
