@@ -234,21 +234,16 @@ void Player::render(SDL_Renderer * renderer, int time_passed, CoreEngine & core)
 
 void Player::collide_with_enemy(Enemy* enemy)
 {
-    if (enemy -> dead) return;
-    // if player attack enemy from above
-    if (pos_rect.y + pos_rect.h < enemy->pos_rect.y + enemy->pos_rect.h)
-    {
-        enemy -> dead = true;
-		if (enemy->type == SLIME)
-		{
-		
-			enemy->pos_rect.h = 12 * SCALE_FACTOR;
-		}
-    }
-    else
-    {
-        die();
-    }
+	if (enemy->dead) return;
+	// if player attack enemy from above
+	if (pos_rect.y + pos_rect.h < enemy->pos_rect.y + enemy->pos_rect.h)
+	{
+		enemy->die();
+	}
+	else
+	{
+		die();
+	}
 }
 
 void Player:: collide_with_Terrain(Terrain* terra)

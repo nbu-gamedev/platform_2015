@@ -16,8 +16,10 @@ public:
 	Object type;
 	virtual bool update(int time_passed, Key_event* ke);
 	virtual void render(SDL_Renderer* renderer, int time_passed, CoreEngine &core);
+	virtual void die();
 	void collide_with_Terrain();
 	bool update_grid_pos();
+
     bool dead;
 protected:
 

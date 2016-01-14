@@ -77,7 +77,6 @@ bool Enemy_fly::update(int time_passed, Key_event* ke)
     }
     else
     {
-        if (i_grid >= GRID_HEIGHT) return false;
         double moved = time_passed*(speed_y - gravity_acceleration * time_passed/ 2000.) / 1000.;
         if (moved < 0) moved *= -1;
         speed_y += gravity_acceleration*time_passed/1000;
@@ -89,6 +88,25 @@ bool Enemy_fly::update(int time_passed, Key_event* ke)
             falling = false;
             speed_y = 0;
         }
+
+        Terrain* floor = NULL;
+        if(i_grid + 1 < GRID_HEIGHT && !grid[i_grid + 1][j_grid].empty() && dynamic_cast<Terrain*>(grid[i_grid + 1][j_grid][0])
+                && dynamic_cast<Terrain*>(grid[i_grid + 1][j_grid][0]) -> pos_rect.y <= pos_rect.y + pos_rect.h + 1)
+        {
+            floor = dynamic_cast<Terrain*>(grid[i_grid + 1][j_grid][0]);
+        }
+        if (floor)
+        {
+            pos_rect.y = real_y = floor -> pos_rect.y - pos_rect.h - 1;
+            speed_y = 0;
+            falling = false;
+        }
     }
     return update_grid_pos();
+}
+
+void Enemy_fly::die()
+{
+    dead = true;
+    falling = true;
 }

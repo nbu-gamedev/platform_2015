@@ -10,6 +10,6 @@ public:
 
 	void render(SDL_Renderer * renderer, int time_passed, CoreEngine & core);
     bool update(int time_passed, Key_event* ke);
-
+    void die();
 };
 
