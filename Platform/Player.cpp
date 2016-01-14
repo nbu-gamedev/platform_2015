@@ -238,7 +238,7 @@ void Player::collide_with_enemy(Enemy* enemy)
     // if player attack enemy from above
     if (pos_rect.y + pos_rect.h < enemy->pos_rect.y + enemy->pos_rect.h)
     {
-        enemy -> dead = true;
+        enemy -> die();
     }
     else
     {

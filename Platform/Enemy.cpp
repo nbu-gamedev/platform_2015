@@ -17,7 +17,7 @@
 	speed = 100;
 	speed_y = 0;
 	direction = rand()%2 ? 1 : -1;
-	falling = false;
+	//falling = false;
 	dead = false;
     last_rendered = 0;
     frame = 0;
@@ -27,7 +27,8 @@ bool Enemy::update(int time_passed, Key_event* ke)
 {
 
      // if(type == "static enemy" (??)) retuen;
-    if(!(falling || dead))
+   // if(!(falling || dead))
+    if (!dead)
     {
         real_x += (direction)*(speed * time_passed)/ 1000;
         pos_rect.x = real_x;
@@ -44,7 +45,8 @@ bool Enemy::update(int time_passed, Key_event* ke)
     }
     else
     {
-        if (i_grid >= GRID_HEIGHT) return false;
+    return false;
+       /* if (i_grid >= GRID_HEIGHT) return false;
         double moved = time_passed*(speed_y - gravity_acceleration * time_passed/ 2000.) / 1000.;
         if (moved < 0) moved *= -1;
         speed_y += gravity_acceleration*time_passed/1000;
@@ -55,7 +57,7 @@ bool Enemy::update(int time_passed, Key_event* ke)
             pos_rect.y = real_y = M_WINDOW_HEIGHT - pos_rect.h;
             falling = false;
             speed_y = 0;
-        }
+        }*/
     }
 	collide_with_Terrain();
     return update_grid_pos();
@@ -173,5 +175,9 @@ void Enemy::collide_with_Terrain()
         speed_y = 0;
         falling = false;
     }
+}
 
+void Enemy::die()
+{
+    dead = true;
 }
