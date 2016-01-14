@@ -63,13 +63,15 @@ bool Enemy::update(int time_passed, Key_event* ke)
 
 void Enemy::render(SDL_Renderer * renderer, int time_passed, CoreEngine & core)
 {
-	last_rendered += time_passed;
-	if (last_rendered > 1000)
+	if (!dead)
 	{
-		frame++;
-		frame %= core.enemy_textures.size();
-		last_rendered -= 1000;
-	}
+		last_rendered += time_passed;
+		if (last_rendered > 1000)
+		{
+			frame++;
+			frame %= core.enemy_textures.size();
+			last_rendered -= 1000;
+		}
 
 		if (direction < 0)
 		{
@@ -80,6 +82,19 @@ void Enemy::render(SDL_Renderer * renderer, int time_passed, CoreEngine & core)
 		{
 			SDL_RenderCopyEx(renderer, core.enemy_textures[frame], NULL, &pos_rect, 180.0f, NULL, SDL_FLIP_VERTICAL);
 		}
+	}
+	else // its dead
+	{
+		if (direction < 0)
+		{
+			SDL_RenderCopy(renderer, core.enemy_dead_texture, NULL, &pos_rect);
+
+		}
+		else
+		{
+			SDL_RenderCopyEx(renderer, core.enemy_dead_texture, NULL, &pos_rect, 180.0f, NULL, SDL_FLIP_VERTICAL);
+		}
+	}
 }
 
 

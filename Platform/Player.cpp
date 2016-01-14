@@ -239,6 +239,11 @@ void Player::collide_with_enemy(Enemy* enemy)
     if (pos_rect.y + pos_rect.h < enemy->pos_rect.y + enemy->pos_rect.h)
     {
         enemy -> dead = true;
+		if (enemy->type == SLIME)
+		{
+		
+			enemy->pos_rect.h = 12 * SCALE_FACTOR;
+		}
     }
     else
     {

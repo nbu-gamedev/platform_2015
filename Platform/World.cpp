@@ -183,7 +183,7 @@ void World::parseGrid(const string & line, ifstream &file)
 				worldGrid[i][j][0]->loadedNumber = current - 1;
 				break;
 			case 7:
-				worldGrid[i][j].push_back(new Enemy_fly(rect, worldGrid, SLIME));
+				worldGrid[i][j].push_back(new Enemy_fly(rect, worldGrid, FLY));
 				worldGrid[i][j][0]->loadedNumber = current - 1;
 				break;
 			default:
