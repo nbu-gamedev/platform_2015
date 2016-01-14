@@ -195,6 +195,6 @@ void Enemy::collide_with_Terrain()
 void Enemy::die()
 {
     dead = true;
-	pos_rect.y = pos_rect.y + pos_rect.h - 12 * SCALE_FACTOR;
+	pos_rect.y = real_y = pos_rect.y + pos_rect.h - 12 * SCALE_FACTOR + 1;
 	pos_rect.h = 12 * SCALE_FACTOR;
 }
