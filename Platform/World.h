@@ -48,9 +48,10 @@ public:
 		{
 			for (int j = 0; j < GRID_WIDTH; j++)
 			{
-				for (Actor* actor : worldGrid[i][j])
+				while(!worldGrid[i][j].empty()) 
 				{
-					delete actor;
+					delete worldGrid[i][j].back();
+					worldGrid[i][j].pop_back();
 				}
 				worldGrid[i][j].clear();
 			}
