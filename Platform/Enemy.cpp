@@ -44,6 +44,7 @@ bool Enemy::update(int time_passed, Key_event* ke)
     }
     else
     {
+        if (i_grid >= GRID_HEIGHT) return false;
         double moved = time_passed*(speed_y - gravity_acceleration * time_passed/ 2000.) / 1000.;
         if (moved < 0) moved *= -1;
         speed_y += gravity_acceleration*time_passed/1000;
@@ -57,7 +58,7 @@ bool Enemy::update(int time_passed, Key_event* ke)
         }
     }
 	collide_with_Terrain();
-   return update_grid_pos();
+    return update_grid_pos();
 }
 
 void Enemy::render(SDL_Renderer * renderer, int time_passed, CoreEngine & core)

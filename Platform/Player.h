@@ -22,7 +22,7 @@ public:
     //void render();
     void move_player(int time);
     void collide_with_Terrain(Terrain* terra);
-  //  void collide_with_enemy(Enemy* enemy);
+    void collide_with_enemy(Enemy* enemy);
     void get_coin(Coin* coin);
     void die();
 	bool update_grid_pos();
@@ -37,7 +37,7 @@ public:
     bool alive;
     bool completely_dead;
     bool end_level;
-	
+
 	//yavor test sound must be size of enum
 	bool sound_events_to_play[5];
 	void play_sound(CoreEngine &core);

@@ -106,7 +106,7 @@ void Player::check_collisions()
 					}
 					if (dynamic_cast<Enemy*>(actor))
 					{
-						die();
+						collide_with_enemy(dynamic_cast<Enemy*>(actor));
 					}
 
 					if (dynamic_cast<Exit*>(actor) && !Coin::coins_to_collect)
@@ -232,7 +232,19 @@ void Player::render(SDL_Renderer * renderer, int time_passed, CoreEngine & core)
 	}
 }
 
-
+void Player::collide_with_enemy(Enemy* enemy)
+{
+    if (enemy -> dead) return;
+    // if player attack enemy from above
+    if (pos_rect.y + pos_rect.h < enemy->pos_rect.y + enemy->pos_rect.h)
+    {
+        enemy -> dead = true;
+    }
+    else
+    {
+        die();
+    }
+}
 
 void Player:: collide_with_Terrain(Terrain* terra)
 {
