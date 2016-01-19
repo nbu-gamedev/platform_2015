@@ -239,6 +239,12 @@ void Player::collide_with_enemy(Enemy* enemy)
 	if (pos_rect.y + pos_rect.h < enemy->pos_rect.y + enemy->pos_rect.h)
 	{
 		enemy->die();
+		jumping = true;
+		falling = false;
+		v_direction = 1;
+		speed_y /= 2.;
+		sound_events_to_play[player_jump] = true;
+		
 	}
 	else
 	{
