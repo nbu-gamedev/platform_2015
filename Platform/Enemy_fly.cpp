@@ -50,7 +50,6 @@ void Enemy_fly::render(SDL_Renderer * renderer, int time_passed, CoreEngine & co
 
 bool Enemy_fly::update(int time_passed, Key_event* ke)
 {
-	real_y += 1;
     if(!dead)
     {
         real_x += (direction)*(speed * time_passed)/ 1000;
@@ -78,7 +77,7 @@ bool Enemy_fly::update(int time_passed, Key_event* ke)
     }
     else
     {
-		
+
         double moved = time_passed*(speed_y - gravity_acceleration * time_passed/ 2000.) / 1000.;
         if (moved < 0) moved *= -1;
         speed_y += gravity_acceleration*time_passed/1000;
