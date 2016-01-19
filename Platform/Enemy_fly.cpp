@@ -3,7 +3,8 @@
 
 
 Enemy_fly::Enemy_fly(SDL_Rect pos, std::vector<Actor*>** world, Object obj)
-	: Enemy(pos, world,obj)
+	: Enemy(pos, world,obj),
+	radians(0)
 {
 }
 
@@ -52,6 +53,11 @@ bool Enemy_fly::update(int time_passed, Key_event* ke)
 {
     if(!dead)
     {
+
+		radians += time_passed * 0.0174533; // 0.0174533 = PI / 180 ( to convert radiants )
+		real_y += sin(radians);
+		pos_rect.y = real_y;
+
         real_x += (direction)*(speed * time_passed)/ 1000;
         pos_rect.x = real_x;
         if ( pos_rect.x >  M_WINDOW_WIDTH - pos_rect.w )
@@ -103,6 +109,7 @@ bool Enemy_fly::update(int time_passed, Key_event* ke)
             falling = false;
         }
     }
+	
     return update_grid_pos();
 }
 
