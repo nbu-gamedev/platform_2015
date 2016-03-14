@@ -1,0 +1,12 @@
+coin
+Sound/coin.ogg
+jump
+Sound/backtolive.ogg
+dead
+Sound/Coin01.ogg
+colision
+Sound/doh.ogg
+exit
+Sound/Exit.ogg
+music
+Sound/loop1.ogg

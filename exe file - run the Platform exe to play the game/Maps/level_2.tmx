@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="25" height="13" tilewidth="70" tileheight="70" nextobjectid="1">
+ <tileset firstgid="1" name="ground" tilewidth="70" tileheight="70" tilecount="1">
+  <image source="../Art/Art/tiles/ground.png" width="70" height="70"/>
+ </tileset>
+ <tileset firstgid="2" name="ground_dirt" tilewidth="70" tileheight="70" tilecount="1">
+  <image source="../Art/Art/tiles/ground_dirt.png" width="70" height="70"/>
+ </tileset>
+ <tileset firstgid="3" name="walk0001" tilewidth="50" tileheight="67" tilecount="1">
+  <image source="../Art/Art/character/walk/walk0001.png" width="75" height="96"/>
+ </tileset>
+ <tileset firstgid="4" name="slime_walk" tilewidth="43" tileheight="26" tilecount="1">
+  <image source="../Art/Art/enemies/slime_walk.png" width="43" height="26"/>
+ </tileset>
+ <tileset firstgid="5" name="coin_gold" tilewidth="40" tileheight="45" tilecount="1">
+  <image source="../Art/Art/coin/coin/1.png" width="40" height="45"/>
+ </tileset>
+ <tileset firstgid="6" name="door_closedMid" tilewidth="70" tileheight="70" tilecount="1">
+  <image source="../Art/Art/exit/door_closedMid.png" width="70" height="70"/>
+ </tileset>
+ <tileset firstgid="7" name="fly_fly" tilewidth="69" tileheight="31" tilecount="1">
+  <image source="../Art/Art/enemies/fly_fly.png" width="69" height="31"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="25" height="13">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,5,0,0,0,0,0,4,6,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7,0,0,0,1,1,1,1,1,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,5,0,0,2,2,2,2,2,
+0,0,0,0,0,0,0,0,0,0,5,5,5,5,0,0,1,1,0,0,0,0,0,2,2,
+0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,5,0,0,0,2,2,
+0,0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,5,0,5,0,0,2,2,
+0,0,0,0,0,0,0,0,0,0,7,5,5,0,0,0,5,5,0,4,0,5,5,2,2,
+0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,2,2,
+0,0,0,0,0,0,1,1,0,5,5,4,0,5,5,0,2,2,2,2,2,2,2,2,2,
+1,1,1,1,1,1,2,2,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2
+</data>
+ </layer>
+</map>
